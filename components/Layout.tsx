@@ -1,13 +1,11 @@
-import clsx from "clsx";
 import Head from "next/head";
 import { FunctionComponent } from "react";
 
 interface Props {
   title?: string;
-  className?: string;
 }
 
-const Layout: FunctionComponent<Props> = ({ title, className, children }) => {
+const Layout: FunctionComponent<Props> = ({ title, children }) => {
   return (
     <>
       {title && (
@@ -15,12 +13,7 @@ const Layout: FunctionComponent<Props> = ({ title, className, children }) => {
           <title>{title}</title>
         </Head>
       )}
-      <div
-        className={clsx(
-          "max-w-4xl mx-auto h-screen my-6 space-y-4 flex flex-col",
-          className
-        )}
-      >
+      <div className="font-mono max-w-2xl mx-auto my-6 flex flex-col">
         {children}
       </div>
     </>

@@ -1,0 +1,32 @@
+fragment RepositoryFragment on Repository {
+  nameWithOwner
+  description
+  stargazerCount
+  primaryLanguage {
+    color
+    name
+  }
+  forkCount
+}
+
+query GetViewer {
+  viewer {
+    username
+    contributionsCollection {
+      contributionCalendar {
+        weeks {
+          contributionDays {
+            contributionCount
+          }
+        }
+      }
+    }
+    pinnedItems(first: 2) {
+      nodes {
+        ... on Repository {
+          ...RepositoryFragment
+        }
+      }
+    }
+  }
+}
