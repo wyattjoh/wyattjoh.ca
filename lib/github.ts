@@ -1,6 +1,27 @@
-import { GraphQLClient } from "graphql-request";
 import { HEIGHT, WIDTH } from "../components/GitHubContributionGraph";
-import { getSdk, RepositoryFragmentFragment } from "./graphql";
+import {
+  GetViewerQuery,
+  RepositoryFragmentFragment,
+} from "./__generated__/types";
+
+async function request<T extends {}, V extends {} = {}>(
+  query: string,
+  variables?: V
+): Promise<T> {
+  const res = await fetch("https://api.github.com/graphql", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+    },
+    body: JSON.stringify({ query, variables }),
+  });
+
+  const json = await res.json();
+
+  return json.data;
+}
 
 function round(value: number, precision: number = 1): string {
   const factor = Math.pow(10, precision);
@@ -25,14 +46,42 @@ export interface GitHubData {
   stats: GitHubContributionStats;
 }
 
+const GetViewer = /* GraphQL */ `
+  fragment RepositoryFragment on Repository {
+    nameWithOwner
+    url
+    description
+    primaryLanguage {
+      color
+    }
+  }
+
+  query GetViewer {
+    viewer {
+      login
+      contributionsCollection {
+        contributionCalendar {
+          weeks {
+            contributionDays {
+              contributionCount
+            }
+          }
+        }
+      }
+      pinnedItems(first: 2) {
+        nodes {
+          __typename
+          ... on Repository {
+            ...RepositoryFragment
+          }
+        }
+      }
+    }
+  }
+`;
+
 export async function getGitHubData(): Promise<GitHubData> {
-  const client = new GraphQLClient("https://api.github.com/graphql", {
-    headers: {
-      Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
-    },
-  });
-  const sdk = getSdk(client);
-  const res = await sdk.GetViewer();
+  const res = await request<GetViewerQuery>(GetViewer);
 
   const repositories = res.viewer.pinnedItems.nodes.filter(
     (node) => node.__typename === "Repository"

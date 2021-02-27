@@ -2,10 +2,9 @@ schema:
   - https://api.github.com/graphql:
       headers:
         Authorization: "Bearer ${GITHUB_TOKEN}"
-documents: "./lib/graphql/*.graphql"
+documents: "./lib/*.ts"
 generates:
-  ./lib/graphql/index.ts:
+  ./lib/__generated__/types.ts:
     plugins:
       - typescript
       - typescript-operations
-      - typescript-graphql-request

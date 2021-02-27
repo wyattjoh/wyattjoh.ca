@@ -33,4 +33,4 @@ yarn-error.log*
 # vercel
 .vercel
 
-lib/graphql/index.ts
+__generated__

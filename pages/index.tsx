@@ -1,6 +1,7 @@
 import { GetStaticProps } from "next";
 
 import GitHubContributionGraph from "../components/GitHubContributionGraph";
+import GitHubRepository from "../components/GitHubRepository";
 import Layout from "../components/Layout";
 import Link from "../components/Link";
 import { getGitHubData, GitHubData } from "../lib/github";
@@ -12,10 +13,10 @@ interface Props {
 export default function IndexPage({ data: { stats, repositories } }: Props) {
   return (
     <Layout title="Wyatt Johnson">
-      <div className="bg-pink-600 p-4 text-white space-y-8">
+      <div className="bg-pink-700 p-4 text-white space-y-8">
         <h1 className="font-bold text-6xl lowercase">Wyatt Johnson</h1>
         <p>
-          Developer with a security first mindset. Lead Engineer at the
+          Developer with a security first mindset. Lead Engineer at the{" "}
           <Link href="https://coralproject.net/">coralproject</Link> with{" "}
           <Link href="https://voxmedia.com/">Vox Media Inc</Link>.
         </p>
@@ -30,22 +31,7 @@ export default function IndexPage({ data: { stats, repositories } }: Props) {
           <h2 className="font-bold">Recent Projects:</h2>
           <div className="grid grid-cols-1 gap-4">
             {repositories.map((repo) => (
-              <a
-                key={repo.nameWithOwner}
-                href={repo.url}
-                className="border border-pink-400 p-2 rounded-md bg-pink-500 transition-colors hover:bg-pink-600"
-              >
-                <h2 className="font-bold mb-1 flex items-baseline">
-                  <span
-                    style={{ backgroundColor: repo.primaryLanguage.color }}
-                    className="w-3 h-3 inline-block rounded-full border border-white mr-2"
-                  />
-                  <span>{repo.nameWithOwner}</span>
-                </h2>
-                {repo.description && (
-                  <p className="text-xs">{repo.description}</p>
-                )}
-              </a>
+              <GitHubRepository key={repo.nameWithOwner} repo={repo} />
             ))}
           </div>
         </div>

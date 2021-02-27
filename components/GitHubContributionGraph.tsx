@@ -16,14 +16,12 @@ const GitHubContributionGraph: FunctionComponent<Props> = ({
       <a
         href={`https://github.com/${username}`}
         title={`Go to @${username}'s GitHub profile`}
-        className="text-pink-500 transition-colors duration-500 hover:text-pink-600"
+        className="text-pink-700 transition-colors duration-200 hover:text-pink-600"
       >
         <svg
           className="w-full fill-current"
-          height={HEIGHT}
-          width={WIDTH}
           viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
-          preserveAspectRatio="xMidYMin"
+          preserveAspectRatio="xMaxYMin"
         >
           {contributions.map(({ x, height, opacity }, index) => (
             <rect

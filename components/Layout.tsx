@@ -13,7 +13,7 @@ const Layout: FunctionComponent<Props> = ({ title, children }) => {
           <title>{title}</title>
         </Head>
       )}
-      <div className="font-mono max-w-2xl mx-auto my-6 flex flex-col">
+      <div className="font-mono max-w-2xl mx-auto lg:my-6 flex flex-col">
         {children}
       </div>
     </>
