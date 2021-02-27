@@ -97,6 +97,7 @@ export async function getGitHubData(): Promise<GitHubData> {
         ),
       []
     )
+    // 112 is a divisor of the value we have for width now, 672.
     .slice(-112);
 
   const max = contributions.reduce(
