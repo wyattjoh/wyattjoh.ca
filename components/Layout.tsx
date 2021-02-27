@@ -1,18 +1,15 @@
-import Head from "next/head";
 import { FunctionComponent } from "react";
+import { NextSeo } from "next-seo";
 
 interface Props {
   title?: string;
+  description?: string;
 }
 
-const Layout: FunctionComponent<Props> = ({ title, children }) => {
+const Layout: FunctionComponent<Props> = ({ title, description, children }) => {
   return (
     <>
-      {title && (
-        <Head>
-          <title>{title}</title>
-        </Head>
-      )}
+      <NextSeo title={title} description={description} />
       <div className="font-mono max-w-2xl mx-auto lg:my-6 flex flex-col">
         {children}
       </div>
