@@ -1,17 +1,15 @@
 fragment RepositoryFragment on Repository {
   nameWithOwner
+  url
   description
-  stargazerCount
   primaryLanguage {
     color
-    name
   }
-  forkCount
 }
 
 query GetViewer {
   viewer {
-    username
+    login
     contributionsCollection {
       contributionCalendar {
         weeks {
@@ -23,6 +21,7 @@ query GetViewer {
     }
     pinnedItems(first: 2) {
       nodes {
+        __typename
         ... on Repository {
           ...RepositoryFragment
         }

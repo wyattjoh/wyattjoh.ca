@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "npm run generate && next build",
     "export": "next export",
     "start": "next start",
     "generate": "graphql-codegen -r dotenv/config"
@@ -15,7 +15,6 @@
     "graphql": "^15.5.0",
     "graphql-request": "^3.4.0",
     "next": "10.0.7",
-    "node-html-parser": "^3.0.3",
     "postcss": "^8.2.6",
     "preact": "^10.5.12",
     "react": "17.0.1",

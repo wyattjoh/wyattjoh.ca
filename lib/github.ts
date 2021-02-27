@@ -1,7 +1,14 @@
 import { GraphQLClient } from "graphql-request";
-import { parse } from "node-html-parser";
 import { HEIGHT, WIDTH } from "../components/GitHubContributionGraph";
 import { getSdk, RepositoryFragmentFragment } from "./graphql";
+
+function round(value: number, precision: number = 1): string {
+  const factor = Math.pow(10, precision);
+  const rounded = Math.floor(value * factor) / factor;
+  return rounded.toString();
+}
+
+const OPACITY_CLAMP = 0.6;
 
 export interface GitHubContributionStats {
   username: string;
@@ -13,70 +20,9 @@ export interface GitHubContributionStats {
   }>;
 }
 
-function round(value: number, precision: number = 1): string {
-  const factor = Math.pow(10, precision);
-  const rounded = Math.floor(value * factor) / factor;
-  return rounded.toString();
-}
-
-const OPACITY_CLAMP = 0.6;
-
-export const getGitHubContributionStats = async (
-  username: string
-): Promise<GitHubContributionStats> => {
-  const res = await fetch(`https://github.com/users/${username}/contributions`);
-  const data = await res.text();
-  const html = parse(data);
-  const svg = html.querySelector("svg.js-calendar-graph-svg");
-  const contributions = svg
-    .querySelectorAll(".ContributionCalendar-day")
-    .map((el) => {
-      const date = el.getAttribute("data-date") || "";
-      const count = el.getAttribute("data-count") || "";
-
-      return { date, count };
-    })
-    .filter(({ count, date }) => {
-      return !!count && !!date;
-    })
-    .map(({ count, date }) => ({
-      count: parseInt(count, 10),
-      date,
-    }))
-    .slice(-112);
-
-  const max = contributions.reduce(
-    (previousValue, { count }) => Math.max(previousValue, count),
-    0
-  );
-
-  const width = WIDTH / contributions.length;
-
-  return {
-    username,
-    width: round(width),
-    contributions: contributions
-      .map(({ count }, index) => {
-        const scale = count / max;
-        return {
-          count,
-          height: round(scale * HEIGHT, 0),
-          x: round(index * width),
-          opacity: round(OPACITY_CLAMP + scale * (1 - OPACITY_CLAMP)),
-        };
-      })
-      .filter(({ count }) => count > 0),
-  };
-};
-
-export interface GitHubRepository {
-  nameWithOwner: string;
-  description?: string;
-  stargazerCount: number;
-}
-
 export interface GitHubData {
-  repositories: GitHubRepository[];
+  repositories: RepositoryFragmentFragment[];
+  stats: GitHubContributionStats;
 }
 
 export async function getGitHubData(): Promise<GitHubData> {
@@ -92,5 +38,41 @@ export async function getGitHubData(): Promise<GitHubData> {
     (node) => node.__typename === "Repository"
   ) as RepositoryFragmentFragment[];
 
-  return { repositories };
+  const contributions: number[] = res.viewer.contributionsCollection.contributionCalendar.weeks
+    .reduce(
+      (previousValue, week) =>
+        previousValue.concat(
+          week.contributionDays.map(
+            ({ contributionCount }) => contributionCount
+          )
+        ),
+      []
+    )
+    .slice(-112);
+
+  const max = contributions.reduce(
+    (previousValue, count) => Math.max(previousValue, count),
+    0
+  );
+
+  const width = WIDTH / contributions.length;
+
+  return {
+    repositories,
+    stats: {
+      username: res.viewer.login,
+      width: round(width),
+      contributions: contributions
+        .map((count, index) => {
+          const scale = count / max;
+          return {
+            count,
+            height: round(scale * HEIGHT, 0),
+            x: round(index * width),
+            opacity: round(OPACITY_CLAMP + scale * (1 - OPACITY_CLAMP)),
+          };
+        })
+        .filter(({ count }) => count > 0),
+    },
+  };
 }
