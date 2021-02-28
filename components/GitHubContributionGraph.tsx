@@ -10,7 +10,7 @@ export const WIDTH = 672;
 export const HEIGHT = 200;
 
 const GitHubContributionGraph: FunctionComponent<Props> = ({
-  stats: { username, width, contributions },
+  stats: { rx, username, width, contributions },
 }) => {
   return (
     <div className="w-full relative">
@@ -21,7 +21,7 @@ const GitHubContributionGraph: FunctionComponent<Props> = ({
       >
         <svg
           className="w-full fill-current"
-          viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
+          viewBox={`0 0 ${WIDTH} ${HEIGHT + parseInt(width, 10) / 2}`}
           preserveAspectRatio="xMaxYMin"
         >
           {contributions.map(({ x, height, opacity }, index) => (
@@ -30,9 +30,10 @@ const GitHubContributionGraph: FunctionComponent<Props> = ({
               opacity={opacity}
               width={width}
               x={x}
-              y="0"
+              y={`-${rx}`}
+              rx={rx}
               height={height}
-            ></rect>
+            />
           ))}
         </svg>
       </a>

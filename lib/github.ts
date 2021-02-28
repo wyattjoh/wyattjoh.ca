@@ -34,6 +34,7 @@ const OPACITY_CLAMP = 0.6;
 export interface GitHubContributionStats {
   username: string;
   width: string;
+  rx: string;
   contributions: Array<{
     height: string;
     x: string;
@@ -112,12 +113,13 @@ export async function getGitHubData(): Promise<GitHubData> {
     stats: {
       username: res.viewer.login,
       width: round(width),
+      rx: round(width / 2),
       contributions: contributions
         .map((count, index) => {
           const scale = count / max;
           return {
             count,
-            height: round(scale * HEIGHT, 0),
+            height: round(scale * HEIGHT + width / 2),
             x: round(index * width),
             opacity: round(OPACITY_CLAMP + scale * (1 - OPACITY_CLAMP)),
           };
