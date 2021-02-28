@@ -31,6 +31,9 @@ function round(value: number, precision: number = 1): string {
 
 const OPACITY_CLAMP = 0.6;
 
+// 112 is a divisor of the value we have for width now, 672.
+export const CONTRIBUTION_DAYS = 112;
+
 export interface GitHubContributionStats {
   username: string;
   width: string;
@@ -98,8 +101,8 @@ export async function getGitHubData(): Promise<GitHubData> {
         ),
       []
     )
-    // 112 is a divisor of the value we have for width now, 672.
-    .slice(-112);
+
+    .slice(-CONTRIBUTION_DAYS);
 
   const max = contributions.reduce(
     (previousValue, count) => Math.max(previousValue, count),

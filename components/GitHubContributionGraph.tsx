@@ -1,5 +1,6 @@
 import { FunctionComponent, useMemo } from "react";
-import { GitHubContributionStats } from "../lib/github";
+
+import { CONTRIBUTION_DAYS, GitHubContributionStats } from "../lib/github";
 
 interface Props {
   stats: GitHubContributionStats;
@@ -16,7 +17,7 @@ const GitHubContributionGraph: FunctionComponent<Props> = ({
     <div className="w-full relative">
       <a
         href={`https://github.com/${username}`}
-        title={`Go to @${username}'s GitHub profile`}
+        title={`GitHub contributions over the last ${CONTRIBUTION_DAYS} days.`}
         className="text-pink-700 transition-colors duration-200 hover:text-pink-600"
       >
         <svg
