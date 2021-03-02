@@ -17,7 +17,10 @@ export default function IndexPage({ data: { stats, repositories } }: Props) {
       description="Full-stack developer working at @voxmedia on the @coralproject."
     >
       <div className="bg-pink-700 p-4 text-white space-y-8">
-        <h1 className="font-bold text-6xl lowercase">Wyatt Johnson</h1>
+        <header>
+          <h1 className="font-bold text-6xl lowercase mb-2">Wyatt Johnson</h1>
+          <h2 className="font-bold text-sm">(he/him)</h2>
+        </header>
         <p>
           Developer with a security first mindset. Lead Engineer at{" "}
           <Link href="https://voxmedia.com/">@voxmedia</Link> on the{" "}
