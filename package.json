@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "npm run generate && next build",
+    "test": "tsc -p . --noEmit",
     "export": "next export",
     "start": "next start",
     "generate": "graphql-codegen -r dotenv/config"
