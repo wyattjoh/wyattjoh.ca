@@ -10,6 +10,10 @@ interface Props {
   data: GitHubData;
 }
 
+export const config = {
+  unstable_runtimeJS: false,
+};
+
 export default function IndexPage({ data: { stats, repositories } }: Props) {
   return (
     <Layout
