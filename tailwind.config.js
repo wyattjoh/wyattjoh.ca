@@ -4,11 +4,4 @@ module.exports = {
   theme: {
     extend: {},
   },
-  variants: {
-    extend: {},
-  },
-  corePlugins: {
-    animation: false,
-  },
-  plugins: [],
 };
