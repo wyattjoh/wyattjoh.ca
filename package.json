@@ -29,7 +29,7 @@
     "@graphql-codegen/cli": "^1.21.3",
     "@graphql-codegen/typescript": "^1.21.1",
     "@graphql-codegen/typescript-operations": "^1.17.15",
-    "@tailwindcss/jit": "^0.1.6",
+    "@tailwindcss/jit": "^0.1.7",
     "@types/node": "^14.14.35",
     "@types/react": "^17.0.3",
     "graphql": "^15.5.0",
