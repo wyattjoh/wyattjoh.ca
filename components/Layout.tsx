@@ -10,7 +10,7 @@ const Layout: FunctionComponent<Props> = ({ title, description, children }) => {
   return (
     <>
       <NextSeo title={title} description={description} />
-      <div className="font-mono max-w-2xl mx-auto md:my-6 flex flex-col">
+      <div className="font-mono max-w-3xl mx-auto md:my-6 flex flex-col">
         {children}
       </div>
     </>

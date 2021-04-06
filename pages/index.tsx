@@ -26,8 +26,9 @@ export default function IndexPage({ data: { stats, repositories } }: Props) {
           <h2 className="font-bold text-sm">(he/him)</h2>
         </header>
         <p>
-          Developer with a security first mindset. Lead Engineer at{" "}
-          <Link href="https://voxmedia.com/">@voxmedia</Link> on the{" "}
+          Developer with a security first mindset. Senior Engineer, Technical
+          Lead of Audience Platform Team at{" "}
+          <Link href="https://voxmedia.com/">@voxmedia</Link>. Previously{" "}
           <Link href="https://coralproject.net/">@coralproject</Link>.
         </p>
         <p>
