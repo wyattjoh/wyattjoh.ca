@@ -20,7 +20,7 @@ export default function IndexPage({ data: { stats, repositories } }: Props) {
       title="Wyatt Johnson"
       description="Full-stack developer working at @voxmedia on the @coralproject."
     >
-      <div className="bg-pink-700 p-4 text-white space-y-8">
+      <div className="bg-primary-dark p-4 text-white space-y-8">
         <header>
           <h1 className="font-bold text-6xl lowercase mb-2">Wyatt Johnson</h1>
           <h2 className="font-bold text-sm">(he/him)</h2>

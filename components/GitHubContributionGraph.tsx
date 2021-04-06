@@ -18,7 +18,7 @@ const GitHubContributionGraph: FunctionComponent<Props> = ({
       <a
         href={`https://github.com/${username}`}
         title={`GitHub contributions over the last ${CONTRIBUTION_DAYS} days.`}
-        className="text-pink-700 transition-colors duration-200 hover:text-pink-600"
+        className="text-primary-dark transition-colors duration-200 hover:text-primary"
       >
         <svg
           className="w-full fill-current"

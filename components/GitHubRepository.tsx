@@ -12,7 +12,7 @@ const GitHubRepository: FunctionComponent<Props> = ({ repo }) => {
       key={repo.nameWithOwner}
       href={repo.url}
       title={`Visit ${repo.nameWithOwner} on GitHub`}
-      className="border border-pink-500 p-2 rounded-md duration-200 bg-pink-600 transition-colors hover:bg-pink-500"
+      className="border border-primary-light p-2 rounded-md duration-200 bg-primary transition-colors hover:bg-primary-light"
     >
       <h2 className="font-bold mb-1 flex items-baseline">
         <span
