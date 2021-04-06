@@ -72,7 +72,7 @@ const GetViewer = /* GraphQL */ `
           }
         }
       }
-      pinnedItems(first: 2) {
+      pinnedItems(first: 4) {
         nodes {
           __typename
           ... on Repository {
