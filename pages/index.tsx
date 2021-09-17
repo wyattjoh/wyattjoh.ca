@@ -6,15 +6,11 @@ import GitHubRepository from "../components/GitHubRepository";
 import Layout from "../components/Layout";
 import Link from "../components/Link";
 import { getGitHubData, GitHubData } from "../lib/github";
-import avatar from "../images/avatar.jpeg";
+import avatar from "../public/images/avatar.jpeg";
 
 interface Props {
   data: GitHubData;
 }
-
-export const config = {
-  unstable_runtimeJS: false,
-};
 
 export default function IndexPage({ data: { stats, repositories } }: Props) {
   return (
