@@ -8,7 +8,7 @@ interface Props {
 
 // NOTE: If you want to change this value, ensure that you update lib/github.ts.
 export const WIDTH = 672;
-export const HEIGHT = 200;
+export const HEIGHT = 50;
 
 const GitHubContributionGraph: FunctionComponent<Props> = ({
   stats: { rx, username, width, contributions },
