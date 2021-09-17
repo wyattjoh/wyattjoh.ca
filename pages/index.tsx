@@ -1,10 +1,12 @@
-import { GetStaticProps } from "next";
+import type { GetStaticProps } from "next";
+import Image from "next/image";
 
 import GitHubContributionGraph from "../components/GitHubContributionGraph";
 import GitHubRepository from "../components/GitHubRepository";
 import Layout from "../components/Layout";
 import Link from "../components/Link";
 import { getGitHubData, GitHubData } from "../lib/github";
+import avatar from "../images/avatar.jpeg";
 
 interface Props {
   data: GitHubData;
@@ -20,11 +22,16 @@ export default function IndexPage({ data: { stats, repositories } }: Props) {
       title="Wyatt Johnson"
       description="Full-stack developer working at @voxmedia on the @coralproject."
     >
-      <div className="bg-primary-dark p-4 text-white space-y-8">
-        <header>
-          <h1 className="font-bold text-6xl lowercase mb-2">Wyatt Johnson</h1>
-          <h2 className="font-bold text-sm">(he/him)</h2>
-        </header>
+      <div className="bg-primary-dark p-4 text-white space-y-8 rounded-t-3xl">
+        <div className="flex items-center">
+          <div className="hidden sm:block">
+            <Image className="rounded-full" src={avatar} />
+          </div>
+          <header className="sm:ml-8 flex-grow">
+            <h1 className="font-bold text-6xl lowercase mb-2">Wyatt Johnson</h1>
+            <h2 className="font-bold text-sm">(he/him)</h2>
+          </header>
+        </div>
         <p>
           Developer with a security first mindset. Staff Engineer, Technical
           Lead of Audience Platform Team at{" "}
