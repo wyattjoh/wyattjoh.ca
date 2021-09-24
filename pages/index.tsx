@@ -18,7 +18,7 @@ export default function IndexPage({ data: { stats, repositories } }: Props) {
       title="Wyatt Johnson"
       description="Full-stack developer working at @voxmedia on the @coralproject."
     >
-      <div className="bg-primary-dark p-4 text-white space-y-8 rounded-t-3xl">
+      <div className="bg-primary-dark p-4 text-white space-y-8 md:rounded-t-3xl">
         <div className="flex items-center">
           <div className="hidden sm:block">
             <Image className="rounded-full" src={avatar} />
