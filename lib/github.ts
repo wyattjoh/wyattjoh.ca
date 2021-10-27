@@ -87,12 +87,12 @@ const GetViewer = /* GraphQL */ `
 export async function getGitHubData(): Promise<GitHubData> {
   const res = await request<GetViewerQuery>(GetViewer);
 
-  const repositories = res.viewer.pinnedItems.nodes.filter(
-    (node) => node.__typename === "Repository"
+  const repositories = res.viewer.pinnedItems?.nodes?.filter(
+    (node) => node?.__typename === "Repository"
   ) as RepositoryFragmentFragment[];
 
-  const contributions: number[] = res.viewer.contributionsCollection.contributionCalendar.weeks
-    .reduce(
+  const contributions = res.viewer.contributionsCollection.contributionCalendar.weeks
+    .reduce<number[]>(
       (previousValue, week) =>
         previousValue.concat(
           week.contributionDays.map(

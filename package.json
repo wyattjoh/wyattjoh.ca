@@ -10,27 +10,26 @@
     "generate": "graphql-codegen -r dotenv/config"
   },
   "engines": {
-    "node": "^14",
-    "npm": "^7"
+    "node": "^14"
   },
   "dependencies": {
-    "autoprefixer": "^10.3.4",
+    "autoprefixer": "^10.3.7",
     "clsx": "^1.1.1",
-    "next": "^11.1.2",
-    "next-seo": "^4.27.0",
-    "postcss": "^8.3.6",
-    "preact": "^10.5.14",
+    "next": "^12.0.1",
+    "next-seo": "^4.28.1",
+    "postcss": "^8.3.11",
+    "preact": "^10.5.15",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "tailwindcss": "^2.2.15"
+    "tailwindcss": "^2.2.17"
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "^2.2.0",
-    "@graphql-codegen/typescript": "^2.2.2",
-    "@graphql-codegen/typescript-operations": "^2.1.4",
-    "@types/node": "^14.17.9",
-    "@types/react": "^17.0.21",
-    "graphql": "^15.5.3",
-    "typescript": "^4.4.3"
+    "@graphql-codegen/cli": "^2.2.1",
+    "@graphql-codegen/typescript": "^2.2.4",
+    "@graphql-codegen/typescript-operations": "^2.1.8",
+    "@types/node": "^14",
+    "@types/react": "^17.0.33",
+    "graphql": "^15.7.0",
+    "typescript": "^4.4.4"
   }
 }

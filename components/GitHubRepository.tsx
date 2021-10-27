@@ -16,7 +16,7 @@ const GitHubRepository: FunctionComponent<Props> = ({ repo }) => {
     >
       <h2 className="font-bold mb-1 flex items-baseline">
         <span
-          style={{ backgroundColor: repo.primaryLanguage.color }}
+          style={{ backgroundColor: repo.primaryLanguage?.color ?? undefined }}
           className="w-3 h-3 inline-block rounded-full border border-white mr-2"
         />
         <span>{repo.nameWithOwner}</span>

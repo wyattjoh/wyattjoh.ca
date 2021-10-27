@@ -20,7 +20,7 @@ export default function IndexPage({ data: { stats, repositories } }: Props) {
     >
       <div className="bg-primary-dark p-4 text-white space-y-8 md:rounded-t-3xl">
         <div className="flex flex-col md:flex-row items-center">
-          <Image className="rounded-full" src={avatar} />
+          <Image className="rounded-full" alt="Wyatt Johnson Avatar" src={avatar} />
           <header className="md:ml-8 my-8 md:my-0 flex-grow">
             <h1 className="font-bold text-6xl lowercase mb-2">Wyatt Johnson</h1>
             <h2 className="font-bold text-sm">(he/him)</h2>
