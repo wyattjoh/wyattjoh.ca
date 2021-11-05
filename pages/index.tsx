@@ -30,6 +30,7 @@ export default function IndexPage({ data: { stats, repositories } }: Props) {
           Developer with a security first mindset. Staff Engineer, Technical
           Lead of Audience Platform Team at{" "}
           <Link href="https://voxmedia.com/">@voxmedia</Link>. Previously{" "}
+          Technical Lead of the{" "}
           <Link href="https://coralproject.net/">@coralproject</Link>.
         </p>
         <p>

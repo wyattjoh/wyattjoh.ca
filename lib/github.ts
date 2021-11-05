@@ -18,6 +18,10 @@ async function request<T extends {}, V extends {} = {}>(
     body: JSON.stringify({ query, variables }),
   });
 
+  if (!res.ok) {
+    throw new Error(await res.text());
+  }
+
   const json = await res.json();
 
   return json.data;
