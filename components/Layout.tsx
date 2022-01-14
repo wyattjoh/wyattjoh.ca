@@ -10,9 +10,16 @@ const Layout: FunctionComponent<Props> = ({ title, description, children }) => {
   return (
     <>
       <NextSeo title={title} description={description} />
-      <SocialProfileJsonLd type="Person" name="Wyatt Johnson" url="https://wyattjoh.ca" sameAs={[]} />
-      <div className="font-mono max-w-3xl mx-auto md:my-6 flex flex-col">
-        {children}
+      <SocialProfileJsonLd
+        type="Person"
+        name="Wyatt Johnson"
+        url="https://wyattjoh.ca"
+        sameAs={[]}
+      />
+      <div className="min-h-screen min-w-screen bg-gray-100 relative flex">
+        <div className="font-mono max-w-3xl mx-auto md:my-6 flex flex-col">
+          {children}
+        </div>
       </div>
     </>
   );

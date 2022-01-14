@@ -18,9 +18,15 @@ export default function IndexPage({ data: { stats, repositories } }: Props) {
       title="Wyatt Johnson"
       description="Full-stack developer working at @voxmedia on the @coralproject."
     >
-      <div className="bg-primary-dark p-4 text-white space-y-8 md:rounded-t-3xl">
+      <div className="bg-primary-dark p-4 text-white space-y-8 md:rounded-t-3xl min-h-full md:min-h-min">
         <div className="flex flex-col md:flex-row items-center">
-          <Image className="rounded-full" alt="Wyatt Johnson Avatar" src={avatar} />
+          <Image
+            className="rounded-full"
+            alt="Wyatt Johnson Avatar"
+            src={avatar}
+            width={150}
+            height={150}
+          />
           <header className="md:ml-8 my-8 md:my-0 flex-grow">
             <h1 className="font-bold text-6xl lowercase mb-2">Wyatt Johnson</h1>
             <h2 className="font-bold text-sm">(he/him)</h2>
@@ -41,9 +47,17 @@ export default function IndexPage({ data: { stats, repositories } }: Props) {
           on <Link href="https://keybase.io/wyattjoh">Keybase</Link>.
         </p>
         <div className="space-y-2">
-          <h2 className="font-bold">Recent Projects:</h2>
+          <h2 className="font-bold">Featured Repositories:</h2>
           <div className="grid grid-cols-1 gap-4">
-            {repositories.map((repo) => (
+            {repositories.featured.map((repo) => (
+              <GitHubRepository key={repo.nameWithOwner} repo={repo} />
+            ))}
+          </div>
+        </div>
+        <div className="space-y-2">
+          <h2 className="font-bold">Recent Repositories:</h2>
+          <div className="grid grid-cols-1 gap-4">
+            {repositories.latest.map((repo) => (
               <GitHubRepository key={repo.nameWithOwner} repo={repo} />
             ))}
           </div>
@@ -59,7 +73,7 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
 
   return {
     props: { data },
-    // Revalidate every 5 minutes.
-    revalidate: 5 * 60,
+    // // Revalidate every 5 minutes.
+    // revalidate: 5 * 60,
   };
 };

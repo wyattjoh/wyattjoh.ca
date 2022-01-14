@@ -14,7 +14,7 @@ const GitHubContributionGraph: FunctionComponent<Props> = ({
   stats: { rx, username, width, contributions },
 }) => {
   return (
-    <div className="w-full relative">
+    <div className="w-full relative hidden md:inline-block">
       <a
         href={`https://github.com/${username}`}
         title={`GitHub contributions over the last ${CONTRIBUTION_DAYS} days.`}

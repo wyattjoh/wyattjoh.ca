@@ -50,17 +50,22 @@ export interface GitHubContributionStats {
 }
 
 export interface GitHubData {
-  repositories: RepositoryFragmentFragment[];
+  repositories: {
+    featured: ReadonlyArray<RepositoryFragmentFragment>;
+    latest: ReadonlyArray<RepositoryFragmentFragment>;
+  };
   stats: GitHubContributionStats;
 }
 
 const GetViewer = /* GraphQL */ `
   fragment RepositoryFragment on Repository {
+    id
     nameWithOwner
     url
     description
     primaryLanguage {
       color
+      name
     }
   }
 
@@ -84,6 +89,16 @@ const GetViewer = /* GraphQL */ `
           }
         }
       }
+      repositories(
+        orderBy: { field: PUSHED_AT, direction: DESC }
+        isLocked: false
+        first: 9
+        privacy: PUBLIC
+      ) {
+        nodes {
+          ...RepositoryFragment
+        }
+      }
     }
   }
 `;
@@ -91,22 +106,33 @@ const GetViewer = /* GraphQL */ `
 export async function getGitHubData(): Promise<GitHubData> {
   const res = await request<GetViewerQuery>(GetViewer);
 
-  const repositories = res.viewer.pinnedItems?.nodes?.filter(
+  const featured = res.viewer.pinnedItems?.nodes?.filter(
     (node) => node?.__typename === "Repository"
   ) as RepositoryFragmentFragment[];
 
-  const contributions = res.viewer.contributionsCollection.contributionCalendar.weeks
-    .reduce<number[]>(
-      (previousValue, week) =>
-        previousValue.concat(
-          week.contributionDays.map(
-            ({ contributionCount }) => contributionCount
-          )
-        ),
-      []
-    )
+  const latest = res.viewer.repositories.nodes
+    ?.filter((latestRepo) => {
+      if (!latestRepo) {
+        return false;
+      }
 
-    .slice(-CONTRIBUTION_DAYS);
+      return featured.every((repo) => repo.id !== latestRepo.id);
+    })
+    .slice(0, 5) as RepositoryFragmentFragment[];
+
+  const contributions =
+    res.viewer.contributionsCollection.contributionCalendar.weeks
+      .reduce<number[]>(
+        (previousValue, week) =>
+          previousValue.concat(
+            week.contributionDays.map(
+              ({ contributionCount }) => contributionCount
+            )
+          ),
+        []
+      )
+
+      .slice(-CONTRIBUTION_DAYS);
 
   const max = contributions.reduce(
     (previousValue, count) => Math.max(previousValue, count),
@@ -116,7 +142,10 @@ export async function getGitHubData(): Promise<GitHubData> {
   const width = WIDTH / contributions.length;
 
   return {
-    repositories,
+    repositories: {
+      featured: featured,
+      latest: latest,
+    },
     stats: {
       username: res.viewer.login,
       width: round(width),
