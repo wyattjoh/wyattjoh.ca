@@ -69,7 +69,7 @@ const GetViewer = /* GraphQL */ `
     }
   }
 
-  query GetViewer($pinnedItems: Int!, $repositories: Int!) {
+  query GetViewer($repositories: Int!) {
     viewer {
       login
       contributionsCollection {
@@ -81,7 +81,7 @@ const GetViewer = /* GraphQL */ `
           }
         }
       }
-      pinnedItems(first: $pinnedItems) {
+      pinnedItems(first: $repositories) {
         nodes {
           __typename
           ... on Repository {
@@ -107,7 +107,6 @@ const REPOSITORY_COUNT = 8;
 
 export async function getGitHubData(): Promise<GitHubData> {
   const res = await request<GetViewerQuery>(GetViewer, {
-    pinnedItems: REPOSITORY_COUNT,
     repositories: REPOSITORY_COUNT,
   });
 
