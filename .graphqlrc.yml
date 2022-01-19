@@ -1,0 +1,12 @@
+schema:
+  - https://api.github.com/graphql:
+      headers:
+        Authorization: "Bearer ${GITHUB_TOKEN}"
+documents: "./lib/*.ts"
+extensions:
+  codegen:
+    generates:
+      ./lib/__generated__/types.ts:
+        plugins:
+          - typescript
+          - typescript-operations

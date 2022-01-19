@@ -50,6 +50,7 @@ export interface GitHubContributionStats {
 }
 
 export interface GitHubData {
+  avatarUrl: string;
   repositories: {
     featured: ReadonlyArray<RepositoryFragmentFragment>;
     latest: ReadonlyArray<RepositoryFragmentFragment>;
@@ -72,6 +73,7 @@ const GetViewer = /* GraphQL */ `
   query GetViewer($repositories: Int!) {
     viewer {
       login
+      avatarUrl(size: 300)
       contributionsCollection {
         contributionCalendar {
           weeks {
@@ -149,6 +151,7 @@ export async function getGitHubData(): Promise<GitHubData> {
   const width = WIDTH / contributions.length;
 
   return {
+    avatarUrl: res.viewer.avatarUrl,
     repositories: {
       featured: featured,
       latest: latest,

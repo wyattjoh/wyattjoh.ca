@@ -4,7 +4,8 @@ module.exports = {
     defaultLocale: "en-US",
   },
   images: {
-    formats: ['image/avif']
+    formats: ["image/avif"],
+    domains: ["avatars.githubusercontent.com"]
   },
   swcMinify: true,
   webpack: (config, { dev, isServer }) => {
