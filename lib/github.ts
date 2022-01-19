@@ -69,7 +69,7 @@ const GetViewer = /* GraphQL */ `
     }
   }
 
-  query GetViewer {
+  query GetViewer($pinnedItems: Int!, $repositories: Int!) {
     viewer {
       login
       contributionsCollection {
@@ -81,7 +81,7 @@ const GetViewer = /* GraphQL */ `
           }
         }
       }
-      pinnedItems(first: 4) {
+      pinnedItems(first: $pinnedItems) {
         nodes {
           __typename
           ... on Repository {
@@ -92,7 +92,7 @@ const GetViewer = /* GraphQL */ `
       repositories(
         orderBy: { field: PUSHED_AT, direction: DESC }
         isLocked: false
-        first: 9
+        first: $repositories
         privacy: PUBLIC
       ) {
         nodes {
@@ -103,8 +103,13 @@ const GetViewer = /* GraphQL */ `
   }
 `;
 
+const REPOSITORY_COUNT = 8;
+
 export async function getGitHubData(): Promise<GitHubData> {
-  const res = await request<GetViewerQuery>(GetViewer);
+  const res = await request<GetViewerQuery>(GetViewer, {
+    pinnedItems: REPOSITORY_COUNT,
+    repositories: REPOSITORY_COUNT,
+  });
 
   const featured = res.viewer.pinnedItems?.nodes?.filter(
     (node) => node?.__typename === "Repository"
@@ -118,7 +123,10 @@ export async function getGitHubData(): Promise<GitHubData> {
 
       return featured.every((repo) => repo.id !== latestRepo.id);
     })
-    .slice(0, 5) as RepositoryFragmentFragment[];
+    .slice(
+      0,
+      REPOSITORY_COUNT - featured.length
+    ) as RepositoryFragmentFragment[];
 
   const contributions =
     res.viewer.contributionsCollection.contributionCalendar.weeks
