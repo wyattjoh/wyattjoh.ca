@@ -29,6 +29,7 @@ const GitHubContributionGraph: FunctionComponent<Props> = ({
             <rect
               key={index}
               opacity={opacity}
+              className="transition-colors duration-200 hover:text-primary-light"
               width={width}
               x={x}
               y={`-${rx}`}

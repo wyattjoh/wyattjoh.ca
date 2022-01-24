@@ -56,14 +56,6 @@ const IndexPage: FunctionComponent<Props> = ({
           ))}
         </div>
       </div>
-      <div className="space-y-2">
-        <h2 className="font-bold">Recent Repositories:</h2>
-        <div className="grid grid-cols-1 gap-4">
-          {repositories.latest.map((repo) => (
-            <GitHubRepository key={repo.nameWithOwner} repo={repo} />
-          ))}
-        </div>
-      </div>
     </div>
     <GitHubContributionGraph stats={stats} />
   </Layout>

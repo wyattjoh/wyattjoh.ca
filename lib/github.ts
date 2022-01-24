@@ -7,7 +7,7 @@ import {
 async function request<T extends {}, V extends {} = {}>(
   query: string,
   variables?: V
-): Promise<T> {
+): Promise<{ data?: T; errors?: any[] }> {
   const res = await fetch("https://api.github.com/graphql", {
     method: "POST",
     headers: {
@@ -22,9 +22,7 @@ async function request<T extends {}, V extends {} = {}>(
     throw new Error(await res.text());
   }
 
-  const json = await res.json();
-
-  return json.data;
+  return res.json();
 }
 
 function round(value: number, precision: number = 1): string {
@@ -53,7 +51,6 @@ export interface GitHubData {
   avatarUrl: string;
   repositories: {
     featured: ReadonlyArray<RepositoryFragmentFragment>;
-    latest: ReadonlyArray<RepositoryFragmentFragment>;
   };
   stats: GitHubContributionStats;
 }
@@ -91,16 +88,6 @@ const GetViewer = /* GraphQL */ `
           }
         }
       }
-      repositories(
-        orderBy: { field: PUSHED_AT, direction: DESC }
-        isLocked: false
-        first: $repositories
-        privacy: PUBLIC
-      ) {
-        nodes {
-          ...RepositoryFragment
-        }
-      }
     }
   }
 `;
@@ -108,29 +95,20 @@ const GetViewer = /* GraphQL */ `
 const REPOSITORY_COUNT = 8;
 
 export async function getGitHubData(): Promise<GitHubData> {
-  const res = await request<GetViewerQuery>(GetViewer, {
+  const { data, errors } = await request<GetViewerQuery>(GetViewer, {
     repositories: REPOSITORY_COUNT,
   });
+  if (!data || errors) {
+    console.error(errors);
+    throw new Error("request has failed");
+  }
 
-  const featured = res.viewer.pinnedItems?.nodes?.filter(
+  const featured = data.viewer.pinnedItems?.nodes?.filter(
     (node) => node?.__typename === "Repository"
   ) as RepositoryFragmentFragment[];
 
-  const latest = res.viewer.repositories.nodes
-    ?.filter((latestRepo) => {
-      if (!latestRepo) {
-        return false;
-      }
-
-      return featured.every((repo) => repo.id !== latestRepo.id);
-    })
-    .slice(
-      0,
-      REPOSITORY_COUNT - featured.length
-    ) as RepositoryFragmentFragment[];
-
   const contributions =
-    res.viewer.contributionsCollection.contributionCalendar.weeks
+    data.viewer.contributionsCollection.contributionCalendar.weeks
       .reduce<number[]>(
         (previousValue, week) =>
           previousValue.concat(
@@ -151,13 +129,12 @@ export async function getGitHubData(): Promise<GitHubData> {
   const width = WIDTH / contributions.length;
 
   return {
-    avatarUrl: res.viewer.avatarUrl,
+    avatarUrl: data.viewer.avatarUrl,
     repositories: {
       featured: featured,
-      latest: latest,
     },
     stats: {
-      username: res.viewer.login,
+      username: data.viewer.login,
       width: round(width),
       rx: round(width / 2),
       contributions: contributions
