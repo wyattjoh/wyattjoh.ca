@@ -7,7 +7,6 @@ import GitHubRepository from "../components/GitHubRepository";
 import Layout from "../components/Layout";
 import Link from "../components/Link";
 import { getGitHubData, GitHubData } from "../lib/github";
-import avatar from "../public/images/avatar.jpeg";
 
 interface Props {
   data: GitHubData;
@@ -18,9 +17,10 @@ const IndexPage: FunctionComponent<Props> = ({
 }) => (
   <Layout
     title="Wyatt Johnson"
-    description="Full-stack developer working at @voxmedia on the @coralproject."
+    description="Full-stack Engineer working at @voxmedia."
   >
-    <div className="bg-primary-dark p-4 text-white space-y-8 md:rounded-t-3xl min-h-full md:min-h-min">
+    <div className="bg-primary-dark p-4 text-white space-y-8 md:rounded-3xl min-h-full md:min-h-min relative overflow-hidden">
+      <GitHubContributionGraph stats={stats} />
       <div className="flex flex-col md:flex-row items-center">
         <Image
           className="rounded-full"
@@ -43,8 +43,7 @@ const IndexPage: FunctionComponent<Props> = ({
       </p>
       <p>
         Feel free to check out my{" "}
-        <Link href="https://github.com/wyattjoh">GitHub</Link> profile, follow
-        me on <Link href="https://twitter.com/wyattjoh">Twitter</Link>, send me
+        <Link href="https://github.com/wyattjoh">GitHub</Link> profile, send me
         an <Link href="mailto:hello@wyattjoh.ca">Email</Link>, or a message on{" "}
         <Link href="https://keybase.io/wyattjoh">Keybase</Link>.
       </p>
@@ -57,7 +56,6 @@ const IndexPage: FunctionComponent<Props> = ({
         </div>
       </div>
     </div>
-    <GitHubContributionGraph stats={stats} />
   </Layout>
 );
 

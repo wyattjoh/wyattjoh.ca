@@ -1,4 +1,5 @@
-import { FunctionComponent, useMemo } from "react";
+import clsx from "clsx";
+import { FunctionComponent } from "react";
 
 import { CONTRIBUTION_DAYS, GitHubContributionStats } from "../lib/github";
 
@@ -14,11 +15,11 @@ const GitHubContributionGraph: FunctionComponent<Props> = ({
   stats: { rx, username, width, contributions },
 }) => {
   return (
-    <div className="w-full relative hidden md:inline-block">
+    <div className="absolute top-0 left-0 right-0 hidden md:inline-block">
       <a
         href={`https://github.com/${username}`}
         title={`GitHub contributions over the last ${CONTRIBUTION_DAYS} days.`}
-        className="text-primary-dark transition-colors duration-200 hover:text-primary"
+        className="text-primary-light transition-colors duration-200 hover:text-primary"
       >
         <svg
           className="w-full fill-current"
