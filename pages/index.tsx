@@ -17,7 +17,7 @@ const IndexPage: FunctionComponent<Props> = ({
 }) => (
   <Layout
     title="Wyatt Johnson"
-    description="Full-stack Engineer working at @voxmedia."
+    description="Full-stack developer working at @vercel on Next.js."
   >
     <div className="bg-primary-dark p-4 text-white space-y-8 md:rounded-3xl min-h-full md:min-h-min relative overflow-hidden">
       <GitHubContributionGraph stats={stats} />
@@ -35,10 +35,11 @@ const IndexPage: FunctionComponent<Props> = ({
         </header>
       </div>
       <p>
-        Developer with a security first mindset. Staff Engineer, Technical Lead
-        of Audience Platform Team at{" "}
-        <Link href="https://voxmedia.com/">@voxmedia</Link>. Previously{" "}
-        Technical Lead of the{" "}
+        Developer with a security first mindset. Software Engineer at{" "}
+        <Link href="https://vercel.com/">Vercel</Link> working on{" "}
+        <Link href="https://nextjs.org/">Next.js</Link>. Previously{" "}
+        <Link href="https://voxmedia.com/">@voxmedia</Link>,{" "}
+        <Link href="https://foundation.mozilla.org/">@mozilla</Link>,{" "}
         <Link href="https://coralproject.net/">@coralproject</Link>.
       </p>
       <p>
