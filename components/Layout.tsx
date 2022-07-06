@@ -1,4 +1,4 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, PropsWithChildren } from "react";
 import { NextSeo, SocialProfileJsonLd } from "next-seo";
 
 interface Props {
@@ -6,7 +6,11 @@ interface Props {
   description?: string;
 }
 
-const Layout: FunctionComponent<Props> = ({ title, description, children }) => {
+const Layout: FunctionComponent<PropsWithChildren<Props>> = ({
+  title,
+  description,
+  children,
+}) => {
   return (
     <>
       <NextSeo title={title} description={description} />

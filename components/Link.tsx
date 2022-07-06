@@ -1,9 +1,12 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, PropsWithChildren } from "react";
 interface Props {
   href: string;
 }
 
-const Link: FunctionComponent<Props> = ({ href, children }) => {
+const Link: FunctionComponent<PropsWithChildren<Props>> = ({
+  href,
+  children,
+}) => {
   return (
     <a className="underline" rel="nofollow noreferrer" href={href}>
       {children}
