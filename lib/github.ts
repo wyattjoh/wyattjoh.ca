@@ -52,7 +52,7 @@ export interface GitHubData {
   repositories: {
     featured: ReadonlyArray<RepositoryFragmentFragment>;
   };
-  stats: GitHubContributionStats;
+  // stats: GitHubContributionStats;
 }
 
 const GetViewer = /* GraphQL */ `
@@ -71,15 +71,15 @@ const GetViewer = /* GraphQL */ `
     viewer {
       login
       avatarUrl(size: 300)
-      contributionsCollection {
-        contributionCalendar {
-          weeks {
-            contributionDays {
-              contributionCount
-            }
-          }
-        }
-      }
+      # contributionsCollection {
+      #   contributionCalendar {
+      #     weeks {
+      #       contributionDays {
+      #         contributionCount
+      #       }
+      #     }
+      #   }
+      # }
       pinnedItems(first: $repositories) {
         nodes {
           __typename
@@ -107,47 +107,47 @@ export async function getGitHubData(): Promise<GitHubData> {
     (node) => node?.__typename === "Repository"
   ) as RepositoryFragmentFragment[];
 
-  const contributions =
-    data.viewer.contributionsCollection.contributionCalendar.weeks
-      .reduce<number[]>(
-        (previousValue, week) =>
-          previousValue.concat(
-            week.contributionDays.map(
-              ({ contributionCount }) => contributionCount
-            )
-          ),
-        []
-      )
+  // const contributions =
+  //   data.viewer.contributionsCollection.contributionCalendar.weeks
+  //     .reduce<number[]>(
+  //       (previousValue, week) =>
+  //         previousValue.concat(
+  //           week.contributionDays.map(
+  //             ({ contributionCount }) => contributionCount
+  //           )
+  //         ),
+  //       []
+  //     )
 
-      .slice(-CONTRIBUTION_DAYS);
+  //     .slice(-CONTRIBUTION_DAYS);
 
-  const max = contributions.reduce(
-    (previousValue, count) => Math.max(previousValue, count),
-    0
-  );
+  // const max = contributions.reduce(
+  //   (previousValue, count) => Math.max(previousValue, count),
+  //   0
+  // );
 
-  const width = WIDTH / contributions.length;
+  // const width = WIDTH / contributions.length;
 
   return {
     avatarUrl: data.viewer.avatarUrl,
     repositories: {
       featured: featured,
     },
-    stats: {
-      username: data.viewer.login,
-      width: round(width),
-      rx: round(width / 2),
-      contributions: contributions
-        .map((count, index) => {
-          const scale = count / max;
-          return {
-            count,
-            height: round(scale * HEIGHT + width / 2),
-            x: round(index * width),
-            opacity: round(OPACITY_CLAMP + scale * (1 - OPACITY_CLAMP)),
-          };
-        })
-        .filter(({ count }) => count > 0),
-    },
+    // stats: {
+    //   username: data.viewer.login,
+    //   width: round(width),
+    //   rx: round(width / 2),
+    //   contributions: contributions
+    //     .map((count, index) => {
+    //       const scale = count / max;
+    //       return {
+    //         count,
+    //         height: round(scale * HEIGHT + width / 2),
+    //         x: round(index * width),
+    //         opacity: round(OPACITY_CLAMP + scale * (1 - OPACITY_CLAMP)),
+    //       };
+    //     })
+    //     .filter(({ count }) => count > 0),
+    // },
   };
 }

@@ -20,7 +20,7 @@ const Layout: FunctionComponent<PropsWithChildren<Props>> = ({
         url="https://wyattjoh.ca"
         sameAs={[]}
       />
-      <div className="min-h-screen min-w-screen bg-gray-100 relative contents">
+      <div className="min-h-screen min-w-screen relative contents">
         <div className="font-mono max-w-3xl mx-auto md:my-6 flex flex-col">
           {children}
         </div>

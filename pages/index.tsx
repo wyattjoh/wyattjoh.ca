@@ -2,7 +2,6 @@ import type { GetStaticProps } from "next";
 import Image from "next/image";
 import { FunctionComponent } from "react";
 
-import GitHubContributionGraph from "../components/GitHubContributionGraph";
 import GitHubRepository from "../components/GitHubRepository";
 import Layout from "../components/Layout";
 import Link from "../components/Link";
@@ -13,18 +12,19 @@ interface Props {
 }
 
 const IndexPage: FunctionComponent<Props> = ({
-  data: { stats, repositories, avatarUrl },
+  data: { repositories, avatarUrl },
 }) => (
   <Layout
     title="Wyatt Johnson"
     description="Full-stack developer working at @vercel on Next.js."
   >
-    <div className="bg-primary-dark p-4 text-white space-y-8 md:rounded-3xl min-h-full md:min-h-min relative overflow-hidden">
-      <GitHubContributionGraph stats={stats} />
+    <div className="bg-primary-dark p-4 text-white space-y-8 min-h-full md:min-h-min relative overflow-hidden">
+      {/* <GitHubContributionGraph stats={stats} /> */}
       <div className="flex flex-col md:flex-row items-center">
         <Image
           className="rounded-full"
           alt="Wyatt Johnson Avatar"
+          priority
           src={avatarUrl}
           width={150}
           height={150}
@@ -42,12 +42,6 @@ const IndexPage: FunctionComponent<Props> = ({
         <Link href="https://foundation.mozilla.org/">@mozilla</Link>,{" "}
         <Link href="https://coralproject.net/">@coralproject</Link>.
       </p>
-      <p>
-        Feel free to check out my{" "}
-        <Link href="https://github.com/wyattjoh">GitHub</Link> profile, send me
-        an <Link href="mailto:hello@wyattjoh.ca">Email</Link>, or a message on{" "}
-        <Link href="https://keybase.io/wyattjoh">Keybase</Link>.
-      </p>
       <div className="space-y-2">
         <h2 className="font-bold">Featured Repositories:</h2>
         <div className="grid grid-cols-1 gap-4">
@@ -56,6 +50,12 @@ const IndexPage: FunctionComponent<Props> = ({
           ))}
         </div>
       </div>
+      <p>
+        Feel free to check out my{" "}
+        <Link href="https://github.com/wyattjoh">GitHub</Link> profile, send me
+        an <Link href="mailto:hello@wyattjoh.ca">Email</Link>, or a message on{" "}
+        <Link href="https://keybase.io/wyattjoh">Keybase</Link>.
+      </p>
     </div>
   </Layout>
 );
