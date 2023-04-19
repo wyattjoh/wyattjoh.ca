@@ -35,7 +35,7 @@ export function GitHubRepository({ repo }: Props) {
         </span>
         <Suspense>
           {/* @ts-expect-error - async components aren't yet supported in TS */}
-          <GitHubStargazerCount url={repo.url} />
+          <GitHubStargazerCount name={repo.name} />
         </Suspense>
       </div>
       {repo.description && <p className="text-xs">{repo.description}</p>}

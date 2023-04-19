@@ -1,7 +1,7 @@
 import { getRepository } from "../lib/github";
 
 type Props = {
-  url: string;
+  name: string;
 };
 
 function formatNumber(n: number): string {
@@ -16,8 +16,8 @@ function formatNumber(n: number): string {
   return n.toString();
 }
 
-export async function GitHubStargazerCount({ url }: Props) {
-  const repository = await getRepository(url);
+export async function GitHubStargazerCount({ name }: Props) {
+  const repository = await getRepository(name);
 
   return (
     <span className="lowercase text-xs">

@@ -20,11 +20,11 @@ async function github<T>(endpoint: string): Promise<T> {
   return await res.json();
 }
 
-export async function getRepository(url: string) {
-  const [owner, repo] = url.slice("https://github.com/".length).split("/");
-  const repository = await github<{
-    stargazers_count: number;
-  }>(`/repos/${owner}/${repo}`);
+export async function getRepository(name: string) {
+  const [owner, repo] = name.split("/");
+  const repository = await github<{ stargazers_count: number }>(
+    `/repos/${owner}/${repo}`
+  );
 
   return repository;
 }
