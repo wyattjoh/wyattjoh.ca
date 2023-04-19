@@ -22,19 +22,19 @@ export default async function Page() {
   return (
     <div className="p-4 space-y-8 min-h-full md:min-h-min relative overflow-hidden">
       <div className="flex flex-col md:flex-row items-center">
-        <a href="https://github.com/wyattjoh">
-          <Image
-            className="rounded-full border-4 border-blue-200 hover:scale-105 transition-all"
-            alt="Wyatt Johnson Avatar"
-            priority
-            src={user.avatar}
-            width={150}
-            height={150}
-          />
-        </a>
+        <Image
+          className="rounded-full border-4 border-gray-200"
+          alt="Wyatt Johnson Avatar"
+          priority
+          src={user.avatar}
+          width={150}
+          height={150}
+        />
         <header className="md:ml-8 my-8 md:my-0 flex-grow">
-          <h1 className="font-bold text-6xl lowercase mb-2">Wyatt Johnson</h1>
-          <h2 className="font-bold text-sm">(he/him)</h2>
+          <h1 className="font-bold text-6xl mb-2">Wyatt Johnson</h1>
+          <h2 className="font-bold text-xs text-gray-500">
+            (pronouns: he/him, pronounced: why-et)
+          </h2>
         </header>
       </div>
       <p>

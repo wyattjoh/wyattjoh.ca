@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import { Suspense } from "react";
 
 import { GitHubStargazerCount } from "./GitHubStargazerCount";
@@ -18,27 +17,21 @@ export function GitHubRepository({ repo }: Props) {
       key={repo.name}
       href={repo.url}
       title={`Visit ${repo.name} on GitHub`}
-      className="border border-blue-100 p-2 rounded-md duration-100 transition-colors hover:border-blue-300"
+      className="border border-gray-200 p-2 duration-200 transition-all hover:border-gray-300 drop-shadow-sm hover:drop-shadow-md bg-white"
     >
-      <div
-        className={clsx(
-          "font-bold flex items-baseline justify-between",
-          repo.description && "mb-1"
-        )}
-      >
-        <span>
-          <span
-            style={{ backgroundColor: repo.color }}
-            className="w-3 h-3 inline-block rounded-full border border-white mr-2"
-          />
-          <span>{repo.name}</span>
+      <div className="flex items-baseline justify-between mb-1">
+        <span
+          style={{ textDecorationColor: repo.color }}
+          className="underline decoration-2"
+        >
+          {repo.name}
         </span>
         <Suspense>
           {/* @ts-expect-error - async components aren't yet supported in TS */}
           <GitHubStargazerCount name={repo.name} />
         </Suspense>
       </div>
-      {repo.description && <p className="text-xs">{repo.description}</p>}
+      <p className="text-xs">{repo.description}</p>
     </a>
   );
 }
