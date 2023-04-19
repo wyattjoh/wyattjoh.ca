@@ -1,4 +1,4 @@
-export async function github<T>(endpoint: string): Promise<T> {
+async function github<T>(endpoint: string): Promise<T> {
   const url = new URL("https://api.github.com");
   url.pathname = endpoint;
   const res = await fetch(url, {
@@ -18,4 +18,34 @@ export async function github<T>(endpoint: string): Promise<T> {
   }
 
   return await res.json();
+}
+
+export async function getRepository(url: string) {
+  const [owner, repo] = url.slice("https://github.com/".length).split("/");
+  const repository = await github<{
+    stargazers_count: number;
+  }>(`/repos/${owner}/${repo}`);
+
+  return repository;
+}
+
+type User = {
+  avatar: string;
+  bio: string;
+  name: string;
+};
+
+export async function getUser(): Promise<User> {
+  const user = await github<{ name: string; avatar_url: string; bio: string }>(
+    "/user"
+  );
+
+  const avatar = new URL(user.avatar_url);
+  avatar.searchParams.set("s", "300");
+
+  return {
+    avatar: avatar.toString(),
+    bio: user.bio,
+    name: user.name,
+  };
 }
