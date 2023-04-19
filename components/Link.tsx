@@ -1,17 +1,16 @@
-import { FunctionComponent, PropsWithChildren } from "react";
-interface Props {
+type Props = {
   href: string;
-}
+  children: string;
+};
 
-const Link: FunctionComponent<PropsWithChildren<Props>> = ({
-  href,
-  children,
-}) => {
+export function Link({ href, children }: Props) {
   return (
-    <a className="underline" rel="nofollow noreferrer" href={href}>
+    <a
+      className="underline decoration-2 decoration-gray-300 hover:decoration-black"
+      rel="nofollow noreferrer"
+      href={href}
+    >
       {children}
     </a>
   );
-};
-
-export default Link;
+}

@@ -2,14 +2,14 @@ import { Suspense } from "react";
 
 import { GitHubStargazerCount } from "./GitHubStargazerCount";
 
-interface Props {
+type Props = {
   repo: {
     name: string;
     url: string;
     description: string;
     color: string;
   };
-}
+};
 
 export function GitHubRepository({ repo }: Props) {
   return (

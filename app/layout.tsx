@@ -1,18 +1,16 @@
 import "../styles/globals.css";
 
-export default function Layout({
-  children,
-}: {
-  children: JSX.Element | JSX.Element[];
-}) {
+type Props = {
+  children: JSX.Element;
+};
+
+export default function Layout({ children }: Props) {
   return (
     <html lang="en">
       <body>
-        <div className="min-h-screen min-w-screen relative contents">
-          <div className="font-mono max-w-3xl mx-auto md:my-6 flex flex-col">
-            {children}
-          </div>
-        </div>
+        <main className="font-mono max-w-3xl mx-auto mb-8 md:my-6 flex flex-col">
+          {children}
+        </main>
       </body>
     </html>
   );

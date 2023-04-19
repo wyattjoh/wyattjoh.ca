@@ -22,7 +22,7 @@ export async function GitHubStargazerCount({ name }: Props) {
   return (
     <span className="lowercase text-xs">
       {formatNumber(repository.stargazers_count)}{" "}
-      <span className="text-xl leading-none">★</span>
+      <span className="text-xl leading-none">☆</span>
     </span>
   );
 }
