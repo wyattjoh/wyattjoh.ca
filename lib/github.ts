@@ -1,7 +1,5 @@
 async function github<T>(endpoint: string): Promise<T> {
-  const url = new URL("https://api.github.com");
-  url.pathname = endpoint;
-  const res = await fetch(url, {
+  const res = await fetch(new URL(endpoint, "https://api.github.com"), {
     headers: {
       Accept: "application/vnd.github+json",
       Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
@@ -27,25 +25,4 @@ export async function getRepository(name: string) {
   );
 
   return repository;
-}
-
-type User = {
-  avatar: string;
-  bio: string;
-  name: string;
-};
-
-export async function getUser(): Promise<User> {
-  const user = await github<{ name: string; avatar_url: string; bio: string }>(
-    "/user"
-  );
-
-  const avatar = new URL(user.avatar_url);
-  avatar.searchParams.set("s", "300");
-
-  return {
-    avatar: avatar.toString(),
-    bio: user.bio,
-    name: user.name,
-  };
 }
