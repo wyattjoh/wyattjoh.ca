@@ -1,31 +1,25 @@
-import type { GetStaticProps } from "next";
 import Image from "next/image";
-import { FunctionComponent } from "react";
 
-import GitHubRepository from "../components/GitHubRepository";
-import Layout from "../components/Layout";
 import Link from "../components/Link";
-import { getGitHubData, GitHubData } from "../lib/github";
+import { GitHubRepositories } from "../components/GitHubRepositories";
+import { github } from "../lib/github";
 
-interface Props {
-  data: GitHubData;
-}
+export const metadata = {
+  title: "Wyatt Johnson",
+  description: "Full-stack developer working at @vercel on Next.js.",
+};
 
-const IndexPage: FunctionComponent<Props> = ({
-  data: { repositories, avatarUrl },
-}) => (
-  <Layout
-    title="Wyatt Johnson"
-    description="Full-stack developer working at @vercel on Next.js."
-  >
+export default async function Page() {
+  const user = await github<{ avatar_url: string }>("/user");
+
+  return (
     <div className="bg-primary-dark p-4 text-white space-y-8 min-h-full md:min-h-min relative overflow-hidden">
-      {/* <GitHubContributionGraph stats={stats} /> */}
       <div className="flex flex-col md:flex-row items-center">
         <Image
           className="rounded-full"
           alt="Wyatt Johnson Avatar"
           priority
-          src={avatarUrl}
+          src={user.avatar_url}
           width={150}
           height={150}
         />
@@ -44,11 +38,8 @@ const IndexPage: FunctionComponent<Props> = ({
       </p>
       <div className="space-y-2">
         <h2 className="font-bold">Featured Repositories:</h2>
-        <div className="grid grid-cols-1 gap-4">
-          {repositories.featured.map((repo) => (
-            <GitHubRepository key={repo.nameWithOwner} repo={repo} />
-          ))}
-        </div>
+        {/* @ts-ignore */}
+        <GitHubRepositories />
       </div>
       <p>
         Feel free to check out my{" "}
@@ -57,17 +48,5 @@ const IndexPage: FunctionComponent<Props> = ({
         <Link href="https://keybase.io/wyattjoh">Keybase</Link>.
       </p>
     </div>
-  </Layout>
-);
-
-export const getStaticProps: GetStaticProps<Props> = async () => {
-  const data = await getGitHubData();
-
-  return {
-    props: { data },
-    // Revalidate every hour.
-    revalidate: 1 * 60 * 60,
-  };
-};
-
-export default IndexPage;
+  );
+}

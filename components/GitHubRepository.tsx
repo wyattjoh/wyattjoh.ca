@@ -1,18 +1,22 @@
-import clsx from "clsx";
-import { FunctionComponent } from "react";
+import type { FunctionComponent } from "react";
 
-import { RepositoryFragmentFragment } from "../lib/__generated__/types";
+import clsx from "clsx";
 
 interface Props {
-  repo: RepositoryFragmentFragment;
+  repo: {
+    name: string;
+    url: string;
+    description: string;
+    color: string | null | undefined;
+  };
 }
 
 const GitHubRepository: FunctionComponent<Props> = ({ repo }) => {
   return (
     <a
-      key={repo.nameWithOwner}
+      key={repo.name}
       href={repo.url}
-      title={`Visit ${repo.nameWithOwner} on GitHub`}
+      title={`Visit ${repo.name} on GitHub`}
       className="border border-primary-light p-2 rounded-md duration-200 bg-primary transition-colors hover:bg-primary-light"
     >
       <h2
@@ -22,11 +26,11 @@ const GitHubRepository: FunctionComponent<Props> = ({ repo }) => {
         )}
       >
         <span
-          style={{ backgroundColor: repo.primaryLanguage?.color ?? undefined }}
+          style={{ backgroundColor: repo.color ?? undefined }}
           className="w-3 h-3 inline-block rounded-full border border-white mr-2"
-          title={repo.primaryLanguage?.name}
+          title={repo.name}
         />
-        <span>{repo.nameWithOwner}</span>
+        <span>{repo.name}</span>
       </h2>
       {repo.description && <p className="text-xs">{repo.description}</p>}
     </a>
