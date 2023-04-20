@@ -1,4 +1,7 @@
-import type { PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
+import type {
+  BlockObjectResponse,
+  PageObjectResponse,
+} from "@notionhq/client/build/src/api-endpoints";
 
 import { Client } from "@notionhq/client";
 
@@ -15,6 +18,14 @@ const notion = new Client({
   },
 });
 
+export async function getPageBlocks(id: string) {
+  const { results } = await notion.blocks.children.list({
+    block_id: id,
+  });
+
+  return results as BlockObjectResponse[];
+}
+
 type Repository = {
   id: string;
   name: string;
@@ -25,7 +36,7 @@ type Repository = {
 
 export async function getRepositories(): Promise<Repository[]> {
   const { results } = await notion.databases.query({
-    database_id: process.env.NOTION_PINNED_DATABASE_ID!,
+    database_id: "b3ccd60d3267422a8c28e9f8044e036b",
     sorts: [{ property: "Order", direction: "ascending" }],
   });
 
