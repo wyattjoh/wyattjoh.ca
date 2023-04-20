@@ -43,11 +43,11 @@ export default function Page() {
           gained experience working on a variety of projects.
         </p>
         <p>
-          If you are interested in checking out my work, feel free to explore my
+          If you are interested in checking out my work, feel free to explore my{" "}
           <Link href="https://github.com/wyattjoh">GitHub</Link> profile.
           Alternatively, you can also reach out to me via{" "}
           <Link href="mailto:hello@wyattjoh.ca">email</Link>,{" "}
-          <Link href="https://keybase.io/wyattjoh">Keybase</Link>, or
+          <Link href="https://keybase.io/wyattjoh">Keybase</Link>, or{" "}
           <Link href="https://www.linkedin.com/in/wyattjoh">LinkedIn</Link>.
         </p>
       </section>
