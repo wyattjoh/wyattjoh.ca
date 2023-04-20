@@ -1,3 +1,4 @@
+import { Footer } from "../components/footer";
 import "../styles/globals.css";
 
 type Props = {
@@ -6,11 +7,12 @@ type Props = {
 
 export default function Layout({ children }: Props) {
   return (
-    <html lang="en">
-      <body>
-        <main className="font-mono max-w-3xl mx-auto mb-8 md:my-6 flex flex-col">
+    <html lang="en" className="">
+      <body className="font-mono min-h-screen">
+        <main className="max-w-3xl mx-auto md:pt-6 mb-24 flex flex-col">
           {children}
         </main>
+        <Footer />
       </body>
     </html>
   );

@@ -1,5 +1,5 @@
 import { getRepositories } from "../lib/notion";
-import { GitHubRepository } from "./GitHubRepository";
+import { GitHubRepository } from "./github-repository";
 
 export async function GitHubRepositories() {
   const repositories = await getRepositories();

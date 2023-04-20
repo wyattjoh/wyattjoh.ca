@@ -6,7 +6,7 @@ type Props = {
 export function Link({ href, children }: Props) {
   return (
     <a
-      className="underline decoration-2 decoration-gray-300 hover:decoration-black"
+      className="underline decoration-2 decoration-gray-500 hover:decoration-black transition-colors"
       rel="nofollow noreferrer"
       href={href}
     >

@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 
-import { GitHubStargazerCount } from "./GitHubStargazerCount";
+import { GitHubStargazerCount } from "./github-stargazer-count";
 
 type Props = {
   repo: {

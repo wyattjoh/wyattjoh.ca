@@ -1,8 +1,8 @@
 import { Suspense } from "react";
 import Image from "next/image";
 
-import { Link } from "../components/Link";
-import { GitHubRepositories } from "../components/GitHubRepositories";
+import { Link } from "../components/link";
+import { GitHubRepositories } from "../components/github-repositories";
 import avatar from "../public/avatar.jpeg";
 
 export const metadata = {
@@ -14,7 +14,7 @@ export const metadata = {
 export default function Page() {
   return (
     <div className="p-4">
-      <div className="flex flex-col sm:flex-row sm:items-center mb-8">
+      <section className="flex flex-col sm:flex-row sm:items-center mb-8">
         <Image
           className="rounded-full border-4 border-gray-200 hidden sm:inline-block"
           alt="Wyatt Johnson Avatar"
@@ -29,31 +29,35 @@ export default function Page() {
             (pronouns: he/him, pronounced: why-et)
           </h2>
         </header>
-      </div>
-      <div className="space-y-8 mb-16">
+      </section>
+      <section className="space-y-8 mb-16">
         <p>
-          Developer with a security first mindset. Software Engineer at{" "}
-          <Link href="https://vercel.com/">Vercel</Link> working on{" "}
-          <Link href="https://nextjs.org/">Next.js</Link>. Previously{" "}
+          As an open source enthusiast, I am a developer with a security-first
+          mindset. Currently, I work as a Software Engineer at{" "}
+          <Link href="https://vercel.com/">Vercel</Link>, contributing to the
+          development of <Link href="https://nextjs.org/">Next.js</Link>. I have
+          previously worked for organizations like{" "}
           <Link href="https://voxmedia.com/">@voxmedia</Link>,{" "}
-          <Link href="https://foundation.mozilla.org/">@mozilla</Link>,{" "}
-          <Link href="https://coralproject.net/">@coralproject</Link>.
+          <Link href="https://foundation.mozilla.org/">@mozilla</Link>, and{" "}
+          <Link href="https://coralproject.net/">@coralproject</Link> where I
+          gained experience working on a variety of projects.
         </p>
         <p>
-          Feel free to check out my{" "}
-          <Link href="https://github.com/wyattjoh">GitHub</Link> profile, send
-          me an <Link href="mailto:hello@wyattjoh.ca">Email</Link>, a message on{" "}
-          <Link href="https://keybase.io/wyattjoh">Keybase</Link> or{" "}
+          If you are interested in checking out my work, feel free to explore my
+          <Link href="https://github.com/wyattjoh">GitHub</Link> profile.
+          Alternatively, you can also reach out to me via{" "}
+          <Link href="mailto:hello@wyattjoh.ca">email</Link>,{" "}
+          <Link href="https://keybase.io/wyattjoh">Keybase</Link>, or
           <Link href="https://www.linkedin.com/in/wyattjoh">LinkedIn</Link>.
         </p>
-      </div>
-      <div className="space-y-2">
+      </section>
+      <section className="space-y-2">
         <h2 className="font-bold">Featured Repositories:</h2>
         <Suspense>
           {/* @ts-expect-error - async components aren't yet supported in TS */}
           <GitHubRepositories />
         </Suspense>
-      </div>
+      </section>
     </div>
   );
 }
