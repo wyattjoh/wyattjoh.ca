@@ -5,7 +5,7 @@ export async function GitHubRepositories() {
   const repositories = await getRepositories();
 
   return (
-    <div className="grid grid-cols-1 gap-4">
+    <div className="flex flex-col space-y-3">
       {repositories.map((repo) => (
         <GitHubRepository key={repo.id} repo={repo} />
       ))}

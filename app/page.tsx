@@ -42,8 +42,9 @@ export default function Page() {
         <p>
           Feel free to check out my{" "}
           <Link href="https://github.com/wyattjoh">GitHub</Link> profile, send
-          me an <Link href="mailto:hello@wyattjoh.ca">Email</Link>, or a message
-          on <Link href="https://keybase.io/wyattjoh">Keybase</Link>.
+          me an <Link href="mailto:hello@wyattjoh.ca">Email</Link>, a message on{" "}
+          <Link href="https://keybase.io/wyattjoh">Keybase</Link> or{" "}
+          <Link href="https://www.linkedin.com/in/wyattjoh">LinkedIn</Link>.
         </p>
       </div>
       <div className="space-y-2">
