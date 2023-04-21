@@ -1,5 +1,7 @@
+import { request } from "./request";
+
 async function github<T>(endpoint: string): Promise<T> {
-  const res = await fetch(new URL(endpoint, "https://api.github.com"), {
+  const res = await request(new URL(endpoint, "https://api.github.com"), {
     headers: {
       Accept: "application/vnd.github+json",
       Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,

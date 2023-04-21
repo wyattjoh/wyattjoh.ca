@@ -32,13 +32,15 @@ export default function Page() {
       </section>
       <section className="space-y-8 mb-16">
         {/* This represents the most important content on the page, so wait for it */}
-        {/* @ts-expect-error - async components aren't yet supported in TS */}
-        <NotionBlocks id="8f20fbb5857a44b487824528dc0217ca" />
+        <Suspense>
+          {/* @ts-expect-error - async components aren't yet supported in TS */}
+          <NotionBlocks id="8f20fbb5857a44b487824528dc0217ca" />
+        </Suspense>
       </section>
       <section className="space-y-2">
-        <h2 className="font-bold">Featured Repositories:</h2>
         {/* This list of repositories isn't critical, so let it stream in later */}
         <Suspense>
+          <h2 className="font-bold">Featured Repositories:</h2>
           {/* @ts-expect-error - async components aren't yet supported in TS */}
           <GitHubRepositories />
         </Suspense>

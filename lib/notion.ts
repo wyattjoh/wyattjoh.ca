@@ -4,11 +4,12 @@ import type {
 } from "@notionhq/client/build/src/api-endpoints";
 
 import { Client } from "@notionhq/client";
+import { request } from "./request";
 
 const notion = new Client({
   auth: process.env.NOTION_TOKEN,
   fetch: (url, init) => {
-    return fetch(url, {
+    return request(url, {
       ...init,
       next: {
         // Revalidate every hour.
