@@ -27,9 +27,11 @@ export default function Page() {
           height={150}
         />
         <header className="sm:ml-8 mt-8 sm:my-0 flex-grow">
-          <h1 className="font-bold text-6xl mb-2">Wyatt Johnson</h1>
+          <h1 className="text-6xl leading-snug mb-2 font-extrabold text-transparent bg-clip-text bg-gradient-to-tr from-cyan-800 to-purple-500 drop-shadow-lg">
+            Wyatt Johnson
+          </h1>
           <h2 className="font-bold text-xs text-gray-500">
-            (pronouns: he/him, pronounced: why-et)
+            (pronouns: <i>he/him</i>, pronounced: <i>why-et</i>)
           </h2>
         </header>
       </section>
