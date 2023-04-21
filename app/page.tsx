@@ -1,7 +1,10 @@
 import { Suspense } from "react";
 import Image from "next/image";
 
-import { GitHubRepositories } from "../components/github-repositories";
+import {
+  GitHubRepositories,
+  GitHubRepositoriesSkeleton,
+} from "../components/github-repositories";
 import avatar from "../public/avatar.jpeg";
 import { NotionBlocks } from "../components/notion-blocks";
 
@@ -30,17 +33,16 @@ export default function Page() {
           </h2>
         </header>
       </section>
-      <section className="space-y-8 mb-16">
-        {/* This represents the most important content on the page, so wait for it */}
-        <Suspense>
-          {/* @ts-expect-error - async components aren't yet supported in TS */}
-          <NotionBlocks id="8f20fbb5857a44b487824528dc0217ca" />
-        </Suspense>
-      </section>
+      <Suspense>
+        {/* @ts-expect-error - async components aren't yet supported in TS */}
+        <NotionBlocks
+          id="8f20fbb5857a44b487824528dc0217ca"
+          className="space-y-8 mb-16"
+        />
+      </Suspense>
       <section className="space-y-2">
-        {/* This list of repositories isn't critical, so let it stream in later */}
-        <Suspense>
-          <h2 className="font-bold">Featured Repositories:</h2>
+        <h2 className="font-bold">Featured Repositories:</h2>
+        <Suspense fallback={<GitHubRepositoriesSkeleton count={4} />}>
           {/* @ts-expect-error - async components aren't yet supported in TS */}
           <GitHubRepositories />
         </Suspense>
