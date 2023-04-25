@@ -50,12 +50,7 @@ export function NotionBlock({ block }: Props) {
       return (
         <div>
           {/* @ts-expect-error - code blocks aren't yet supported in TS */}
-          <Code
-            lang={block.code.language}
-            theme="github-light"
-            className="border"
-            lineNumbers
-          >
+          <Code lang={block.code.language} theme="nord" lineNumbers>
             {block.code.rich_text[0].plain_text}
           </Code>
           {block.code.caption.length > 0 && (
