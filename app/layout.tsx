@@ -1,8 +1,17 @@
+import type { Metadata } from "next";
+
 import { Footer } from "../components/footer";
 import "../styles/globals.css";
 
 type Props = {
   children: JSX.Element;
+};
+
+export const metadata: Metadata = {
+  title: {
+    default: "Wyatt Johnson",
+    template: "%s | Wyatt Johnson",
+  },
 };
 
 export default function Layout({ children }: Props) {

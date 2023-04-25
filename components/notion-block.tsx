@@ -4,6 +4,7 @@ import type {
 } from "@notionhq/client/build/src/api-endpoints";
 
 import Link from "next/link";
+import { Code } from "bright";
 
 type Props = {
   block: BlockObjectResponse | RichTextItemResponse;
@@ -32,6 +33,10 @@ export function NotionBlock({ block }: Props) {
         element = <em>{element}</em>;
       }
 
+      if (block.annotations.code) {
+        element = <code className="not-prose">{block.text.content}</code>;
+      }
+
       if (block.text.link) {
         element = (
           <Link href={block.text.link.url} rel="nofollow noreferrer">
@@ -41,8 +46,32 @@ export function NotionBlock({ block }: Props) {
       }
 
       return element;
+    case "code":
+      return (
+        <div>
+          {/* @ts-expect-error - code blocks aren't yet supported in TS */}
+          <Code
+            lang={block.code.language}
+            theme="github-light"
+            className="border"
+            lineNumbers
+          >
+            {block.code.rich_text[0].plain_text}
+          </Code>
+          {block.code.caption.length > 0 && (
+            <p className="text-xs text-gray-500 -mt-2">
+              {block.code.caption[0].plain_text}
+            </p>
+          )}
+        </div>
+      );
     default:
       // TODO: support other block types
+
+      // In development, log unsupported block types to the console.
+      if (process.env.NODE_ENV === "development") {
+        console.log('Unsupported block type: "' + block.type + '"');
+      }
       return null;
   }
 }

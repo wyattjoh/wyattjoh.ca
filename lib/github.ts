@@ -1,3 +1,5 @@
+import { cache } from "react";
+
 import { request } from "./request";
 
 async function github<T>(endpoint: string): Promise<T> {
@@ -20,11 +22,11 @@ async function github<T>(endpoint: string): Promise<T> {
   return await res.json();
 }
 
-export async function getRepository(name: string) {
+export const getRepository = cache(async (name: string) => {
   const [owner, repo] = name.split("/");
   const repository = await github<{ stargazers_count: number }>(
     `/repos/${owner}/${repo}`
   );
 
   return repository;
-}
+});
