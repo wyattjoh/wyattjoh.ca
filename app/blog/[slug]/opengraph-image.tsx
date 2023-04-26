@@ -90,7 +90,7 @@ export default async function OpenGraphImage({ params: { slug } }: Props) {
           }}
         >
           <img
-            src={`${base}${avatar.src}`}
+            src="https://wyattjoh.ca/avatar.jpeg"
             style={{
               height: 120,
               width: 120,
