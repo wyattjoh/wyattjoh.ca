@@ -21,12 +21,15 @@ export async function generateMetadata({
     notFound();
   }
 
+  const description = toPlainText(post.summary);
+
   return {
     title: post.title,
+    description,
     openGraph: {
       title: post.title,
       type: "article",
-      description: toPlainText(post.summary),
+      description,
       publishedTime: post.date,
       url: `${base}/blog/${slug}`,
     },
