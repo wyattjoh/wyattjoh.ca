@@ -33,15 +33,20 @@ async function calculateMD5Hash(
 /**
  * Gets the key for a request.
  *
- * @param req the request to get the key for
+ * @param method the HTTP method
+ * @param url the URL
+ * @param body the request body
  * @returns the key for the request
  */
-async function getKey(req: Request): Promise<string> {
-  let parts: string[] = ["request", "v1", req.method, req.url];
+async function getKey(
+  method: string,
+  url: string,
+  body: unknown
+): Promise<string> {
+  let parts: string[] = ["request", "v1", method, url];
 
-  const body = req.clone().body;
-  if (body) {
-    const hash = await calculateMD5Hash(body);
+  if (body && typeof body === "string") {
+    const hash = crypto.createHash("md5").update(body).digest("hex");
     parts.push(hash);
   } else {
     parts.push("null");
@@ -57,15 +62,28 @@ export const request = cache(
   ): Promise<Response> => {
     const revalidate = init?.next?.revalidate ?? false;
 
-    // Create a new request.
-    const req = new Request(input, init);
-
-    // Get the url from the input.
-    const url = req.url;
-    const method = req.method;
+    // Get the url, method, and body from the request.
+    const url =
+      typeof input === "string"
+        ? input
+        : "href" in input
+        ? input.href
+        : input.url;
+    const method =
+      typeof input === "string"
+        ? init?.method ?? "GET"
+        : "method" in input
+        ? input.method
+        : "GET";
+    const body =
+      typeof input === "string"
+        ? init?.body
+        : "body" in input
+        ? input.body
+        : null;
 
     // Compute the key for Redis.
-    const key = client ? await getKey(req) : null;
+    const key = client ? await getKey(method, url, body) : null;
 
     // Try to fetch the response from Redis.
     if (client && key && revalidate) {
@@ -85,7 +103,7 @@ export const request = cache(
     }
 
     const start = Date.now();
-    const res = await fetch(req);
+    const res = await fetch(input, init);
     const took = Date.now() - start;
 
     console.debug(`${method} ${url} ${res.status} ${took}ms ORIGIN`);
