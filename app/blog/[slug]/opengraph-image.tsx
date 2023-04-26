@@ -41,8 +41,7 @@ export default async function OpenGraphImage({ params: { slug } }: Props) {
     (
       <div
         style={{
-          fontFamily:
-            'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
+          fontFamily: "sans-serif",
           background:
             "linear-gradient(45deg, rgba(31,35,43,1) 0%, rgba(46,52,64,1) 100%)",
           width: "100%",
