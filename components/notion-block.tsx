@@ -3,8 +3,8 @@ import type {
   RichTextItemResponse,
 } from "@notionhq/client/build/src/api-endpoints";
 
-import Link from "next/link";
 import { Code } from "bright";
+import { NotionRichTextBlock } from "./notion-rich-text-block";
 
 type Props = {
   block: BlockObjectResponse | RichTextItemResponse;
@@ -23,29 +23,14 @@ export function NotionBlock({ block }: Props) {
         </p>
       );
     case "text":
-      let element = <span>{block.text.content}</span>;
-
-      if (block.annotations.bold) {
-        element = <strong>{element}</strong>;
-      }
-
-      if (block.annotations.italic) {
-        element = <em>{element}</em>;
-      }
-
-      if (block.annotations.code) {
-        element = <code className="not-prose">{block.text.content}</code>;
-      }
-
-      if (block.text.link) {
-        element = (
-          <Link href={block.text.link.url} rel="nofollow noreferrer">
-            {element}
-          </Link>
-        );
-      }
-
-      return element;
+      return <NotionRichTextBlock block={block} />;
+    case "heading_1":
+      // We're using h2 instead of h1 because the page title is an h1.
+      return <h2>{block.heading_1.rich_text[0].plain_text}</h2>;
+    case "heading_2":
+      return <h3>{block.heading_2.rich_text[0].plain_text}</h3>;
+    case "heading_3":
+      return <h4>{block.heading_3.rich_text[0].plain_text}</h4>;
     case "code":
       return (
         <div>

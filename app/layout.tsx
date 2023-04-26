@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 
 import { Footer } from "../components/footer";
+import { base } from "../lib/base";
+
 import "../styles/globals.css";
 
 type Props = {
@@ -12,6 +14,7 @@ export const metadata: Metadata = {
     default: "Wyatt Johnson",
     template: "%s | Wyatt Johnson",
   },
+  metadataBase: new URL(base),
 };
 
 export default function Layout({ children }: Props) {

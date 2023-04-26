@@ -7,6 +7,7 @@ import {
 } from "../components/github-repositories";
 import avatar from "../public/avatar.jpeg";
 import { NotionBlocks } from "../components/notion-blocks";
+import { BlogPosts } from "../components/blog-posts";
 
 export const metadata = {
   title: "Wyatt Johnson",
@@ -16,11 +17,11 @@ export const metadata = {
 
 export default function Page() {
   return (
-    <div className="p-4">
-      <section className="flex flex-col sm:flex-row sm:items-center mb-8">
+    <div className="p-4 space-y-10">
+      <section className="flex flex-col sm:flex-row sm:items-center">
         <Image
           className="rounded-full border-4 border-gray-200 hidden sm:inline-block"
-          alt="Wyatt Johnson Avatar"
+          alt="Picture of Wyatt Johnson"
           priority
           src={avatar}
           width={150}
@@ -37,10 +38,12 @@ export default function Page() {
         {/* @ts-expect-error - async components aren't yet supported in TS */}
         <NotionBlocks
           id="8f20fbb5857a44b487824528dc0217ca"
-          className="space-y-8 mb-16"
+          className="space-y-8"
         />
       </Suspense>
-      <section className="space-y-2">
+      {/* @ts-expect-error - async components aren't yet supported in TS */}
+      <BlogPosts className="space-y-6" />
+      <section className="space-y-6">
         <h2 className="font-bold">Featured Repositories:</h2>
         <Suspense fallback={<GitHubRepositoriesSkeleton count={4} />}>
           {/* @ts-expect-error - async components aren't yet supported in TS */}

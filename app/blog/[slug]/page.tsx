@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 
-import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Suspense } from "react";
 
 import { BlogPost } from "../../../components/blog-post";
-import { findBlogPost, getBlogPosts } from "../../../lib/notion";
+import { findBlogPost, getBlogPosts, toPlainText } from "../../../lib/notion";
+import { BlogPostHeader } from "../../../components/blog-post-header";
+import { base } from "../../../lib/base";
 
 type Props = {
   params: {
@@ -26,8 +26,9 @@ export async function generateMetadata({
     openGraph: {
       title: post.title,
       type: "article",
+      description: toPlainText(post.summary),
       publishedTime: post.date,
-      url: `https://wyattjoh.ca/blog/${slug}`,
+      url: `${base}/blog/${slug}`,
     },
   };
 }
@@ -48,22 +49,9 @@ export default async function Page({ params: { slug } }: Props) {
 
   return (
     <div className="p-4">
-      <header className="mb-8">
-        <div className="mb-6">
-          <Link
-            href="/blog"
-            className="text-xs text-gray-400 hover:text-gray-500"
-          >
-            ← Back to Blog
-          </Link>
-        </div>
-        <h1 className="text-3xl font-bold">{post.title}</h1>
-        <time className="text-sm">{post.date}</time>
-      </header>
-      <Suspense>
-        {/* @ts-expect-error - async components aren't yet supported in TS */}
-        <BlogPost post={post} />
-      </Suspense>
+      <BlogPostHeader post={post} />
+      {/* @ts-expect-error - async components aren't yet supported in TS */}
+      <BlogPost post={post} />
     </div>
   );
 }
