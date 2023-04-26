@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 
+import { Analytics } from "@vercel/analytics/react";
+
 import { Footer } from "../components/footer";
 import { base } from "../lib/base";
 
@@ -26,6 +28,7 @@ export default function Layout({ children }: Props) {
         </main>
         <Footer />
       </body>
+      <Analytics />
     </html>
   );
 }
