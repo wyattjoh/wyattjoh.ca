@@ -2,9 +2,7 @@
 import { notFound } from "next/navigation";
 import { ImageResponse } from "next/server";
 
-import avatar from "../../../public/avatar.jpeg";
 import { findBlogPost, toPlainText } from "../../../lib/notion";
-import { base } from "../../../lib/base";
 
 export const size = {
   width: 1920,
