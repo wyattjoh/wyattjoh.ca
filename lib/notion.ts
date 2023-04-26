@@ -9,11 +9,14 @@ import type {
 import { cache } from "react";
 import { Client } from "@notionhq/client";
 
-import { request } from "./request";
-
 const notion = new Client({
   auth: process.env.NOTION_TOKEN,
   fetch: (url, init) => {
+    const request =
+      process.env.NEXT_RUNTIME === "edge"
+        ? fetch
+        : (require("./request").request as typeof import("./request").request);
+
     return request(url, {
       ...init,
       next: {

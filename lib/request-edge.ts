@@ -1,11 +1,26 @@
 import "server-only";
 
-import crypto from "node:crypto";
 import { cache } from "react";
-import Redis from "ioredis";
 
-// Connect to Redis if it's available.
-const client = process.env.REDIS_URL ? new Redis(process.env.REDIS_URL) : null;
+const client =
+  process.env.REDIS_FETCH_URL && process.env.REDIS_FETCH_TOKEN
+    ? async (...args: Array<string | number>) => {
+        const res = await fetch(process.env.REDIS_FETCH_URL!, {
+          headers: {
+            Authorization: `Bearer ${process.env.REDIS_FETCH_TOKEN}`,
+            ContentType: "application/json",
+          },
+          body: JSON.stringify(args),
+        });
+        if (!res.ok) {
+          throw new Error(
+            `Redis fetch failed: ${res.status} ${res.statusText}`
+          );
+        }
+
+        return res.json();
+      }
+    : null;
 
 /**
  * Gets the key for a request.
@@ -20,14 +35,7 @@ async function getKey(
   url: string,
   body: unknown
 ): Promise<string> {
-  let parts: string[] = ["request", "v1", method, url];
-
-  if (body && typeof body === "string") {
-    const hash = crypto.createHash("md5").update(body).digest("hex");
-    parts.push(hash);
-  } else {
-    parts.push("null");
-  }
+  let parts: string[] = ["request-edge", "v1", method, url];
 
   return parts.join(":");
 }
@@ -65,7 +73,7 @@ export const request = cache(
     // Try to fetch the response from Redis.
     if (client && key && revalidate) {
       const start = Date.now();
-      const value = await client.get(key);
+      const value = await client("GET", key);
       const took = Date.now() - start;
 
       console.debug(`${method} ${url} ${took}ms ${value ? "HIT" : "MISS"}`);
@@ -90,7 +98,7 @@ export const request = cache(
       const value = await res.clone().text();
 
       // Cache the response in Redis.
-      await client.set(key, value, "EX", revalidate);
+      await client("SET", key, value, "EX", revalidate);
     }
 
     return res;

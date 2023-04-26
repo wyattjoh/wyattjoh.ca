@@ -9,6 +9,7 @@ export const size = {
   height: 1080,
 };
 export const contentType = "image/png";
+export const runtime = "edge";
 
 type Props = {
   params: {
