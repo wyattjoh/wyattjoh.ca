@@ -53,7 +53,6 @@ export default async function Page({ params: { slug } }: Props) {
   return (
     <div className="p-4">
       <BlogPostHeader post={post} />
-      {/* @ts-expect-error - async components aren't yet supported in TS */}
       <BlogPost post={post} />
     </div>
   );

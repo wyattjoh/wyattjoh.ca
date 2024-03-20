@@ -44,7 +44,6 @@ export function GitHubRepository({ repo }: Props) {
           {repo.name}
         </span>
         <Suspense fallback={<GitHubStargazerCountSkeleton />}>
-          {/* @ts-expect-error - async components aren't yet supported in TS */}
           <GitHubStargazerCount name={repo.name} />
         </Suspense>
       </span>

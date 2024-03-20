@@ -1,9 +1,8 @@
-module.exports = {
+/** @type {import('next').NextConfig} */
+export default {
   images: {
     formats: ["image/avif"],
     domains: ["avatars.githubusercontent.com"],
   },
-  experimental: {
-    appDir: true,
-  },
+  experimental: {},
 };

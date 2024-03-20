@@ -35,18 +35,15 @@ export default function Page() {
         </header>
       </section>
       <Suspense>
-        {/* @ts-expect-error - async components aren't yet supported in TS */}
         <NotionBlocks
           id="8f20fbb5857a44b487824528dc0217ca"
           className="space-y-8"
         />
       </Suspense>
-      {/* @ts-expect-error - async components aren't yet supported in TS */}
       <BlogPosts className="space-y-6" />
       <section className="space-y-6">
         <h2 className="font-bold">Featured Repositories:</h2>
         <Suspense fallback={<GitHubRepositoriesSkeleton count={4} />}>
-          {/* @ts-expect-error - async components aren't yet supported in TS */}
           <GitHubRepositories />
         </Suspense>
       </section>

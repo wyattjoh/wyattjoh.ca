@@ -3,6 +3,7 @@ import "server-only";
 import type {
   BlockObjectResponse,
   PageObjectResponse,
+  QueryDatabaseParameters,
   RichTextItemResponse,
 } from "@notionhq/client/build/src/api-endpoints";
 
@@ -92,7 +93,10 @@ function createBlogPost(response: PageObjectResponse): BlogPost | null {
   }
 
   // Ensure we only show published blog posts.
-  if (Status.type !== "select" || Status.select?.name !== "Published") {
+  if (
+    process.env.ENABLE_DRAFT_MODE !== "true" &&
+    (Status.type !== "select" || Status.select?.name !== "Published")
+  ) {
     return null;
   }
 
@@ -118,7 +122,7 @@ function createBlogPost(response: PageObjectResponse): BlogPost | null {
 
 export const findBlogPost = cache(
   async (slug: string): Promise<BlogPost | null> => {
-    const { results } = await notion.databases.query({
+    const args: QueryDatabaseParameters = {
       database_id: "0b56732805064002a20bb6bb55da55eb",
       filter: {
         and: [
@@ -128,21 +132,26 @@ export const findBlogPost = cache(
               equals: slug,
             },
           },
-          // Ensure we only show published blog posts.
-          {
-            property: "Status",
-            select: {
-              equals: "Published",
-            },
-          },
         ],
       },
-    });
+    };
 
+    if (process.env.ENABLE_DRAFT_MODE !== "true") {
+      // @ts-expect-error
+      args.filter.and.push({
+        property: "Status",
+        select: {
+          equals: "Published",
+        },
+      });
+    }
+
+    const { results } = await notion.databases.query(args);
     if (results.length === 0 || !("properties" in results[0])) {
       return null;
     }
 
+    // @ts-expect-error
     return createBlogPost(results[0]);
   }
 );
@@ -152,12 +161,15 @@ export const getBlogPosts = cache(async (): Promise<BlogPost[]> => {
     database_id: "0b56732805064002a20bb6bb55da55eb",
     sorts: [{ property: "Date", direction: "descending" }],
     // Ensure we only show published blog posts.
-    filter: {
-      property: "Status",
-      select: {
-        equals: "Published",
-      },
-    },
+    filter:
+      process.env.ENABLE_DRAFT_MODE === "true"
+        ? undefined
+        : {
+            property: "Status",
+            select: {
+              equals: "Published",
+            },
+          },
   });
 
   return results

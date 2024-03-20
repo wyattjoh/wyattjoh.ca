@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/alt-text, @next/next/no-img-element */
 import { notFound } from "next/navigation";
-import { ImageResponse } from "next/server";
+import { ImageResponse } from "next/og";
 
 import { findBlogPost, toPlainText } from "../../../lib/notion";
 
