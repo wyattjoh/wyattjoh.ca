@@ -23,6 +23,9 @@ const notion = new Client({
       next: {
         // Revalidate every hour.
         revalidate: 1 * 60 * 60,
+        // Add a tag to each request to Notion so we can invalidate them all
+        // at once.
+        tags: ["notion"],
       },
     });
   },
