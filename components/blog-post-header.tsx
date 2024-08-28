@@ -7,7 +7,7 @@ import avatar from "../public/avatar.jpeg";
 import { NotionRichTextBlock } from "./notion-rich-text-block";
 
 type Props = {
-  post: BlogPost;
+  post: BlogPost | undefined;
 };
 
 export function BlogPostHeader({ post }: Props) {
@@ -20,13 +20,22 @@ export function BlogPostHeader({ post }: Props) {
         ← Back
       </Link>
       <div className="space-y-2">
-        <h1 className="text-4xl font-bold">{post.title}</h1>
-        {post.summary.length > 0 && (
-          <p className="text-gray-400 prose">
-            {post.summary.map((block, index) => (
-              <NotionRichTextBlock key={index} block={block} />
-            ))}
-          </p>
+        {post ? (
+          <>
+            <h1 className="text-4xl font-bold">{post.title}</h1>
+            {post.summary.length > 0 && (
+              <p className="text-gray-400 prose">
+                {post.summary.map((block, index) => (
+                  <NotionRichTextBlock key={index} block={block} />
+                ))}
+              </p>
+            )}
+          </>
+        ) : (
+          <div className="animate-pulse space-y-2">
+            <div className="h-10 bg-slate-200 rounded"></div>
+            <div className="h-7 bg-slate-200 rounded"></div>
+          </div>
         )}
       </div>
       <div className="flex text-xs items-center justify-between">
@@ -44,7 +53,11 @@ export function BlogPostHeader({ post }: Props) {
             >
               Wyatt Johnson
             </Link>
-            <time className="text-gray-400">{post.date}</time>
+            {post ? (
+              <time className="text-gray-400">{post.date}</time>
+            ) : (
+              <div className="animate-pulse h-4 bg-slate-200 rounded" />
+            )}
           </div>
         </div>
         <hr className="ml-6 flex-grow" />

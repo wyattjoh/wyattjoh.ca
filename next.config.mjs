@@ -4,5 +4,8 @@ export default {
     formats: ["image/avif"],
     domains: ["avatars.githubusercontent.com"],
   },
-  experimental: {},
+  experimental: {
+    ppr: true,
+    pprFallbacks: true,
+  },
 };
