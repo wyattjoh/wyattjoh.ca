@@ -12,8 +12,8 @@ async function github<T>(endpoint: string): Promise<T> {
       "X-GitHub-Api-Version": "2022-11-28",
     },
     next: {
-      // Revalidate every day.
-      revalidate: 1 * 24 * 60 * 60,
+      // Revalidate every 7 days.
+      revalidate: 7 * 24 * 60 * 60,
     },
   });
 

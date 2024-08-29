@@ -5,7 +5,7 @@ export const dynamic = "force-dynamic";
 
 export async function GET(request: NextRequest): Promise<Response> {
   const url = new URL(request.url);
-  if (url.searchParams.get("key") !== process.env.REVALIDATE_KEY) {
+  if (request.headers.get("Authorization") !== process.env.REVALIDATE_KEY) {
     return new Response("Unauthorized", { status: 401 });
   }
 
