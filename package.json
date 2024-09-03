@@ -20,7 +20,7 @@
     "clsx": "^2.1.0",
     "encoding": "^0.1.13",
     "ioredis": "^5.3.2",
-    "next": "15.0.0-canary.133",
+    "next": "15.0.0-canary.139",
     "postcss": "^8.4.37",
     "react": "19.0.0-rc-eb3ad065-20240822",
     "react-dom": "19.0.0-rc-eb3ad065-20240822",
