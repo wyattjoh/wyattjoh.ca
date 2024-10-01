@@ -12,6 +12,7 @@ async function github<T>(endpoint: string): Promise<T> {
     next: {
       // Revalidate every 7 days.
       revalidate: 7 * 24 * 60 * 60,
+      tags: ["github"],
     },
   });
 
