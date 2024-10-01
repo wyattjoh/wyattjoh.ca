@@ -13,21 +13,7 @@ import { Client } from "@notionhq/client";
 const notion = new Client({
   auth: process.env.NOTION_TOKEN,
   fetch: (url, init) => {
-    const request =
-      process.env.NEXT_RUNTIME === "edge"
-        ? fetch
-        : (require("./request").request as typeof import("./request").request);
-
-    return request(url, {
-      ...init,
-      next: {
-        // Revalidate every hour.
-        revalidate: 1 * 60 * 60,
-        // Add a tag to each request to Notion so we can invalidate them all
-        // at once.
-        tags: ["notion"],
-      },
-    });
+    return fetch(url, init);
   },
 });
 

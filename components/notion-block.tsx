@@ -20,7 +20,7 @@ export async function NotionBlock({ block }: Props) {
       return (
         <p>
           {block.paragraph.rich_text.map((text, index) => (
-            <NotionBlock key={index} block={text} />
+            <NotionBlock key={`${block.id}-${index}`} block={text} />
           ))}
         </p>
       );
@@ -56,13 +56,21 @@ export async function NotionBlock({ block }: Props) {
       if (/^https:\/\/twitter.com/.test(block.embed.url)) {
         return <TwitterEmbed url={block.embed.url} />;
       }
+      // TODO: support other block types
 
+      // In development, log unsupported block types to the console.
+      if (process.env.NODE_ENV === "development") {
+        console.log(`Unsupported embed type: "${block.embed.url}"`);
+        console.log(JSON.stringify(block, null, 2));
+      }
+
+      return null;
     default:
       // TODO: support other block types
 
       // In development, log unsupported block types to the console.
       if (process.env.NODE_ENV === "development") {
-        console.log('Unsupported block type: "' + block.type + '"');
+        console.log(`Unsupported block type: "${block.type}"`);
         console.log(JSON.stringify(block, null, 2));
       }
 

@@ -10,7 +10,7 @@ export function NotionRichTextBlock({ block }: Props) {
   // TODO: support other rich text types
   if (block.type !== "text") {
     if (process.env.NODE_ENV === "development") {
-      console.log('Unsupported rich text type: "' + block.type + '"');
+      console.log(`Unsupported rich text type: "${block.type}"`);
     }
 
     return null;

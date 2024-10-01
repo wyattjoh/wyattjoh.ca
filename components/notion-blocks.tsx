@@ -18,8 +18,8 @@ export async function NotionBlocks({ id, className }: Props) {
         className
       )}
     >
-      {blocks.map((block, index) => (
-        <NotionBlock key={index} block={block} />
+      {blocks.map((block) => (
+        <NotionBlock key={block.id} block={block} />
       ))}
     </div>
   );

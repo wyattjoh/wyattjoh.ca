@@ -6,6 +6,7 @@ import { BlogPost } from "../../../components/blog-post";
 import { findBlogPost, getBlogPosts, toPlainText } from "../../../lib/notion";
 import { BlogPostHeader } from "../../../components/blog-post-header";
 import { base } from "../../../lib/base";
+import { BlogPostFooter } from "../../../components/blog-post-footer";
 
 type Props = {
   params: {
@@ -54,6 +55,7 @@ export default async function Page({ params: { slug } }: Props) {
     <div className="p-4">
       <BlogPostHeader post={post} />
       <BlogPost post={post} />
+      <BlogPostFooter />
     </div>
   );
 }

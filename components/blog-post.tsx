@@ -1,8 +1,8 @@
-import type { BlogPost } from "../lib/notion";
+import type { BlogPost as BlogPostData } from "../lib/notion";
 import { NotionBlocks } from "./notion-blocks";
 
 type Props = {
-  post: BlogPost;
+  post: BlogPostData;
 };
 
 export async function BlogPost({ post }: Props) {

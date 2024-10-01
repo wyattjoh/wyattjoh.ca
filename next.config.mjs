@@ -1,11 +1,13 @@
 /** @type {import('next').NextConfig} */
-export default {
+const nextConfig = {
   images: {
     formats: ["image/avif"],
-    domains: ["avatars.githubusercontent.com"],
+    remotePatterns: [{ hostname: "avatars.githubusercontent.com" }],
   },
   experimental: {
     ppr: true,
     pprFallbacks: true,
   },
 };
+
+export default nextConfig;
