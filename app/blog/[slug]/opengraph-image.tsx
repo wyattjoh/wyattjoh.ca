@@ -9,7 +9,6 @@ export const size = {
   height: 1080,
 };
 export const contentType = "image/png";
-export const runtime = "edge";
 
 type Props = {
   params: {
@@ -95,6 +94,7 @@ export default async function OpenGraphImage({ params: { slug } }: Props) {
               borderRadius: "50%",
               marginRight: 30,
             }}
+            alt="Wyatt Johnson"
           />
           <div
             style={{
