@@ -11,9 +11,9 @@ export const size = {
 export const contentType = "image/png";
 
 type Props = {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 };
 
 const styles = {
@@ -29,7 +29,8 @@ const styles = {
   },
 };
 
-export default async function OpenGraphImage({ params: { slug } }: Props) {
+export default async function OpenGraphImage(props: Props) {
+  const { slug } = await props.params;
   const post = await findBlogPost(slug);
   if (!post) {
     notFound();

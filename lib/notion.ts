@@ -13,7 +13,14 @@ import { Client } from "@notionhq/client";
 const notion = new Client({
   auth: process.env.NOTION_TOKEN,
   fetch: (url, init) => {
-    return fetch(url, { ...init, next: { tags: ["notion"] } });
+    return fetch(url, {
+      ...init,
+      next: {
+        // Revalidate the cache every 7 days.
+        revalidate: 60 * 60 * 24 * 7,
+        tags: ["notion"],
+      },
+    });
   },
 });
 

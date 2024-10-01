@@ -34,12 +34,10 @@ export default function Page() {
           </h2>
         </header>
       </section>
-      <Suspense>
-        <NotionBlocks
-          id="8f20fbb5857a44b487824528dc0217ca"
-          className="space-y-8"
-        />
-      </Suspense>
+      <NotionBlocks
+        id="8f20fbb5857a44b487824528dc0217ca"
+        className="space-y-8"
+      />
       <BlogPosts className="space-y-6" />
       <section className="space-y-6">
         <h2 className="font-bold">Featured Repositories:</h2>
