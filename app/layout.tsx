@@ -5,7 +5,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { Footer } from "../components/footer";
 import { base } from "../lib/base";
 
-import "../styles/globals.css";
+import "./layout.css";
 
 type Props = {
   children: JSX.Element;
@@ -23,7 +23,7 @@ export default function Layout({ children }: Props) {
   return (
     <html lang="en">
       <body className="min-h-screen font-sans font-light">
-        <main className="max-w-3xl mx-auto md:pt-6 mb-24 flex flex-col">
+        <main className="max-w-3xl mx-auto md:mt-6 mb-24 flex flex-col">
           {children}
         </main>
         <Footer />
