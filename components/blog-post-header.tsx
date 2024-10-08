@@ -33,8 +33,8 @@ export function BlogPostHeader({ post }: Props) {
           </>
         ) : (
           <div className="animate-pulse space-y-2">
-            <div className="h-10 bg-slate-200 rounded"></div>
-            <div className="h-7 bg-slate-200 rounded"></div>
+            <div className="h-10 bg-slate-200 rounded" />
+            <div className="h-7 bg-slate-200 rounded" />
           </div>
         )}
       </div>
