@@ -7,6 +7,7 @@ import { Code } from "bright";
 import { NotionRichTextBlock } from "./notion-rich-text-block";
 import { ApplePodcastEmbed } from "./embeds/apple-podcast";
 import { TwitterEmbed } from "./embeds/twitter";
+import { YouTubeEmbed } from "./embeds/youtube";
 
 type Props = {
   block: BlockObjectResponse | RichTextItemResponse;
@@ -61,6 +62,20 @@ export async function NotionBlock({ block }: Props) {
       // In development, log unsupported block types to the console.
       if (process.env.NODE_ENV === "development") {
         console.log(`Unsupported embed type: "${block.embed.url}"`);
+        console.log(JSON.stringify(block, null, 2));
+      }
+
+      return null;
+    case "video":
+      if (block.video.type === "external") {
+        if (/^https:\/\/youtu.be/.test(block.video.external.url)) {
+          return <YouTubeEmbed url={block.video.external.url} />;
+        }
+      }
+
+      // In development, log unsupported block types to the console.
+      if (process.env.NODE_ENV === "development") {
+        console.log(`Unsupported video type: "${block.video.type}"`);
         console.log(JSON.stringify(block, null, 2));
       }
 
