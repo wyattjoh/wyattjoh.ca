@@ -19,14 +19,22 @@ export default function Page() {
   return (
     <div className="p-4 space-y-10">
       <section className="flex flex-col sm:flex-row sm:items-center">
-        <Image
-          className="rounded-full border-4 border-gray-200 hidden sm:inline-block"
-          alt="Picture of Wyatt Johnson"
-          priority
-          src={avatar}
-          width={150}
-          height={150}
-        />
+        <div className="relative">
+          <Image
+            className="rounded-full border-4 border-gray-200 hidden sm:inline-block"
+            alt="Picture of Wyatt Johnson"
+            priority
+            src={avatar}
+            width={150}
+            height={150}
+          />
+          <a
+            href="https://www.skippingstone.ca/"
+            title="Skipping Stone Foundation"
+          >
+            <span className="text-4xl absolute bottom-1 right-1">🏳️‍🌈</span>
+          </a>
+        </div>
         <header className="sm:ml-8 mt-8 sm:my-0 flex-grow">
           <h1 className="font-bold text-6xl mb-2">Wyatt Johnson</h1>
           <h2 className="font-bold text-xs text-gray-500">
