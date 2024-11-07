@@ -19,9 +19,9 @@ export default function Page() {
   return (
     <div className="p-4 space-y-10">
       <section className="flex flex-col sm:flex-row sm:items-center">
-        <div className="relative">
+        <div className="relative hidden sm:inline-block">
           <Image
-            className="rounded-full border-4 border-gray-200 hidden sm:inline-block"
+            className="rounded-full border-4 border-gray-200"
             alt="Picture of Wyatt Johnson"
             priority
             src={avatar}
