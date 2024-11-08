@@ -26,12 +26,9 @@ export async function YouTubeEmbed(props: Props) {
 
   return (
     <iframe
-      className="mx-auto"
-      width="560"
-      height="315"
+      className="mx-auto w-full aspect-video"
       src={embedURL}
       title="YouTube video player"
-      frameBorder="0"
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
       referrerPolicy="strict-origin-when-cross-origin"
       allowFullScreen
