@@ -8,23 +8,20 @@ import type {
 } from "@notionhq/client/build/src/api-endpoints";
 
 import { cache } from "react";
+import { unstable_cacheLife, unstable_cacheTag } from "next/cache";
 import { Client } from "@notionhq/client";
 
 const notion = new Client({
   auth: process.env.NOTION_TOKEN,
-  fetch: (url, init) => {
-    return fetch(url, {
-      ...init,
-      next: {
-        // Revalidate the cache every 7 days.
-        revalidate: 60 * 60 * 24 * 7,
-        tags: ["notion"],
-      },
-    });
-  },
 });
 
 export const getPageBlocks = cache(async (id: string) => {
+  "use cache";
+
+  // Cache the function on the order of days.
+  unstable_cacheLife("days");
+  unstable_cacheTag("notion");
+
   const { results } = await notion.blocks.children.list({
     block_id: id,
   });
@@ -118,6 +115,12 @@ function createBlogPost(response: PageObjectResponse): BlogPost | null {
 
 export const findBlogPost = cache(
   async (slug: string): Promise<BlogPost | null> => {
+    "use cache";
+
+    // Cache the function on the order of days.
+    unstable_cacheLife("days");
+    unstable_cacheTag("notion");
+
     const args: QueryDatabaseParameters = {
       database_id: "0b56732805064002a20bb6bb55da55eb",
       filter: {
@@ -153,6 +156,12 @@ export const findBlogPost = cache(
 );
 
 export const getBlogPosts = cache(async (): Promise<BlogPost[]> => {
+  "use cache";
+
+  // Cache the function on the order of days.
+  unstable_cacheLife("days");
+  unstable_cacheTag("notion");
+
   const { results } = await notion.databases.query({
     database_id: "0b56732805064002a20bb6bb55da55eb",
     sorts: [{ property: "Date", direction: "descending" }],
@@ -187,6 +196,12 @@ type Repository = {
 };
 
 export const getRepositories = cache(async (): Promise<Repository[]> => {
+  "use cache";
+
+  // Cache the function on the order of days.
+  unstable_cacheLife("days");
+  unstable_cacheTag("notion");
+
   const { results } = await notion.databases.query({
     database_id: "b3ccd60d3267422a8c28e9f8044e036b",
     sorts: [{ property: "Order", direction: "ascending" }],
