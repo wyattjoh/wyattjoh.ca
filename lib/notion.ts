@@ -113,47 +113,45 @@ function createBlogPost(response: PageObjectResponse): BlogPost | null {
   };
 }
 
-export const findBlogPost = cache(
-  async (slug: string): Promise<BlogPost | null> => {
-    "use cache";
+export const findBlogPost = async (slug: string): Promise<BlogPost | null> => {
+  "use cache";
 
-    // Cache the function on the order of days.
-    unstable_cacheLife("days");
-    unstable_cacheTag("notion");
+  // Cache the function on the order of days.
+  unstable_cacheLife("days");
+  unstable_cacheTag("notion");
 
-    const args: QueryDatabaseParameters = {
-      database_id: "0b56732805064002a20bb6bb55da55eb",
-      filter: {
-        and: [
-          {
-            property: "Slug",
-            rich_text: {
-              equals: slug,
-            },
+  const args: QueryDatabaseParameters = {
+    database_id: "0b56732805064002a20bb6bb55da55eb",
+    filter: {
+      and: [
+        {
+          property: "Slug",
+          rich_text: {
+            equals: slug,
           },
-        ],
-      },
-    };
-
-    if (process.env.ENABLE_DRAFT_MODE !== "true") {
-      // @ts-expect-error
-      args.filter.and.push({
-        property: "Status",
-        select: {
-          equals: "Published",
         },
-      });
-    }
+      ],
+    },
+  };
 
-    const { results } = await notion.databases.query(args);
-    if (results.length === 0 || !("properties" in results[0])) {
-      return null;
-    }
-
+  if (process.env.ENABLE_DRAFT_MODE !== "true") {
     // @ts-expect-error
-    return createBlogPost(results[0]);
+    args.filter.and.push({
+      property: "Status",
+      select: {
+        equals: "Published",
+      },
+    });
   }
-);
+
+  const { results } = await notion.databases.query(args);
+  if (results.length === 0 || !("properties" in results[0])) {
+    return null;
+  }
+
+  // @ts-expect-error
+  return createBlogPost(results[0]);
+};
 
 export const getBlogPosts = cache(async (): Promise<BlogPost[]> => {
   "use cache";
