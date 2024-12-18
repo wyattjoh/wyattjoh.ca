@@ -1,7 +1,7 @@
 import "server-only";
 
 import { cache } from "react";
-import { unstable_cacheLife, unstable_cacheTag } from "next/cache";
+import { unstable_cache } from "next/cache";
 
 async function github<T>(endpoint: string): Promise<T> {
   const res = await fetch(new URL(endpoint, "https://api.github.com"), {
@@ -19,17 +19,19 @@ async function github<T>(endpoint: string): Promise<T> {
   return await res.json();
 }
 
-export const getRepository = cache(async (name: string) => {
-  "use cache";
+export const getRepository = unstable_cache(
+  cache(async (name: string) => {
+    const [owner, repo] = name.split("/");
+    const repository = await github<{ stargazers_count: number }>(
+      `/repos/${owner}/${repo}`
+    );
 
-  // Cache the function on the order of days.
-  unstable_cacheLife("days");
-  unstable_cacheTag("github");
-
-  const [owner, repo] = name.split("/");
-  const repository = await github<{ stargazers_count: number }>(
-    `/repos/${owner}/${repo}`
-  );
-
-  return repository;
-});
+    return repository;
+  }),
+  [],
+  {
+    tags: ["github"],
+    // Cache the function on the order of days.
+    revalidate: 60 * 60 * 24 * 30,
+  }
+);

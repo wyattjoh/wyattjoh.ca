@@ -8,26 +8,28 @@ import type {
 } from "@notionhq/client/build/src/api-endpoints";
 
 import { cache } from "react";
-import { unstable_cacheLife, unstable_cacheTag } from "next/cache";
+import { unstable_cache } from "next/cache";
 import { Client } from "@notionhq/client";
 
 const notion = new Client({
   auth: process.env.NOTION_TOKEN,
 });
 
-export const getPageBlocks = cache(async (id: string) => {
-  "use cache";
+export const getPageBlocks = unstable_cache(
+  cache(async (id: string) => {
+    const { results } = await notion.blocks.children.list({
+      block_id: id,
+    });
 
-  // Cache the function on the order of days.
-  unstable_cacheLife("days");
-  unstable_cacheTag("notion");
-
-  const { results } = await notion.blocks.children.list({
-    block_id: id,
-  });
-
-  return results as BlockObjectResponse[];
-});
+    return results as BlockObjectResponse[];
+  }),
+  [],
+  {
+    tags: ["notion"],
+    // Cache the function on the order of days.
+    revalidate: 60 * 60 * 24 * 30,
+  }
+);
 
 export type BlogPost = {
   id: string;
@@ -113,77 +115,81 @@ function createBlogPost(response: PageObjectResponse): BlogPost | null {
   };
 }
 
-export const findBlogPost = async (slug: string): Promise<BlogPost | null> => {
-  "use cache";
-
-  // Cache the function on the order of days.
-  unstable_cacheLife("days");
-  unstable_cacheTag("notion");
-
-  const args: QueryDatabaseParameters = {
-    database_id: "0b56732805064002a20bb6bb55da55eb",
-    filter: {
-      and: [
-        {
-          property: "Slug",
-          rich_text: {
-            equals: slug,
-          },
-        },
-      ],
-    },
-  };
-
-  if (process.env.ENABLE_DRAFT_MODE !== "true") {
-    // @ts-expect-error
-    args.filter.and.push({
-      property: "Status",
-      select: {
-        equals: "Published",
-      },
-    });
-  }
-
-  const { results } = await notion.databases.query(args);
-  if (results.length === 0 || !("properties" in results[0])) {
-    return null;
-  }
-
-  // @ts-expect-error
-  return createBlogPost(results[0]);
-};
-
-export const getBlogPosts = cache(async (): Promise<BlogPost[]> => {
-  "use cache";
-
-  // Cache the function on the order of days.
-  unstable_cacheLife("days");
-  unstable_cacheTag("notion");
-
-  const { results } = await notion.databases.query({
-    database_id: "0b56732805064002a20bb6bb55da55eb",
-    sorts: [{ property: "Date", direction: "descending" }],
-    // Ensure we only show published blog posts.
-    filter:
-      process.env.ENABLE_DRAFT_MODE === "true"
-        ? undefined
-        : {
-            property: "Status",
-            select: {
-              equals: "Published",
+export const findBlogPost = unstable_cache(
+  cache(async (slug: string): Promise<BlogPost | null> => {
+    const args: QueryDatabaseParameters = {
+      database_id: "0b56732805064002a20bb6bb55da55eb",
+      filter: {
+        and: [
+          {
+            property: "Slug",
+            rich_text: {
+              equals: slug,
             },
           },
-  });
+        ],
+      },
+    };
 
-  return results
-    .filter<PageObjectResponse>((result): result is PageObjectResponse => {
-      return "properties" in result;
-    })
-    .map<BlogPost | null>(createBlogPost)
-    .filter((post): post is BlogPost => {
-      return post !== null;
+    if (process.env.ENABLE_DRAFT_MODE !== "true") {
+      // @ts-expect-error
+      args.filter.and.push({
+        property: "Status",
+        select: {
+          equals: "Published",
+        },
+      });
+    }
+
+    const { results } = await notion.databases.query(args);
+    if (results.length === 0 || !("properties" in results[0])) {
+      return null;
+    }
+
+    // @ts-expect-error
+    return createBlogPost(results[0]);
+  }),
+  [],
+  {
+    tags: ["notion"],
+    // Cache the function on the order of days.
+    revalidate: 60 * 60 * 24 * 30,
+  }
+);
+
+export const getBlogPosts = unstable_cache(
+  cache(async (): Promise<BlogPost[]> => {
+    const { results } = await notion.databases.query({
+      database_id: "0b56732805064002a20bb6bb55da55eb",
+      sorts: [{ property: "Date", direction: "descending" }],
+      // Ensure we only show published blog posts.
+      filter:
+        process.env.ENABLE_DRAFT_MODE === "true"
+          ? undefined
+          : {
+              property: "Status",
+              select: {
+                equals: "Published",
+              },
+            },
     });
-});
+
+    return results
+      .filter<PageObjectResponse>((result): result is PageObjectResponse => {
+        return "properties" in result;
+      })
+      .map<BlogPost | null>(createBlogPost)
+      .filter((post): post is BlogPost => {
+        return post !== null;
+      });
+  }),
+  [],
+  {
+    tags: ["notion"],
+    // Cache the function on the order of days.
+    revalidate: 60 * 60 * 24 * 30,
+  }
+);
 
 type Repository = {
   id: string;
@@ -193,53 +199,55 @@ type Repository = {
   color: string;
 };
 
-export const getRepositories = cache(async (): Promise<Repository[]> => {
-  "use cache";
-
-  // Cache the function on the order of days.
-  unstable_cacheLife("days");
-  unstable_cacheTag("notion");
-
-  const { results } = await notion.databases.query({
-    database_id: "b3ccd60d3267422a8c28e9f8044e036b",
-    sorts: [{ property: "Order", direction: "ascending" }],
-  });
-
-  return results
-    .filter<PageObjectResponse>((result): result is PageObjectResponse => {
-      return "properties" in result;
-    })
-    .map<Repository | null>((result) => {
-      const { Name, URL, Description, Color } = result.properties;
-
-      if (Name.type !== "title" || !Name.title?.[0]?.plain_text) {
-        return null;
-      }
-
-      if (URL.type !== "url" || !URL.url) {
-        return null;
-      }
-
-      if (
-        Description.type !== "rich_text" ||
-        !Description.rich_text?.[0]?.plain_text
-      ) {
-        return null;
-      }
-
-      if (Color.type !== "rich_text" || !Color.rich_text?.[0]?.plain_text) {
-        return null;
-      }
-
-      return {
-        id: result.id,
-        name: Name.title[0].plain_text,
-        url: URL.url,
-        description: Description.rich_text[0].plain_text,
-        color: Color.rich_text[0].plain_text,
-      };
-    })
-    .filter((repository): repository is Repository => {
-      return repository !== null;
+export const getRepositories = unstable_cache(
+  cache(async (): Promise<Repository[]> => {
+    const { results } = await notion.databases.query({
+      database_id: "b3ccd60d3267422a8c28e9f8044e036b",
+      sorts: [{ property: "Order", direction: "ascending" }],
     });
-});
+
+    return results
+      .filter<PageObjectResponse>((result): result is PageObjectResponse => {
+        return "properties" in result;
+      })
+      .map<Repository | null>((result) => {
+        const { Name, URL, Description, Color } = result.properties;
+
+        if (Name.type !== "title" || !Name.title?.[0]?.plain_text) {
+          return null;
+        }
+
+        if (URL.type !== "url" || !URL.url) {
+          return null;
+        }
+
+        if (
+          Description.type !== "rich_text" ||
+          !Description.rich_text?.[0]?.plain_text
+        ) {
+          return null;
+        }
+
+        if (Color.type !== "rich_text" || !Color.rich_text?.[0]?.plain_text) {
+          return null;
+        }
+
+        return {
+          id: result.id,
+          name: Name.title[0].plain_text,
+          url: URL.url,
+          description: Description.rich_text[0].plain_text,
+          color: Color.rich_text[0].plain_text,
+        };
+      })
+      .filter((repository): repository is Repository => {
+        return repository !== null;
+      });
+  }),
+  [],
+  {
+    tags: ["notion"],
+    // Cache the function on the order of days.
+    revalidate: 60 * 60 * 24 * 30,
+  }
+);
