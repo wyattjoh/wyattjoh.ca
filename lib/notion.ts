@@ -7,7 +7,6 @@ import type {
   RichTextItemResponse,
 } from "@notionhq/client/build/src/api-endpoints";
 
-import { cache } from "react";
 import { unstable_cache } from "next/cache";
 import { Client } from "@notionhq/client";
 
@@ -16,13 +15,13 @@ const notion = new Client({
 });
 
 export const getPageBlocks = unstable_cache(
-  cache(async (id: string) => {
+  async (id: string) => {
     const { results } = await notion.blocks.children.list({
       block_id: id,
     });
 
     return results as BlockObjectResponse[];
-  }),
+  },
   [],
   {
     tags: ["notion"],
@@ -116,7 +115,7 @@ function createBlogPost(response: PageObjectResponse): BlogPost | null {
 }
 
 export const findBlogPost = unstable_cache(
-  cache(async (slug: string): Promise<BlogPost | null> => {
+  async (slug: string): Promise<BlogPost | null> => {
     const args: QueryDatabaseParameters = {
       database_id: "0b56732805064002a20bb6bb55da55eb",
       filter: {
@@ -148,7 +147,7 @@ export const findBlogPost = unstable_cache(
 
     // @ts-expect-error
     return createBlogPost(results[0]);
-  }),
+  },
   [],
   {
     tags: ["notion"],
@@ -158,7 +157,7 @@ export const findBlogPost = unstable_cache(
 );
 
 export const getBlogPosts = unstable_cache(
-  cache(async (): Promise<BlogPost[]> => {
+  async (): Promise<BlogPost[]> => {
     const { results } = await notion.databases.query({
       database_id: "0b56732805064002a20bb6bb55da55eb",
       sorts: [{ property: "Date", direction: "descending" }],
@@ -182,7 +181,7 @@ export const getBlogPosts = unstable_cache(
       .filter((post): post is BlogPost => {
         return post !== null;
       });
-  }),
+  },
   [],
   {
     tags: ["notion"],
@@ -200,7 +199,7 @@ type Repository = {
 };
 
 export const getRepositories = unstable_cache(
-  cache(async (): Promise<Repository[]> => {
+  async (): Promise<Repository[]> => {
     const { results } = await notion.databases.query({
       database_id: "b3ccd60d3267422a8c28e9f8044e036b",
       sorts: [{ property: "Order", direction: "ascending" }],
@@ -243,7 +242,7 @@ export const getRepositories = unstable_cache(
       .filter((repository): repository is Repository => {
         return repository !== null;
       });
-  }),
+  },
   [],
   {
     tags: ["notion"],

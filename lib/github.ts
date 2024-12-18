@@ -1,6 +1,5 @@
 import "server-only";
 
-import { cache } from "react";
 import { unstable_cache } from "next/cache";
 
 async function github<T>(endpoint: string): Promise<T> {
@@ -20,14 +19,14 @@ async function github<T>(endpoint: string): Promise<T> {
 }
 
 export const getRepository = unstable_cache(
-  cache(async (name: string) => {
+  async (name: string) => {
     const [owner, repo] = name.split("/");
     const repository = await github<{ stargazers_count: number }>(
       `/repos/${owner}/${repo}`
     );
 
     return repository;
-  }),
+  },
   [],
   {
     tags: ["github"],
