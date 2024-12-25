@@ -6,7 +6,8 @@ const nextConfig = {
   },
   experimental: {
     ppr: true,
-    dynamicIO: true,
+    // Disabled due to a bug with I18n date formatting.
+    // dynamicIO: true,
   },
 };
 
