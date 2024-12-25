@@ -39,11 +39,11 @@ export type BlogPost = {
   slug: string;
 };
 
-const formatter = new Intl.DateTimeFormat("en-US", {
-  year: "numeric",
-  month: "long",
-  day: "numeric",
-});
+// const formatter = new Intl.DateTimeFormat("en-US", {
+//   year: "numeric",
+//   month: "long",
+//   day: "numeric",
+// });
 
 export function toPlainText(text: RichTextItemResponse[]): string {
   return text
@@ -102,7 +102,8 @@ function createBlogPost(response: PageObjectResponse): BlogPost | null {
   }
 
   // Parse the date from the format 2023-04-25 into a JS Date object.
-  const date = formatter.format(new Date(BlogDate.date.start));
+  // const date = formatter.format(new Date(BlogDate.date.start));
+  const date = BlogDate.date.start;
 
   return {
     id: response.id,
