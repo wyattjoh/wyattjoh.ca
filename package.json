@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@notionhq/client": "^2.2.14",
-    "@tailwindcss/typography": "^0.5.10",
+    "@tailwindcss/typography": "^0.5.16",
     "@vercel/analytics": "^1.2.2",
     "autoprefixer": "^10.4.18",
     "bright": "^0.8.5",

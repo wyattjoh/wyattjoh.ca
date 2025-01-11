@@ -22,10 +22,11 @@ export function BlogPostHeader({ post }: Props) {
       <div className="space-y-2">
         {post ? (
           <>
-            <h1 className="text-4xl font-bold">{post.title}</h1>
+            <h1 className="text-4xl font-bold dark:text-white">{post.title}</h1>
             {post.summary.length > 0 && (
               <p className="text-gray-400 prose">
                 {post.summary.map((block, index) => (
+                  // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
                   <NotionRichTextBlock key={index} block={block} />
                 ))}
               </p>
@@ -33,8 +34,8 @@ export function BlogPostHeader({ post }: Props) {
           </>
         ) : (
           <div className="animate-pulse space-y-2">
-            <div className="h-10 bg-slate-200 rounded" />
-            <div className="h-7 bg-slate-200 rounded" />
+            <div className="h-10 bg-slate-200 rounded dark:bg-gray-700" />
+            <div className="h-7 bg-slate-200 rounded dark:bg-gray-700" />
           </div>
         )}
       </div>
@@ -48,7 +49,7 @@ export function BlogPostHeader({ post }: Props) {
           />
           <div className="ml-2">
             <Link
-              className="font-bold text-gray-600 hover:text-black transition-colors block"
+              className="font-bold text-gray-600 hover:text-black transition-colors block dark:text-white"
               href="/"
             >
               Wyatt Johnson

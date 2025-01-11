@@ -14,13 +14,13 @@ export async function BlogPosts({ className }: Props) {
 
   return (
     <section className={className}>
-      <h2 className="font-bold">Recent Posts:</h2>
+      <h2 className="font-bold dark:text-white">Recent Posts:</h2>
       <ul className="space-y-3">
         {posts.map((post) => (
           <li key={post.id}>
             <Link
               href={`/blog/${post.slug}`}
-              className="text-xl block underline decoration-2 decoration-gray-500 hover:decoration-black transition-colors"
+              className="text-xl block underline decoration-2 decoration-gray-500 hover:decoration-black transition-colors dark:text-white"
             >
               {post.title}
             </Link>

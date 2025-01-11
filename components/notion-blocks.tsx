@@ -14,7 +14,7 @@ export async function NotionBlocks({ id, className }: Props) {
   return (
     <div
       className={clsx(
-        "max-w-none prose prose-a:decoration-2 prose-a:decoration-gray-500 hover:prose-a:decoration-black prose-a:transition-colors",
+        "max-w-none prose dark:prose-invert prose-a:decoration-2 prose-a:decoration-gray-500 hover:prose-a:decoration-black hover:dark:prose-a:decoration-gray-600 prose-a:transition-colors",
         className
       )}
     >

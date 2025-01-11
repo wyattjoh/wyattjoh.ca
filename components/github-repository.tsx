@@ -7,7 +7,7 @@ import {
 
 export function GitHubRepositorySkeleton() {
   return (
-    <span className="animate-pulse border border-gray-200 p-2 duration-200 transition-all hover:border-gray-300 drop-shadow-sm hover:drop-shadow-md bg-white">
+    <span className="animate-pulse border border-gray-200 p-2 duration-200 transition-all hover:border-gray-300 drop-shadow-sm hover:drop-shadow-md bg-white dark:border-gray-700 dark:bg-gray-900">
       <span className="flex items-baseline justify-between mb-1">
         <span className="font-mono underline decoration-2 h-6 w-24 bg-gray-200 text-gray-200">
           Loading...
@@ -34,12 +34,12 @@ export function GitHubRepository({ repo }: Props) {
       key={repo.name}
       href={repo.url}
       title={`Visit ${repo.name} on GitHub`}
-      className="border border-gray-200 p-2 duration-200 transition-all hover:border-gray-300 drop-shadow-sm hover:drop-shadow-md bg-white"
+      className="border border-gray-200 p-2 duration-200 transition-all hover:border-gray-300 drop-shadow-sm hover:drop-shadow-md bg-white dark:border-gray-700 dark:bg-gray-900"
     >
       <span className="flex items-baseline justify-between mb-1">
         <span
           style={{ textDecorationColor: repo.color }}
-          className="font-mono underline decoration-2"
+          className="font-mono underline decoration-2 dark:text-white"
         >
           {repo.name}
         </span>
@@ -47,7 +47,7 @@ export function GitHubRepository({ repo }: Props) {
           <GitHubStargazerCount name={repo.name} />
         </Suspense>
       </span>
-      <p className="text-xs">{repo.description}</p>
+      <p className="text-xs dark:text-gray-500">{repo.description}</p>
     </a>
   );
 }

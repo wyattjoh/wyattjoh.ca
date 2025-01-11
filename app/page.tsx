@@ -21,7 +21,7 @@ export default function Page() {
       <section className="flex flex-col sm:flex-row sm:items-center">
         <div className="relative hidden sm:inline-block">
           <Image
-            className="rounded-full border-4 border-gray-200"
+            className="rounded-full border-4 border-gray-200 dark:border-gray-700"
             alt="Picture of Wyatt Johnson"
             priority
             src={avatar}
@@ -30,13 +30,15 @@ export default function Page() {
           />
           <a
             href="https://www.skippingstone.ca/"
-            title="Skipping Stone Foundation"
+            title="Donate to the Skipping Stone Foundation"
           >
             <span className="text-4xl absolute bottom-1 right-1">🏳️‍🌈</span>
           </a>
         </div>
         <header className="sm:ml-8 mt-8 sm:my-0 flex-grow">
-          <h1 className="font-bold text-6xl mb-2">Wyatt Johnson</h1>
+          <h1 className="font-bold text-6xl mb-2 dark:text-white">
+            Wyatt Johnson
+          </h1>
           <h2 className="font-bold text-xs text-gray-500">
             (pronouns: he/him, pronounced: why-et)
           </h2>
@@ -48,7 +50,7 @@ export default function Page() {
       />
       <BlogPosts className="space-y-6" />
       <section className="space-y-6">
-        <h2 className="font-bold">Featured Repositories:</h2>
+        <h2 className="font-bold dark:text-white">Featured Repositories:</h2>
         <Suspense fallback={<GitHubRepositoriesSkeleton count={4} />}>
           <GitHubRepositories />
         </Suspense>
