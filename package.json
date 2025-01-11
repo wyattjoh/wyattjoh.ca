@@ -9,7 +9,7 @@
     "start": "next start"
   },
   "engines": {
-    "node": "^20.18.0"
+    "node": "^22.11.0"
   },
   "dependencies": {
     "@notionhq/client": "^2.2.14",
