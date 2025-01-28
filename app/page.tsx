@@ -35,7 +35,7 @@ export default function Page() {
             <span className="text-4xl absolute bottom-1 right-1">🏳️‍🌈</span>
           </a>
         </div>
-        <header className="sm:ml-8 mt-8 sm:my-0 flex-grow">
+        <header className="sm:ml-8 mt-8 sm:my-0 grow">
           <h1 className="font-bold text-6xl mb-2 dark:text-white">
             Wyatt Johnson
           </h1>

@@ -13,9 +13,9 @@
   },
   "dependencies": {
     "@notionhq/client": "^2.2.14",
+    "@tailwindcss/postcss": "^4.0.0",
     "@tailwindcss/typography": "^0.5.16",
     "@vercel/analytics": "^1.2.2",
-    "autoprefixer": "^10.4.18",
     "bright": "^0.8.5",
     "clsx": "^2.1.0",
     "next": "15.2.0-canary.9",
@@ -23,7 +23,7 @@
     "react": "19.1.0-canary-b3a95caf-20250113",
     "react-dom": "19.1.0-canary-b3a95caf-20250113",
     "sharp": "^0.33.2",
-    "tailwindcss": "^3.4.1"
+    "tailwindcss": "^4.0.0"
   },
   "devDependencies": {
     "@types/node": "^20.11.30",

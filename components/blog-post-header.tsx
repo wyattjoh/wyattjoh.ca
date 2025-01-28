@@ -34,8 +34,8 @@ export function BlogPostHeader({ post }: Props) {
           </>
         ) : (
           <div className="animate-pulse space-y-2">
-            <div className="h-10 bg-slate-200 rounded dark:bg-gray-700" />
-            <div className="h-7 bg-slate-200 rounded dark:bg-gray-700" />
+            <div className="h-10 bg-slate-200 rounded-sm dark:bg-gray-700" />
+            <div className="h-7 bg-slate-200 rounded-sm dark:bg-gray-700" />
           </div>
         )}
       </div>
@@ -57,11 +57,11 @@ export function BlogPostHeader({ post }: Props) {
             {post ? (
               <time className="text-gray-400">{post.date}</time>
             ) : (
-              <div className="animate-pulse h-4 bg-slate-200 rounded" />
+              <div className="animate-pulse h-4 bg-slate-200 rounded-sm" />
             )}
           </div>
         </div>
-        <hr className="ml-6 flex-grow" />
+        <hr className="ml-6 grow text-gray-200" />
       </div>
     </header>
   );
