@@ -20,7 +20,7 @@ export async function BlogPosts({ className }: Props) {
           <li key={post.id}>
             <Link
               href={`/blog/${post.slug}`}
-              className="text-xl block underline decoration-2 decoration-gray-500 hover:decoration-black transition-colors dark:text-white"
+              className="text-xl block underline decoration-2 decoration-gray-500 hover:decoration-black dark:hover:decoration-gray-600 transition-colors dark:text-white"
             >
               {post.title}
             </Link>

@@ -1,11 +1,19 @@
 import { NotionBlocks } from "./notion-blocks";
+import Image from "next/image";
+import avatar from "../public/avatar.jpeg";
 
 export function BlogPostFooter() {
   return (
     <aside className="flex gap-4 py-12 border-t border-gray-200 items-center">
+      <Image
+        alt="Picture of Wyatt Johnson"
+        src={avatar}
+        width={100}
+        className="rounded-full"
+      />
       <NotionBlocks
         id="7d96f57f99494c6abcf136cac30e7e7a"
-        className="opacity-75 sm:opacity-100 grow bg-gray-100 p-4 rounded-lg dark:bg-gray-900"
+        className="grow p-4"
       />
     </aside>
   );
