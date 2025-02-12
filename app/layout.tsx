@@ -20,6 +20,13 @@ export const metadata: Metadata = {
     default: "Wyatt Johnson",
     template: "%s | Wyatt Johnson",
   },
+  icons: {
+    icon: [
+      { url: "/favicon64x64.png", sizes: "64x64" },
+      { url: "/favicon128x128.png", sizes: "128x128" },
+      { url: "/favicon256x256.png", sizes: "256x256" },
+    ],
+  },
   metadataBase: new URL(base),
 };
 
