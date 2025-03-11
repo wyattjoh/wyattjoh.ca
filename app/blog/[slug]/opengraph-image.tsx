@@ -29,8 +29,8 @@ const styles = {
   },
 };
 
-export default async function OpenGraphImage(props: Props) {
-  const { slug } = await props.params;
+export default async function OpenGraphImage({ params }: Props) {
+  const { slug } = await params;
   const post = await findBlogPost(slug);
   if (!post) {
     notFound();

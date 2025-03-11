@@ -14,6 +14,8 @@ type Props = {
 };
 
 export async function NotionBlock({ block }: Props) {
+  "use cache";
+
   switch (block.type) {
     case "paragraph":
       if (block.paragraph.rich_text.length === 0) return null;

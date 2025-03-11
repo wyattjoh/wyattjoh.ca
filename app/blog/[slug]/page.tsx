@@ -14,8 +14,8 @@ type Props = {
   }>;
 };
 
-export async function generateMetadata(props: Props): Promise<Metadata> {
-  const { slug } = await props.params;
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
   const post = await findBlogPost(slug);
   if (!post) {
     notFound();
@@ -44,8 +44,8 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function Page(props: Props) {
-  const { slug } = await props.params;
+export default async function Page({ params }: Props) {
+  const { slug } = await params;
   const post = await findBlogPost(slug);
   if (!post) {
     notFound();
