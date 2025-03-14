@@ -7,7 +7,6 @@ const nextConfig = {
   experimental: {
     ppr: true,
     dynamicIO: true,
-    clientSegmentCache: true,
   },
 };
 
