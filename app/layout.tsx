@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { clsx } from "clsx";
 
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Inter } from "next/font/google";
 
 import { Footer } from "../components/footer";
@@ -45,6 +46,7 @@ export default function Layout({ children }: Props) {
         <Footer />
       </body>
       <Analytics />
+      <SpeedInsights />
     </html>
   );
 }
