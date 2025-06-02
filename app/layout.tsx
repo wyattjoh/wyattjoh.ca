@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { clsx } from "clsx";
-import React from "react";
+import type { ReactNode } from "react";
 
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -14,7 +14,7 @@ import "./layout.css";
 const inter = Inter({ subsets: ["latin"] });
 
 type Props = {
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
 export const metadata: Metadata = {
