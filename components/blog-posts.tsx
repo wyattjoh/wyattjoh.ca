@@ -14,20 +14,33 @@ export async function BlogPosts({ className }: Props) {
 
   return (
     <section className={className}>
-      <h2 className="font-bold dark:text-white">Recent Posts:</h2>
-      <ul className="space-y-3">
+      <h2 className="font-bold text-2xl dark:text-white mb-6">Recent Posts:</h2>
+      <div className="space-y-6">
         {posts.map((post) => (
-          <li key={post.id}>
+          <article key={post.id} className="group">
             <Link
               href={`/blog/${post.slug}`}
-              className="text-xl block underline decoration-2 decoration-gray-500 hover:decoration-black dark:hover:decoration-gray-600 transition-colors dark:text-white"
+              className="block hover-lift p-4 -mx-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-all"
             >
-              {post.title}
+              <div className="flex items-start gap-4">
+                <time className="text-sm text-gray-500 dark:text-gray-400 mt-1 w-30 flex-shrink-0">
+                  {post.date}
+                </time>
+                <div className="flex-1">
+                  <h3 className="text-xl font-semibold group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors dark:text-white">
+                    {post.title}
+                  </h3>
+                  {post.summary && (
+                    <p className="text-gray-600 dark:text-gray-400 mt-2 line-clamp-2">
+                      {post.summary.map((text) => text.plain_text).join("")}
+                    </p>
+                  )}
+                </div>
+              </div>
             </Link>
-            <time className="text-xs text-gray-400">{post.date}</time>
-          </li>
+          </article>
         ))}
-      </ul>
+      </div>
     </section>
   );
 }

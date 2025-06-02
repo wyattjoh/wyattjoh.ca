@@ -41,7 +41,7 @@ export default function Layout({ children }: Props) {
           "min-h-screen font-sans font-light dark:bg-gray-800"
         )}
       >
-        <main className="max-w-3xl mx-auto md:mt-6 mb-24 flex flex-col">
+        <main className="max-w-3xl mx-auto mt-6 mb-24 flex flex-col">
           {children}
         </main>
         <Footer />

@@ -6,7 +6,7 @@ import {
 
 export function GitHubRepositoriesSkeleton(props: { count: number }) {
   return (
-    <div className="flex flex-col space-y-3">
+    <div className="grid gap-4 grid-cols-1 md:grid-cols-2">
       {Array.from({ length: props.count }).map((_, index) => (
         // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
         <GitHubRepositorySkeleton key={index} />
@@ -19,7 +19,7 @@ export async function GitHubRepositories() {
   const repositories = await getRepositories();
 
   return (
-    <div className="flex flex-col space-y-3">
+    <div className="grid gap-4 grid-cols-1 md:grid-cols-2">
       {repositories.map((repo) => (
         <GitHubRepository key={repo.id} repo={repo} />
       ))}

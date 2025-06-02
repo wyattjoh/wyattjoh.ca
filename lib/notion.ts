@@ -184,6 +184,7 @@ type Repository = {
   url: string;
   description: string;
   color: string;
+  language: string;
 };
 
 export const getRepositories = async (): Promise<Repository[]> => {
@@ -201,7 +202,7 @@ export const getRepositories = async (): Promise<Repository[]> => {
       return "properties" in result;
     })
     .map<Repository | null>((result) => {
-      const { Name, URL, Description, Color } = result.properties;
+      const { Name, URL, Description, Color, Language } = result.properties;
 
       if (Name.type !== "title" || !Name.title?.[0]?.plain_text) {
         return null;
@@ -222,12 +223,20 @@ export const getRepositories = async (): Promise<Repository[]> => {
         return null;
       }
 
+      if (
+        Language.type !== "rich_text" ||
+        !Language.rich_text?.[0]?.plain_text
+      ) {
+        return null;
+      }
+
       return {
         id: result.id,
         name: Name.title[0].plain_text,
         url: URL.url,
         description: Description.rich_text[0].plain_text,
         color: Color.rich_text[0].plain_text,
+        language: Language.rich_text[0].plain_text,
       };
     })
     .filter((repository): repository is Repository => {
