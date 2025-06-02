@@ -1,6 +1,6 @@
-import { NotionBlocks } from "./notion-blocks";
 import Image from "next/image";
 import avatar from "../public/avatar.jpeg";
+import { NotionBlocks } from "./notion-blocks";
 
 export function BlogPostFooter() {
   return (

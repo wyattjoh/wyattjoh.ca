@@ -18,6 +18,7 @@ export async function TwitterEmbed(props: Props) {
 
   return (
     <div
+      // biome-ignore lint/security/noDangerouslySetInnerHtml: Twitter oEmbed API returns safe HTML content
       dangerouslySetInnerHTML={{
         __html: data.html,
       }}

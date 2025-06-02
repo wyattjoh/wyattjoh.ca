@@ -3,10 +3,10 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { BlogPost } from "../../../components/blog-post";
-import { findBlogPost, getBlogPosts, toPlainText } from "../../../lib/notion";
+import { BlogPostFooter } from "../../../components/blog-post-footer";
 import { BlogPostHeader } from "../../../components/blog-post-header";
 import { base } from "../../../lib/base";
-import { BlogPostFooter } from "../../../components/blog-post-footer";
+import { findBlogPost, getBlogPosts, toPlainText } from "../../../lib/notion";
 
 type Props = {
   params: Promise<{

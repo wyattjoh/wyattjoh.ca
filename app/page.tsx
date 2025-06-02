@@ -1,13 +1,13 @@
-import { Suspense } from "react";
 import Image from "next/image";
+import { Suspense } from "react";
 
+import { BlogPosts } from "../components/blog-posts";
 import {
   GitHubRepositories,
   GitHubRepositoriesSkeleton,
 } from "../components/github-repositories";
-import avatar from "../public/avatar.jpeg";
 import { NotionBlocks } from "../components/notion-blocks";
-import { BlogPosts } from "../components/blog-posts";
+import avatar from "../public/avatar.jpeg";
 
 export const metadata = {
   title: "Wyatt Johnson",
