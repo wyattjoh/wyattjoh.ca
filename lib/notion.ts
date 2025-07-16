@@ -9,6 +9,7 @@ import type {
 
 import { Client } from "@notionhq/client";
 import { unstable_cacheLife, unstable_cacheTag } from "next/cache";
+import { getColor } from "./colors";
 
 const notion = new Client({
   auth: process.env.NOTION_TOKEN,
@@ -202,7 +203,7 @@ export const getRepositories = async (): Promise<Repository[]> => {
       return "properties" in result;
     })
     .map<Repository | null>((result) => {
-      const { Name, URL, Description, Color, Language } = result.properties;
+      const { Name, URL, Description, Language } = result.properties;
 
       if (Name.type !== "title" || !Name.title?.[0]?.plain_text) {
         return null;
@@ -219,10 +220,6 @@ export const getRepositories = async (): Promise<Repository[]> => {
         return null;
       }
 
-      if (Color.type !== "rich_text" || !Color.rich_text?.[0]?.plain_text) {
-        return null;
-      }
-
       if (
         Language.type !== "rich_text" ||
         !Language.rich_text?.[0]?.plain_text
@@ -235,7 +232,7 @@ export const getRepositories = async (): Promise<Repository[]> => {
         name: Name.title[0].plain_text,
         url: URL.url,
         description: Description.rich_text[0].plain_text,
-        color: Color.rich_text[0].plain_text,
+        color: getColor(Language.rich_text[0].plain_text, "#858585"),
         language: Language.rich_text[0].plain_text,
       };
     })

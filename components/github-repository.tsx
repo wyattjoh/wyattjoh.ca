@@ -24,6 +24,8 @@ type Props = {
     description: string;
     color: string;
     language: string;
+    stargazers_count?: number;
+    // last_updated: string;
   };
 };
 
@@ -40,8 +42,18 @@ export function GitHubRepository({ repo }: Props) {
           {repo.name}
         </h3>
         <div className="flex items-center gap-2">
-          <Suspense fallback={<GitHubStargazerCountSkeleton />}>
-            <GitHubStargazerCount name={repo.name} />
+          <Suspense
+            fallback={
+              <GitHubStargazerCountSkeleton
+                name={repo.name}
+                count={repo.stargazers_count}
+              />
+            }
+          >
+            <GitHubStargazerCount
+              name={repo.name}
+              count={repo.stargazers_count}
+            />
           </Suspense>
         </div>
       </div>

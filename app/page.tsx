@@ -5,6 +5,7 @@ import { BlogPosts } from "../components/blog-posts";
 import {
   GitHubRepositories,
   GitHubRepositoriesSkeleton,
+  RecentGitHubRepositories,
 } from "../components/github-repositories";
 import { NotionBlocks } from "../components/notion-blocks";
 import avatar from "../public/avatar.jpeg";
@@ -59,6 +60,14 @@ export default function Page() {
         </h2>
         <Suspense fallback={<GitHubRepositoriesSkeleton count={4} />}>
           <GitHubRepositories />
+        </Suspense>
+      </section>
+      <section className="space-y-8" id="recent-projects">
+        <h2 className="font-bold text-2xl dark:text-white">
+          Recent Repositories:
+        </h2>
+        <Suspense fallback={<GitHubRepositoriesSkeleton count={6} />}>
+          <RecentGitHubRepositories />
         </Suspense>
       </section>
     </div>
