@@ -1,7 +1,6 @@
-import type { BlogPost } from "../lib/notion";
-
 import Image from "next/image";
 import Link from "next/link";
+import type { BlogPost } from "../lib/notion";
 
 import avatar from "../public/avatar.jpeg";
 import { NotionRichTextBlock } from "./notion-rich-text-block";
@@ -26,7 +25,7 @@ export function BlogPostHeader({ post }: Props) {
             {post.summary.length > 0 && (
               <p className="text-gray-400 prose">
                 {post.summary.map((block, index) => (
-                  // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+                  // biome-ignore lint/suspicious/noArrayIndexKey: Index is stable for static content
                   <NotionRichTextBlock key={index} block={block} />
                 ))}
               </p>

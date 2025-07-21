@@ -6,7 +6,7 @@ const nextConfig = {
   },
   experimental: {
     ppr: true,
-    dynamicIO: true,
+    cacheComponents: true,
   },
   eslint: {
     ignoreDuringBuilds: true,

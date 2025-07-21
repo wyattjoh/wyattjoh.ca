@@ -22,13 +22,13 @@ export async function NotionBlocks({ id, className }: Props) {
     // Handle bulleted list items: group consecutive items into a single <ul>
     if (currentBlock.type === "bulleted_list_item") {
       const listItems = [];
-      
+
       // Collect all consecutive bulleted list items
       while (i < blocks.length && blocks[i].type === "bulleted_list_item") {
         listItems.push(blocks[i]);
         i++; // Increment index for each list item processed
       }
-      
+
       // Create a single <ul> element containing all consecutive bulleted list items
       groupedBlocks.push(
         <ul key={`bulleted-list-${listItems[0].id}`}>
@@ -37,17 +37,17 @@ export async function NotionBlocks({ id, className }: Props) {
           ))}
         </ul>
       );
-    } 
+    }
     // Handle numbered list items: group consecutive items into a single <ol>
     else if (currentBlock.type === "numbered_list_item") {
       const listItems = [];
-      
+
       // Collect all consecutive numbered list items
       while (i < blocks.length && blocks[i].type === "numbered_list_item") {
         listItems.push(blocks[i]);
         i++; // Increment index for each list item processed
       }
-      
+
       // Create a single <ol> element containing all consecutive numbered list items
       groupedBlocks.push(
         <ol key={`numbered-list-${listItems[0].id}`}>
@@ -56,7 +56,7 @@ export async function NotionBlocks({ id, className }: Props) {
           ))}
         </ol>
       );
-    } 
+    }
     // Handle all other block types individually (paragraphs, headings, code, etc.)
     else {
       groupedBlocks.push(

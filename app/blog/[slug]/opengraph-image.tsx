@@ -86,6 +86,7 @@ export default async function OpenGraphImage({ params }: Props) {
           alignItems: "center",
         }}
       >
+        {/* biome-ignore lint/performance/noImgElement: OG image generation requires standard img element */}
         <img
           src="https://wyattjoh.ca/avatar.jpeg"
           style={{

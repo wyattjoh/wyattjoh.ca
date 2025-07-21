@@ -1,13 +1,12 @@
 import "server-only";
 
+import { Client } from "@notionhq/client";
 import type {
   BlockObjectResponse,
   PageObjectResponse,
   QueryDatabaseParameters,
   RichTextItemResponse,
 } from "@notionhq/client/build/src/api-endpoints";
-
-import { Client } from "@notionhq/client";
 import { unstable_cacheLife, unstable_cacheTag } from "next/cache";
 import { getColor } from "./colors";
 

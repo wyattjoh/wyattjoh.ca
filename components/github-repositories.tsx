@@ -9,7 +9,7 @@ export function GitHubRepositoriesSkeleton(props: { count: number }) {
   return (
     <div className="grid gap-4 grid-cols-1 md:grid-cols-2">
       {Array.from({ length: props.count }).map((_, index) => (
-        // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+        // biome-ignore lint/suspicious/noArrayIndexKey: Index is stable for skeleton placeholders
         <GitHubRepositorySkeleton key={index} />
       ))}
     </div>
