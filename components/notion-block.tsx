@@ -82,6 +82,22 @@ export async function NotionBlock({ block }: Props) {
       }
 
       return null;
+    case "bulleted_list_item":
+      return (
+        <li>
+          {block.bulleted_list_item.rich_text.map((text, index) => (
+            <NotionBlock key={`${block.id}-${index}`} block={text} />
+          ))}
+        </li>
+      );
+    case "numbered_list_item":
+      return (
+        <li>
+          {block.numbered_list_item.rich_text.map((text, index) => (
+            <NotionBlock key={`${block.id}-${index}`} block={text} />
+          ))}
+        </li>
+      );
     default:
       // TODO: support other block types
 
