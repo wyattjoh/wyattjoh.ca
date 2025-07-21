@@ -25,7 +25,6 @@ type Props = {
     color: string;
     language: string;
     stargazers_count?: number;
-    // last_updated: string;
   };
 };
 

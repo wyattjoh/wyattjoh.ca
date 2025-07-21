@@ -38,7 +38,7 @@ export async function RecentGitHubRepositories() {
 
   const recentRepositories = allRepositories
     .filter((repo) => !featuredUrls.has(repo.url))
-    .slice(0, 6);
+    .slice(0, 5);
 
   return (
     <div className="grid gap-4 grid-cols-1">

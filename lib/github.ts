@@ -28,17 +28,22 @@ export const getRecentRepositories = async () => {
   const repositories = await octokit.request("GET /user/repos", {
     sort: "pushed",
     direction: "desc",
-    per_page: 20,
+    per_page: 30,
     type: "owner",
   });
 
-  return repositories.data.map((repo) => ({
-    id: repo.id.toString(),
-    name: repo.full_name,
-    url: repo.html_url,
-    description: repo.description || "No description",
-    language: repo.language || "Unknown",
-    color: getColor(repo.language || "Unknown", "#858585"),
-    stargazers_count: repo.stargazers_count,
-  }));
+  return repositories.data
+    .filter((repo) => repo.private === false) // Exclude private repositories.
+    .filter((repo) => repo.fork === false) // Exclude repositories that are forks.
+    .filter((repo) => repo.archived === false) // Exclude repositories that are archived.
+    .slice(0, 10) // Limit it to the last 10 repositories.
+    .map((repo) => ({
+      id: repo.id.toString(),
+      name: repo.full_name,
+      url: repo.html_url,
+      description: repo.description || "No description",
+      language: repo.language || "Unknown",
+      color: getColor(repo.language || "Unknown", "#858585"),
+      stargazers_count: repo.stargazers_count,
+    }));
 };
