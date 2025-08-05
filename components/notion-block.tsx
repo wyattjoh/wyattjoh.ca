@@ -36,10 +36,20 @@ export async function NotionBlock({ block }: Props) {
       return <h3>{block.heading_2.rich_text[0].plain_text}</h3>;
     case "heading_3":
       return <h4>{block.heading_3.rich_text[0].plain_text}</h4>;
-    case "code":
+    case "code": {
+      // Map Notion language names to bright-compatible ones
+      const mapLanguage = (lang: string) => {
+        if (lang === "plain text") return "text";
+        return lang;
+      };
+
       return (
         <div>
-          <Code lang={block.code.language} theme="nord" lineNumbers>
+          <Code
+            lang={mapLanguage(block.code.language)}
+            theme="nord"
+            lineNumbers
+          >
             {block.code.rich_text[0].plain_text}
           </Code>
           {block.code.caption.length > 0 && (
@@ -49,6 +59,7 @@ export async function NotionBlock({ block }: Props) {
           )}
         </div>
       );
+    }
     case "embed":
       // URL matches https://podcasts.apple.com/ca/podcast/partial-pre-rendering-in-next-js-with-delba-de/id1539945251?i=1000649186593
       if (/^https:\/\/podcasts.apple.com/.test(block.embed.url)) {
@@ -98,6 +109,8 @@ export async function NotionBlock({ block }: Props) {
           ))}
         </li>
       );
+    case "divider":
+      return <hr />;
     default:
       // TODO: support other block types
 
