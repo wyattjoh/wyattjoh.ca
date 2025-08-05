@@ -19,11 +19,22 @@ export const getPageBlocks = async (id: string) => {
   unstable_cacheTag("notion");
   unstable_cacheLife("days");
 
-  const { results } = await notion.blocks.children.list({
-    block_id: id,
-  });
+  const allBlocks: BlockObjectResponse[] = [];
+  let cursor: string | undefined;
 
-  return results as BlockObjectResponse[];
+  do {
+    const response = await notion.blocks.children.list({
+      block_id: id,
+      start_cursor: cursor,
+    });
+
+    const blocks = response.results as BlockObjectResponse[];
+    allBlocks.push(...blocks);
+
+    cursor = response.next_cursor || undefined;
+  } while (cursor);
+
+  return allBlocks;
 };
 
 export type BlogPost = {
