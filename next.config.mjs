@@ -5,7 +5,6 @@ const nextConfig = {
     remotePatterns: [{ hostname: "avatars.githubusercontent.com" }],
   },
   experimental: {
-    ppr: true,
     cacheComponents: true,
   },
   eslint: {

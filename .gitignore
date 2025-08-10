@@ -35,3 +35,4 @@ yarn-error.log*
 
 __generated__
 .env*.local
+*.tsbuildinfo
