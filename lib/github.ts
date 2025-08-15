@@ -9,7 +9,7 @@ const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
 export const getRepository = async (name: string) => {
   "use cache";
   unstable_cacheTag("github");
-  unstable_cacheLife("days");
+  unstable_cacheLife("hours");
 
   const [owner, repo] = name.split("/");
   const repository = await octokit.request("GET /repos/{owner}/{repo}", {
@@ -23,7 +23,7 @@ export const getRepository = async (name: string) => {
 export const getRecentRepositories = async () => {
   "use cache";
   unstable_cacheTag("github");
-  unstable_cacheLife("days");
+  unstable_cacheLife("hours");
 
   const repositories = await octokit.request("GET /user/repos", {
     sort: "pushed",

@@ -17,7 +17,7 @@ const notion = new Client({
 export const getPageBlocks = async (id: string) => {
   "use cache";
   unstable_cacheTag("notion");
-  unstable_cacheLife("days");
+  unstable_cacheLife("hours");
 
   const allBlocks: BlockObjectResponse[] = [];
   let cursor: string | undefined;
@@ -124,7 +124,7 @@ function createBlogPost(response: PageObjectResponse): BlogPost | null {
 export const findBlogPost = async (slug: string): Promise<BlogPost | null> => {
   "use cache";
   unstable_cacheTag("notion");
-  unstable_cacheLife("days");
+  unstable_cacheLife("hours");
 
   const args: QueryDatabaseParameters = {
     database_id: "0b56732805064002a20bb6bb55da55eb",
@@ -162,7 +162,7 @@ export const findBlogPost = async (slug: string): Promise<BlogPost | null> => {
 export const getBlogPosts = async (): Promise<BlogPost[]> => {
   "use cache";
   unstable_cacheTag("notion");
-  unstable_cacheLife("days");
+  unstable_cacheLife("hours");
 
   const { results } = await notion.databases.query({
     database_id: "0b56732805064002a20bb6bb55da55eb",
@@ -201,7 +201,7 @@ type Repository = {
 export const getRepositories = async (): Promise<Repository[]> => {
   "use cache";
   unstable_cacheTag("notion");
-  unstable_cacheLife("days");
+  unstable_cacheLife("hours");
 
   const { results } = await notion.databases.query({
     database_id: "b3ccd60d3267422a8c28e9f8044e036b",
