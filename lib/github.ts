@@ -34,7 +34,6 @@ export const getRecentRepositories = async () => {
 
   return repositories.data
     .filter((repo) => repo.private === false) // Exclude private repositories.
-    .filter((repo) => repo.fork === false) // Exclude repositories that are forks.
     .filter((repo) => repo.archived === false) // Exclude repositories that are archived.
     .slice(0, 10) // Limit it to the last 10 repositories.
     .map((repo) => ({
