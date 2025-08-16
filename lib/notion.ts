@@ -14,6 +14,13 @@ const notion = new Client({
   auth: process.env.NOTION_TOKEN,
 });
 
+/**
+ * Retrieves all child blocks from a Notion page, handling pagination automatically.
+ * This function recursively fetches all blocks using Notion's pagination cursor.
+ *
+ * @param id - The Notion page or block ID to fetch children from
+ * @returns Promise that resolves to an array of all block objects from the page
+ */
 export const getPageBlocks = async (id: string) => {
   "use cache";
   unstable_cacheTag("notion");
@@ -37,6 +44,52 @@ export const getPageBlocks = async (id: string) => {
   return allBlocks;
 };
 
+/**
+ * Extracts heading blocks (h1, h2, h3) from a Notion page and returns them as a structured array.
+ * Used for generating table of contents for blog posts.
+ *
+ * @param id - The Notion page ID to extract headings from
+ * @returns Promise that resolves to an array of heading objects with id, text, and level properties
+ */
+export const extractHeadings = async (id: string): Promise<Heading[]> => {
+  "use cache";
+  unstable_cacheTag("notion");
+  unstable_cacheLife("hours");
+
+  const blocks = await getPageBlocks(id);
+  const headings: Heading[] = [];
+
+  for (const block of blocks) {
+    if (block.type === "heading_1" && block.heading_1.rich_text[0]) {
+      headings.push({
+        id: block.id,
+        text: block.heading_1.rich_text[0].plain_text,
+        level: 1,
+      });
+    } else if (block.type === "heading_2" && block.heading_2.rich_text[0]) {
+      headings.push({
+        id: block.id,
+        text: block.heading_2.rich_text[0].plain_text,
+        level: 2,
+      });
+    } else if (block.type === "heading_3" && block.heading_3.rich_text[0]) {
+      headings.push({
+        id: block.id,
+        text: block.heading_3.rich_text[0].plain_text,
+        level: 3,
+      });
+    }
+  }
+
+  return headings;
+};
+
+export type Heading = {
+  id: string;
+  text: string;
+  level: 1 | 2 | 3;
+};
+
 export type BlogPost = {
   id: string;
   title: string;
@@ -52,6 +105,13 @@ const formatter = new Intl.DateTimeFormat("en-US", {
   day: "numeric",
 });
 
+/**
+ * Converts Notion rich text objects to plain text by extracting text content.
+ * Filters out non-text items and joins all text blocks with spaces.
+ *
+ * @param text - Array of Notion rich text response objects
+ * @returns Plain text string with all formatting removed
+ */
 export function toPlainText(text: RichTextItemResponse[]): string {
   return text
     .map((block) => {
@@ -121,6 +181,13 @@ function createBlogPost(response: PageObjectResponse): BlogPost | null {
   };
 }
 
+/**
+ * Finds a specific blog post by its slug from the Notion database.
+ * Filters by published status unless draft mode is enabled via environment variable.
+ *
+ * @param slug - The unique slug identifier for the blog post
+ * @returns Promise that resolves to a BlogPost object or null if not found
+ */
 export const findBlogPost = async (slug: string): Promise<BlogPost | null> => {
   "use cache";
   unstable_cacheTag("notion");
@@ -141,13 +208,14 @@ export const findBlogPost = async (slug: string): Promise<BlogPost | null> => {
   };
 
   if (process.env.ENABLE_DRAFT_MODE !== "true") {
-    // @ts-expect-error
-    args.filter.and.push({
-      property: "Status",
-      select: {
-        equals: "Published",
-      },
-    });
+    if (args.filter && "and" in args.filter) {
+      args.filter.and.push({
+        property: "Status",
+        select: {
+          equals: "Published",
+        },
+      });
+    }
   }
 
   const { results } = await notion.databases.query(args);
@@ -155,10 +223,17 @@ export const findBlogPost = async (slug: string): Promise<BlogPost | null> => {
     return null;
   }
 
-  // @ts-expect-error
-  return createBlogPost(results[0]);
+  // We know results[0] is a PageObjectResponse because the blog post id is
+  // hardcoded.
+  return createBlogPost(results[0] as PageObjectResponse);
 };
 
+/**
+ * Retrieves all published blog posts from the Notion database, sorted by date (newest first).
+ * Filters out draft posts unless ENABLE_DRAFT_MODE environment variable is set.
+ *
+ * @returns Promise that resolves to an array of BlogPost objects
+ */
 export const getBlogPosts = async (): Promise<BlogPost[]> => {
   "use cache";
   unstable_cacheTag("notion");
@@ -198,6 +273,12 @@ type Repository = {
   language: string;
 };
 
+/**
+ * Retrieves featured repositories from the Notion database, sorted by order.
+ * Includes repository metadata like name, URL, description, and programming language.
+ *
+ * @returns Promise that resolves to an array of Repository objects with metadata
+ */
 export const getRepositories = async (): Promise<Repository[]> => {
   "use cache";
   unstable_cacheTag("notion");

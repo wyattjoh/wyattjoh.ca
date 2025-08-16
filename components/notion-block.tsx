@@ -31,11 +31,23 @@ export async function NotionBlock({ block }: Props) {
       return <NotionRichTextBlock block={block} />;
     case "heading_1":
       // We're using h2 instead of h1 because the page title is an h1.
-      return <h2>{block.heading_1.rich_text[0].plain_text}</h2>;
+      return (
+        <h2 id={block.id} className="scroll-mt-20">
+          {block.heading_1.rich_text[0].plain_text}
+        </h2>
+      );
     case "heading_2":
-      return <h3>{block.heading_2.rich_text[0].plain_text}</h3>;
+      return (
+        <h3 id={block.id} className="scroll-mt-20">
+          {block.heading_2.rich_text[0].plain_text}
+        </h3>
+      );
     case "heading_3":
-      return <h4>{block.heading_3.rich_text[0].plain_text}</h4>;
+      return (
+        <h4 id={block.id} className="scroll-mt-20">
+          {block.heading_3.rich_text[0].plain_text}
+        </h4>
+      );
     case "code": {
       // Map Notion language names to bright-compatible ones
       const mapLanguage = (lang: string) => {

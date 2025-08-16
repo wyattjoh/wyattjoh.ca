@@ -33,7 +33,7 @@ export const metadata: Metadata = {
 
 export default function Layout({ children }: Props) {
   return (
-    <html lang="en">
+    <html lang="en" className="scroll-smooth">
       <body
         className={clsx(
           inter.className,

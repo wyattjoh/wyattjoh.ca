@@ -27,7 +27,7 @@ export async function BlogPosts({ className }: Props) {
                   {post.date}
                 </time>
                 <div className="flex-1">
-                  <h3 className="text-xl font-semibold group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors dark:text-white">
+                  <h3 className="text-xl font-semibold group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors dark:text-white">
                     {post.title}
                   </h3>
                   {post.summary && (

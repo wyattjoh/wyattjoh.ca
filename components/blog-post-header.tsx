@@ -11,13 +11,29 @@ type Props = {
 
 export function BlogPostHeader({ post }: Props) {
   return (
-    <header className="mb-20 space-y-8">
-      <Link
-        href="/"
-        className="text-xs text-gray-400 hover:text-gray-500 inline-block"
-      >
-        ← Back
-      </Link>
+    <header className="space-y-8">
+      <div className="flex items-center gap-4">
+        <Link
+          href="/"
+          className="flex items-center gap-3 transition-all duration-200 focus-ring group"
+        >
+          <Image
+            alt="Picture of Wyatt Johnson"
+            src={avatar}
+            width={48}
+            height={48}
+            className="rounded-full border-2 border-gray-200 dark:border-gray-700 group-hover:border-gray-300 dark:group-hover:border-gray-600 transition-colors"
+          />
+          <div>
+            <h2 className="font-bold text-lg text-gray-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+              Wyatt Johnson
+            </h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              Full-stack developer
+            </p>
+          </div>
+        </Link>
+      </div>
       <div className="space-y-2">
         {post ? (
           <>
@@ -40,25 +56,11 @@ export function BlogPostHeader({ post }: Props) {
       </div>
       <div className="flex text-xs items-center justify-between">
         <div className="flex items-center">
-          <Image
-            alt="Picture of Wyatt Johnson"
-            src={avatar}
-            width={30}
-            className="rounded-full"
-          />
-          <div className="ml-2">
-            <Link
-              className="font-bold text-gray-600 hover:text-black transition-colors block dark:text-white"
-              href="/"
-            >
-              Wyatt Johnson
-            </Link>
-            {post ? (
-              <time className="text-gray-400">{post.date}</time>
-            ) : (
-              <div className="animate-pulse h-4 bg-slate-200 rounded-sm" />
-            )}
-          </div>
+          {post ? (
+            <time className="text-gray-400">{post.date}</time>
+          ) : (
+            <div className="animate-pulse h-4 bg-slate-200 rounded-sm w-24" />
+          )}
         </div>
         <hr className="ml-6 grow text-gray-200" />
       </div>

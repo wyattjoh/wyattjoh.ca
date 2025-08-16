@@ -99,3 +99,7 @@ Required for local development:
 - Custom CSS variables for spacing and typography scales
 - Dark mode support with theme-aware gradients
 - Interactive states and animations in `app/layout.css`
+- **ALWAYS use `clsx` utility for combining CSS classes conditionally instead of template literals**
+  - Import: `import clsx from "clsx"`
+  - Example: `className={clsx("base-class", condition && "conditional-class", variable)}`
+  - Avoid: `className={\`base-class ${condition ? 'conditional-class' : ''}\`}`

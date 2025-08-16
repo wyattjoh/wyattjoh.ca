@@ -37,7 +37,7 @@ export function GitHubRepository({ repo }: Props) {
       className="group block border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:border-gray-300 dark:hover:border-gray-600 hover:shadow-lg transition-all duration-200 hover-lift bg-white dark:bg-gray-900 focus-ring"
     >
       <div className="flex items-start justify-between mb-2">
-        <h3 className="font-mono text-lg group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors dark:text-white">
+        <h3 className="font-mono text-lg group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors dark:text-white">
           {repo.name}
         </h3>
         <div className="flex items-center gap-2">

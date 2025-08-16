@@ -76,7 +76,7 @@ export default function Page() {
           href="https://github.com/wyattjoh"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-3 px-6 py-3 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-gray-300 dark:hover:border-gray-600 hover:shadow-lg transition-all duration-200 hover-lift bg-white dark:bg-gray-900 focus-ring text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400"
+          className="inline-flex items-center gap-3 px-6 py-3 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-gray-300 dark:hover:border-gray-600 hover:shadow-lg transition-all duration-200 hover-lift bg-white dark:bg-gray-900 focus-ring text-gray-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400"
         >
           <Github size={20} />
           <span className="font-medium">View all repositories on GitHub</span>

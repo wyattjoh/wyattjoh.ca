@@ -5,8 +5,15 @@ import { notFound } from "next/navigation";
 import { BlogPost } from "../../../components/blog-post";
 import { BlogPostFooter } from "../../../components/blog-post-footer";
 import { BlogPostHeader } from "../../../components/blog-post-header";
+import { MobileTableOfContents } from "../../../components/mobile-table-of-contents";
+import { TableOfContents } from "../../../components/table-of-contents";
 import { base } from "../../../lib/base";
-import { findBlogPost, getBlogPosts, toPlainText } from "../../../lib/notion";
+import {
+  extractHeadings,
+  findBlogPost,
+  getBlogPosts,
+  toPlainText,
+} from "../../../lib/notion";
 
 type Props = {
   params: Promise<{
@@ -51,11 +58,21 @@ export default async function Page({ params }: Props) {
     notFound();
   }
 
+  const headings = await extractHeadings(post.id);
+
   return (
     <div className="p-4">
-      <BlogPostHeader post={post} />
-      <BlogPost post={post} />
-      <BlogPostFooter />
+      <div className="lg:grid lg:grid-cols-[1fr_250px] lg:gap-12">
+        <div className="lg:col-span-2">
+          <BlogPostHeader post={post} />
+        </div>
+        <div className="lg:col-span-1">
+          <BlogPost post={post} />
+          <BlogPostFooter />
+        </div>
+        <TableOfContents headings={headings} />
+      </div>
+      <MobileTableOfContents headings={headings} />
     </div>
   );
 }
