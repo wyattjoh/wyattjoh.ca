@@ -1,5 +1,5 @@
-import type { BlogPost as BlogPostData } from "../lib/notion";
-import { NotionBlocks } from "./notion-blocks";
+import { NotionBlocks } from "@/components/notion-blocks";
+import type { BlogPost as BlogPostData } from "@/lib/notion";
 
 type Props = {
   post: BlogPostData;

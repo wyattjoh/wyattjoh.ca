@@ -1,7 +1,6 @@
-import { cn } from "../lib/cn";
-
-import { getPageBlocks } from "../lib/notion";
-import { NotionBlock } from "./notion-block";
+import { NotionBlock } from "@/components/notion-block";
+import { cn } from "@/lib/cn";
+import { getPageBlocks } from "@/lib/notion";
 
 type Props = {
   id: string;

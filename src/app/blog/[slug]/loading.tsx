@@ -1,4 +1,4 @@
-import { BlogPostHeader } from "../../../components/blog-post-header";
+import { BlogPostHeader } from "@/components/blog-post-header";
 
 function BlogPostSkeleton() {
   return (

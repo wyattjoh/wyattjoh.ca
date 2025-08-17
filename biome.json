@@ -16,7 +16,8 @@
       "!**/build",
       "!**/dist",
       "!**/bun.lock"
-    ]
+    ],
+    "maxSize": 10485760
   },
   "formatter": {
     "enabled": true,
@@ -24,6 +25,13 @@
     "indentWidth": 2,
     "lineEnding": "lf",
     "lineWidth": 80
+  },
+  "graphql": {
+    "formatter": {
+      "enabled": true,
+      "indentStyle": "space",
+      "indentWidth": 2
+    }
   },
   "assist": { "actions": { "source": { "organizeImports": "on" } } },
   "linter": {
@@ -35,7 +43,8 @@
       },
       "correctness": {
         "noUnusedVariables": "warn",
-        "useExhaustiveDependencies": "warn"
+        "useExhaustiveDependencies": "warn",
+        "useUniqueElementIds": "off"
       },
       "style": {
         "useConst": "error",

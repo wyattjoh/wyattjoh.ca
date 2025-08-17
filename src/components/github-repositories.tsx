@@ -1,9 +1,8 @@
-import { getRecentRepositories } from "../lib/github";
-import { getRepositories } from "../lib/notion";
 import {
   GitHubRepository,
   GitHubRepositorySkeleton,
-} from "./github-repository";
+} from "@/components/github-repository";
+import type { ViewerRepositories } from "@/lib/github";
 
 export function GitHubRepositoriesSkeleton(props: { count: number }) {
   return (
@@ -16,28 +15,29 @@ export function GitHubRepositoriesSkeleton(props: { count: number }) {
   );
 }
 
-export async function GitHubRepositories() {
-  const repositories = await getRepositories();
+type Props = {
+  data: Promise<ViewerRepositories>;
+};
+
+export async function GitHubRepositories({ data }: Props) {
+  const { pinned } = await data;
 
   return (
     <div className="grid gap-4 grid-cols-1">
-      {repositories.map((repo) => (
+      {pinned.map((repo) => (
         <GitHubRepository key={repo.id} repo={repo} />
       ))}
     </div>
   );
 }
 
-export async function RecentGitHubRepositories() {
-  const [featuredRepositories, allRepositories] = await Promise.all([
-    getRepositories(),
-    getRecentRepositories(),
-  ]);
+export async function RecentGitHubRepositories({ data }: Props) {
+  const { pinned, repositories } = await data;
 
-  const featuredUrls = new Set(featuredRepositories.map((repo) => repo.url));
+  const pinnedIDs = new Set(pinned.map((repo) => repo.id));
 
-  const recentRepositories = allRepositories
-    .filter((repo) => !featuredUrls.has(repo.url))
+  const recentRepositories = repositories
+    .filter((repo) => !pinnedIDs.has(repo.id))
     .slice(0, 5);
 
   return (

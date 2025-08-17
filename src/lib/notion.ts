@@ -8,7 +8,6 @@ import type {
   RichTextItemResponse,
 } from "@notionhq/client/build/src/api-endpoints";
 import { unstable_cacheLife, unstable_cacheTag } from "next/cache";
-import { getColor } from "./colors";
 
 const notion = new Client({
   auth: process.env.NOTION_TOKEN,
@@ -261,73 +260,5 @@ export const getBlogPosts = async (): Promise<BlogPost[]> => {
     .map<BlogPost | null>(createBlogPost)
     .filter((post): post is BlogPost => {
       return post !== null;
-    });
-};
-
-type Repository = {
-  id: string;
-  name: string;
-  url: string;
-  description: string;
-  color: string;
-  language: string;
-};
-
-/**
- * Retrieves featured repositories from the Notion database, sorted by order.
- * Includes repository metadata like name, URL, description, and programming language.
- *
- * @returns Promise that resolves to an array of Repository objects with metadata
- */
-export const getRepositories = async (): Promise<Repository[]> => {
-  "use cache";
-  unstable_cacheTag("notion");
-  unstable_cacheLife("hours");
-
-  const { results } = await notion.databases.query({
-    database_id: "b3ccd60d3267422a8c28e9f8044e036b",
-    sorts: [{ property: "Order", direction: "ascending" }],
-  });
-
-  return results
-    .filter<PageObjectResponse>((result): result is PageObjectResponse => {
-      return "properties" in result;
-    })
-    .map<Repository | null>((result) => {
-      const { Name, URL, Description, Language } = result.properties;
-
-      if (Name.type !== "title" || !Name.title?.[0]?.plain_text) {
-        return null;
-      }
-
-      if (URL.type !== "url" || !URL.url) {
-        return null;
-      }
-
-      if (
-        Description.type !== "rich_text" ||
-        !Description.rich_text?.[0]?.plain_text
-      ) {
-        return null;
-      }
-
-      if (
-        Language.type !== "rich_text" ||
-        !Language.rich_text?.[0]?.plain_text
-      ) {
-        return null;
-      }
-
-      return {
-        id: result.id,
-        name: Name.title[0].plain_text,
-        url: URL.url,
-        description: Description.rich_text[0].plain_text,
-        color: getColor(Language.rich_text[0].plain_text, "#858585"),
-        language: Language.rich_text[0].plain_text,
-      };
-    })
-    .filter((repository): repository is Repository => {
-      return repository !== null;
     });
 };

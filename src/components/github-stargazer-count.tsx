@@ -1,9 +1,7 @@
 import { Star } from "lucide-react";
-import { getRepository } from "../lib/github";
 
 type Props = {
-  name: string;
-  count?: number;
+  count: number;
 };
 
 function formatNumber(n: number): string {
@@ -18,12 +16,7 @@ function formatNumber(n: number): string {
   return n.toString();
 }
 
-export async function GitHubStargazerCount({ name, count }: Props) {
-  if (!count) {
-    const repository = await getRepository(name);
-    count = repository.stargazers_count;
-  }
-
+export function GitHubStargazerCount({ count }: Props) {
   return (
     <span className="font-mono lowercase text-sm dark:text-gray-500 flex items-center gap-1">
       {formatNumber(count)} <Star className="w-4 h-4" aria-label="stars" />
@@ -31,11 +24,7 @@ export async function GitHubStargazerCount({ name, count }: Props) {
   );
 }
 
-export function GitHubStargazerCountSkeleton({ name, count }: Partial<Props>) {
-  if (name && count) {
-    return <GitHubStargazerCount name={name} count={count} />;
-  }
-
+export function GitHubStargazerCountSkeleton() {
   return (
     <span className="animate-pulse font-mono lowercase h-4 w-12 bg-gray-200 dark:bg-gray-700" />
   );

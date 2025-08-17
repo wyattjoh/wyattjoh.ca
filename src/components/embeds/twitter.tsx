@@ -14,8 +14,6 @@ export async function TwitterEmbed(props: Props) {
 
   const data = await res.json();
 
-  console.log(data);
-
   return (
     <div
       // biome-ignore lint/security/noDangerouslySetInnerHtml: Twitter oEmbed API returns safe HTML content

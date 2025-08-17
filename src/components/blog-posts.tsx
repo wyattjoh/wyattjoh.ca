@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { getBlogPosts } from "../lib/notion";
+import { getBlogPosts } from "@/lib/notion";
 
 type Props = {
   className?: string;

@@ -4,10 +4,10 @@ import type {
 } from "@notionhq/client/build/src/api-endpoints";
 
 import { Code } from "bright";
-import { ApplePodcastEmbed } from "./embeds/apple-podcast";
-import { TwitterEmbed } from "./embeds/twitter";
-import { YouTubeEmbed } from "./embeds/youtube";
-import { NotionRichTextBlock } from "./notion-rich-text-block";
+import { ApplePodcastEmbed } from "@/components/embeds/apple-podcast";
+import { TwitterEmbed } from "@/components/embeds/twitter";
+import { YouTubeEmbed } from "@/components/embeds/youtube";
+import { NotionRichTextBlock } from "@/components/notion-rich-text-block";
 
 type Props = {
   block: BlockObjectResponse | RichTextItemResponse;

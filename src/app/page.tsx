@@ -4,16 +4,17 @@ import Image from "next/image";
 import { Suspense } from "react";
 import type { Person } from "schema-dts";
 
-import { BlogPosts } from "../components/blog-posts";
+import { BlogPosts } from "@/components/blog-posts";
 import {
   GitHubRepositories,
   GitHubRepositoriesSkeleton,
   RecentGitHubRepositories,
-} from "../components/github-repositories";
-import { NotionBlocks } from "../components/notion-blocks";
-import { StructuredData } from "../components/structured-data";
-import { base } from "../lib/base";
-import avatar from "../public/avatar.jpeg";
+} from "@/components/github-repositories";
+import { NotionBlocks } from "@/components/notion-blocks";
+import { StructuredData } from "@/components/structured-data";
+import { base } from "@/lib/base";
+import { getViewerRepositories } from "@/lib/github";
+import avatar from "@/public/avatar.jpeg";
 
 export const metadata: Metadata = {
   title: "Wyatt Johnson",
@@ -52,6 +53,8 @@ export default function Page() {
       "Software Engineering",
     ],
   };
+
+  const data = getViewerRepositories();
 
   return (
     <>
@@ -97,7 +100,7 @@ export default function Page() {
             Featured Repositories
           </h2>
           <Suspense fallback={<GitHubRepositoriesSkeleton count={4} />}>
-            <GitHubRepositories />
+            <GitHubRepositories data={data} />
           </Suspense>
         </section>
         <section className="space-y-8" id="recent-projects">
@@ -105,7 +108,7 @@ export default function Page() {
             Recent Repositories
           </h2>
           <Suspense fallback={<GitHubRepositoriesSkeleton count={6} />}>
-            <RecentGitHubRepositories />
+            <RecentGitHubRepositories data={data} />
           </Suspense>
         </section>
         <section className="flex justify-center">

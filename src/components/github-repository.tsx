@@ -1,5 +1,3 @@
-import { Suspense } from "react";
-
 import {
   GitHubStargazerCount,
   GitHubStargazerCountSkeleton,
@@ -21,10 +19,10 @@ type Props = {
   repo: {
     name: string;
     url: string;
-    description: string;
+    description: string | null;
     color: string;
     language: string;
-    stargazers_count?: number;
+    stargazers_count: number;
   };
 };
 
@@ -41,24 +39,14 @@ export function GitHubRepository({ repo }: Props) {
           {repo.name}
         </h3>
         <div className="flex items-center gap-2">
-          <Suspense
-            fallback={
-              <GitHubStargazerCountSkeleton
-                name={repo.name}
-                count={repo.stargazers_count}
-              />
-            }
-          >
-            <GitHubStargazerCount
-              name={repo.name}
-              count={repo.stargazers_count}
-            />
-          </Suspense>
+          <GitHubStargazerCount count={repo.stargazers_count} />
         </div>
       </div>
-      <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
-        {repo.description}
-      </p>
+      {repo.description && (
+        <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+          {repo.description}
+        </p>
+      )}
       <div className="flex items-center gap-4 mt-3 text-xs text-gray-500 dark:text-gray-500">
         <span
           className="flex items-center gap-1.5"

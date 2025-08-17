@@ -1,9 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import type { BlogPost } from "../lib/notion";
-
-import avatar from "../public/avatar.jpeg";
-import { NotionRichTextBlock } from "./notion-rich-text-block";
+import { NotionRichTextBlock } from "@/components/notion-rich-text-block";
+import type { BlogPost } from "@/lib/notion";
+import avatar from "@/public/avatar.jpeg";
 
 type Props = {
   post: BlogPost | undefined;

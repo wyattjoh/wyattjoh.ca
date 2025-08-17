@@ -6,6 +6,8 @@ const nextConfig = {
   },
   experimental: {
     cacheComponents: true,
+    clientSegmentCache: true,
+    clientParamParsing: true,
   },
   eslint: {
     ignoreDuringBuilds: true,

@@ -2,7 +2,7 @@
 import { notFound } from "next/navigation";
 import { ImageResponse } from "next/og";
 
-import { findBlogPost, toPlainText } from "../../../lib/notion";
+import { findBlogPost, toPlainText } from "@/lib/notion";
 
 export const size = {
   width: 1920,

@@ -1,18 +1,18 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { BlogPost } from "../../../components/blog-post";
-import { BlogPostFooter } from "../../../components/blog-post-footer";
-import { BlogPostHeader } from "../../../components/blog-post-header";
-import { MobileTableOfContents } from "../../../components/mobile-table-of-contents";
-import { StructuredData } from "../../../components/structured-data";
-import { TableOfContents } from "../../../components/table-of-contents";
-import { base } from "../../../lib/base";
+import { BlogPost } from "@/components/blog-post";
+import { BlogPostFooter } from "@/components/blog-post-footer";
+import { BlogPostHeader } from "@/components/blog-post-header";
+import { MobileTableOfContents } from "@/components/mobile-table-of-contents";
+import { StructuredData } from "@/components/structured-data";
+import { TableOfContents } from "@/components/table-of-contents";
+import { base } from "@/lib/base";
 import {
   extractHeadings,
   findBlogPost,
   getBlogPosts,
   toPlainText,
-} from "../../../lib/notion";
+} from "@/lib/notion";
 
 type Props = {
   params: Promise<{
