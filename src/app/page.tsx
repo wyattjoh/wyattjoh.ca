@@ -14,7 +14,7 @@ import { NotionBlocks } from "@/components/notion-blocks";
 import { StructuredData } from "@/components/structured-data";
 import { base } from "@/lib/base";
 import { getViewerRepositories } from "@/lib/github";
-import avatar from "@/public/avatar.jpeg";
+import avatar from "../../public/avatar.jpeg";
 
 export const metadata: Metadata = {
   title: "Wyatt Johnson",
