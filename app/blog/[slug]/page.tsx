@@ -61,7 +61,7 @@ export default async function Page({ params }: Props) {
   return (
     <div className="p-4">
       {headings.length > 0 ? (
-        <div className="lg:grid lg:grid-cols-[1fr_250px] lg:gap-x-12 lg:gap-y-16">
+        <div className="flex flex-col lg:grid lg:grid-cols-[1fr_250px] gap-x-12 gap-y-16">
           <div className="lg:col-span-2">
             <BlogPostHeader post={post} />
           </div>
