@@ -11,7 +11,7 @@ type Props = {
 
 export function BlogPostHeader({ post }: Props) {
   return (
-    <header className="space-y-8">
+    <header className="space-y-8  text-lg not-last:max-w-prose">
       <div className="flex items-center gap-4">
         <Link
           href="/"

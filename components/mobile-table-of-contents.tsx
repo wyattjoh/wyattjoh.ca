@@ -1,7 +1,7 @@
 "use client";
 
-import clsx from "clsx";
 import { useState } from "react";
+import { cn } from "../lib/cn";
 import type { Heading } from "../lib/notion";
 
 type Props = {
@@ -92,7 +92,7 @@ export function MobileTableOfContents({ headings }: Props) {
                     key={heading.id}
                     type="button"
                     onClick={() => handleHeadingClick(heading.id)}
-                    className={clsx(
+                    className={cn(
                       "block w-full text-left py-2 px-2 rounded-lg transition-colors hover:cursor-pointer text-gray-900 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800",
                       heading.level === 1 && "font-bold",
                       heading.level === 2 && "pl-4",

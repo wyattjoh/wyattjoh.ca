@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
-
 import { notFound } from "next/navigation";
-
 import { BlogPost } from "../../../components/blog-post";
 import { BlogPostFooter } from "../../../components/blog-post-footer";
 import { BlogPostHeader } from "../../../components/blog-post-header";
@@ -62,17 +60,25 @@ export default async function Page({ params }: Props) {
 
   return (
     <div className="p-4">
-      <div className="lg:grid lg:grid-cols-[1fr_250px] lg:gap-12">
-        <div className="lg:col-span-2">
-          <BlogPostHeader post={post} />
+      {headings.length > 0 ? (
+        <div className="lg:grid lg:grid-cols-[1fr_250px] lg:gap-x-12 lg:gap-y-16">
+          <div className="lg:col-span-2">
+            <BlogPostHeader post={post} />
+          </div>
+          <div className="lg:col-span-1 space-y-16">
+            <BlogPost post={post} />
+            <BlogPostFooter />
+          </div>
+          <TableOfContents headings={headings} />
         </div>
-        <div className="lg:col-span-1">
+      ) : (
+        <div className="max-w-prose text-lg space-y-16">
+          <BlogPostHeader post={post} />
           <BlogPost post={post} />
           <BlogPostFooter />
         </div>
-        <TableOfContents headings={headings} />
-      </div>
-      <MobileTableOfContents headings={headings} />
+      )}
+      {headings.length > 0 && <MobileTableOfContents headings={headings} />}
     </div>
   );
 }

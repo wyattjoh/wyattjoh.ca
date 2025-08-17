@@ -6,5 +6,5 @@ type Props = {
 };
 
 export async function BlogPost({ post }: Props) {
-  return <NotionBlocks id={post.id} className="space-y-8 mb-16" />;
+  return <NotionBlocks id={post.id} className="space-y-8" />;
 }

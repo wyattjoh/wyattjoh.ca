@@ -1,7 +1,7 @@
 "use client";
 
-import clsx from "clsx";
 import { useEffect, useState } from "react";
+import { cn } from "../lib/cn";
 import type { Heading } from "../lib/notion";
 
 type Props = {
@@ -73,7 +73,7 @@ export function TableOfContents({ headings }: Props) {
 
   return (
     <aside
-      className={clsx(
+      className={cn(
         "hidden lg:block duration-200 opacity-50 hover:opacity-100 transition-opacity  max-h-[calc(100vh-5rem)] overflow-y-auto",
         isSticky ? "sticky top-10" : ""
       )}
@@ -119,15 +119,15 @@ export function TableOfContents({ headings }: Props) {
             <a
               key={heading.id}
               href={`#${heading.id}`}
-              className={clsx(
+              className={cn(
                 "block py-1 transition-colors",
                 paddingClass,
-                isActive && "text-indigo-600 dark:text-indigo-400 font-medium",
-                !isActive &&
-                  "hover:text-black dark:text-gray-300/70 dark:hover:text-white",
                 heading.level === 1 && "font-medium text-gray-900/80",
                 heading.level === 2 && "font-normal text-gray-800/80",
-                heading.level === 3 && "font-light text-gray-700/70"
+                heading.level === 3 && "font-light text-gray-700/70",
+                isActive && "text-indigo-600 dark:text-indigo-400",
+                !isActive &&
+                  "hover:text-black dark:text-gray-300/70 dark:hover:text-white"
               )}
             >
               {heading.text}

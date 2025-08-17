@@ -1,12 +1,11 @@
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { clsx } from "clsx";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import type { ReactNode } from "react";
-
 import { Footer } from "../components/footer";
 import { base } from "../lib/base";
+import { cn } from "../lib/cn";
 
 import "./layout.css";
 
@@ -35,7 +34,7 @@ export default function Layout({ children }: Props) {
   return (
     <html lang="en" className="scroll-smooth">
       <body
-        className={clsx(
+        className={cn(
           inter.className,
           "min-h-screen font-sans font-light dark:bg-gray-800"
         )}

@@ -4,7 +4,7 @@ import { NotionBlocks } from "./notion-blocks";
 
 export function BlogPostFooter() {
   return (
-    <aside className="flex gap-4 py-12 border-t border-gray-200 items-center">
+    <aside className="flex gap-4 pb-12 border-t border-gray-200 items-center">
       <Image
         alt="Picture of Wyatt Johnson"
         src={avatar}
