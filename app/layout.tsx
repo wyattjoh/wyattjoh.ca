@@ -20,6 +20,38 @@ export const metadata: Metadata = {
     default: "Wyatt Johnson",
     template: "%s | Wyatt Johnson",
   },
+  description:
+    "Software Engineer with a security first mindset. Working on Next.js at @vercel.",
+  keywords: [
+    "Wyatt Johnson",
+    "Full-stack Developer",
+    "Next.js",
+    "React",
+    "TypeScript",
+    "Vercel",
+    "Web Development",
+    "Software Engineering",
+  ],
+  authors: [{ name: "Wyatt Johnson", url: base }],
+  creator: "Wyatt Johnson",
+  publisher: "Wyatt Johnson",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: base,
+    title: "Wyatt Johnson",
+    description:
+      "Software Engineer with a security first mindset. Working on Next.js at @vercel.",
+    siteName: "Wyatt Johnson",
+    images: [
+      {
+        url: `${base}/avatar.jpeg`,
+        width: 1200,
+        height: 630,
+        alt: "Wyatt Johnson",
+      },
+    ],
+  },
   icons: {
     icon: [
       { url: "/favicon64x64.png", sizes: "64x64" },
@@ -28,11 +60,17 @@ export const metadata: Metadata = {
     ],
   },
   metadataBase: new URL(base),
+  alternates: {
+    canonical: base,
+  },
 };
 
 export default function Layout({ children }: Props) {
   return (
     <html lang="en" className="scroll-smooth">
+      <head>
+        <link rel="preconnect" href="https://avatars.githubusercontent.com" />
+      </head>
       <body
         className={cn(
           inter.className,

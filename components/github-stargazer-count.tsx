@@ -26,7 +26,7 @@ export async function GitHubStargazerCount({ name, count }: Props) {
 
   return (
     <span className="font-mono lowercase text-sm dark:text-gray-500 flex items-center gap-1">
-      {formatNumber(count)} <Star className="w-4 h-4" />
+      {formatNumber(count)} <Star className="w-4 h-4" aria-label="stars" />
     </span>
   );
 }

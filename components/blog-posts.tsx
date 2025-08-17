@@ -14,7 +14,7 @@ export async function BlogPosts({ className }: Props) {
 
   return (
     <section className={className}>
-      <h2 className="font-bold text-2xl dark:text-white mb-6">Recent Posts:</h2>
+      <h2 className="font-bold text-2xl dark:text-white mb-6">Recent Posts</h2>
       <div className="space-y-6">
         {posts.map((post) => (
           <article key={post.id} className="group">
