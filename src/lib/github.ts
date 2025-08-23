@@ -16,8 +16,8 @@ export type Repository = {
   url: string;
   description: string | null;
   stargazers_count: number;
-  color: string;
-  language: string;
+  language?: string;
+  color?: string | null;
 };
 
 function mapRepository(node: RepositoryFragment): Repository {
@@ -27,8 +27,8 @@ function mapRepository(node: RepositoryFragment): Repository {
     url: node.url,
     description: node.description ?? null,
     stargazers_count: node.stargazerCount,
-    language: node.languages?.nodes?.[0]?.name || "Unknown",
-    color: node.languages?.nodes?.[0]?.color || "#858585",
+    language: node.languages?.nodes?.[0]?.name,
+    color: node.languages?.nodes?.[0]?.color,
   };
 }
 
@@ -96,13 +96,18 @@ export const getViewerRepositories = async (): Promise<ViewerRepositories> => {
       .filter((repo): repo is Repository => repo !== null);
   }
 
+  const pinnedIDs = new Set(repositories.pinned.map((repo) => repo.id));
+
   if (data.viewer.repositories.nodes) {
     repositories.repositories = data.viewer.repositories.nodes
       .map((node) => {
         if (!node || node.__typename !== "Repository") return null;
         return mapRepository(node);
       })
-      .filter((repo): repo is Repository => repo !== null);
+      .filter(
+        (repo): repo is Repository => repo !== null && !pinnedIDs.has(repo.id)
+      )
+      .slice(0, 5);
   }
 
   return repositories;

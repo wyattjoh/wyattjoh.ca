@@ -32,17 +32,11 @@ export async function GitHubRepositories({ data }: Props) {
 }
 
 export async function RecentGitHubRepositories({ data }: Props) {
-  const { pinned, repositories } = await data;
-
-  const pinnedIDs = new Set(pinned.map((repo) => repo.id));
-
-  const recentRepositories = repositories
-    .filter((repo) => !pinnedIDs.has(repo.id))
-    .slice(0, 5);
+  const { repositories } = await data;
 
   return (
     <div className="grid gap-4 grid-cols-1">
-      {recentRepositories.map((repo) => (
+      {repositories.map((repo) => (
         <GitHubRepository key={repo.id} repo={repo} />
       ))}
     </div>
