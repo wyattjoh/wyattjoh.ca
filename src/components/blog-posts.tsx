@@ -23,7 +23,7 @@ export async function BlogPosts({ className }: Props) {
               className="block hover-lift p-4 -mx-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-all"
             >
               <div className="flex items-start gap-4">
-                <time className="text-sm text-gray-500 dark:text-gray-400 mt-1 w-30 flex-shrink-0">
+                <time className="text-sm text-gray-500 dark:text-gray-400 mt-1 w-30 flex-shrink-0 whitespace-nowrap">
                   {post.date}
                 </time>
                 <div className="flex-1">
