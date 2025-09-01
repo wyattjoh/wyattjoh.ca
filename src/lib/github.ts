@@ -8,6 +8,9 @@ import type {
   ViewerRepositoriesQuery,
 } from "@/generated/github-types";
 
+export const PINNED_ITEMS_COUNT = 6;
+export const MORE_REPOSITORIES_COUNT = 6;
+
 const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
 
 export type Repository = {
@@ -42,8 +45,8 @@ export const getViewerRepositories = async (): Promise<ViewerRepositories> => {
   unstable_cacheTag("github");
   unstable_cacheLife("hours");
 
-  const data = await octokit.graphql<ViewerRepositoriesQuery>({
-    query: /* GraphQL */ `
+  const data = await octokit.graphql<ViewerRepositoriesQuery>(
+    /* GraphQL */ `
       fragment Repository on Repository {
         id
         nameWithOwner
@@ -58,13 +61,13 @@ export const getViewerRepositories = async (): Promise<ViewerRepositories> => {
         }
       }
 
-      query ViewerRepositories {
+      query ViewerRepositories($firstPinnedItems: Int!, $firstRepositories: Int!) {
         viewer {
           repositories(
-            first: 12
+            first: $firstRepositories
             privacy: PUBLIC
             ownerAffiliations: [OWNER]
-            orderBy: { field: PUSHED_AT, direction: DESC }
+            orderBy: { field: UPDATED_AT, direction: DESC }
             isArchived: false
           ) {
             nodes {
@@ -72,7 +75,7 @@ export const getViewerRepositories = async (): Promise<ViewerRepositories> => {
               ...Repository
             }
           }
-          pinnedItems(first: 6) {
+          pinnedItems(first: $firstPinnedItems) {
             nodes {
               __typename
               ...Repository
@@ -80,7 +83,11 @@ export const getViewerRepositories = async (): Promise<ViewerRepositories> => {
           }
         }
       }`,
-  });
+    {
+      firstPinnedItems: PINNED_ITEMS_COUNT,
+      firstRepositories: MORE_REPOSITORIES_COUNT + PINNED_ITEMS_COUNT,
+    }
+  );
 
   const repositories: ViewerRepositories = {
     pinned: [],
@@ -107,7 +114,7 @@ export const getViewerRepositories = async (): Promise<ViewerRepositories> => {
       .filter(
         (repo): repo is Repository => repo !== null && !pinnedIDs.has(repo.id)
       )
-      .slice(0, 5);
+      .slice(0, MORE_REPOSITORIES_COUNT);
   }
 
   return repositories;

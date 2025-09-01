@@ -13,7 +13,11 @@ import {
 import { NotionBlocks } from "@/components/notion-blocks";
 import { StructuredData } from "@/components/structured-data";
 import { base } from "@/lib/base";
-import { getViewerRepositories } from "@/lib/github";
+import {
+  getViewerRepositories,
+  MORE_REPOSITORIES_COUNT,
+  PINNED_ITEMS_COUNT,
+} from "@/lib/github";
 import avatar from "../../public/avatar.jpeg";
 
 export const metadata: Metadata = {
@@ -99,15 +103,21 @@ export default function Page() {
           <h2 className="font-bold text-2xl dark:text-white">
             Featured Repositories
           </h2>
-          <Suspense fallback={<GitHubRepositoriesSkeleton count={4} />}>
+          <Suspense
+            fallback={<GitHubRepositoriesSkeleton count={PINNED_ITEMS_COUNT} />}
+          >
             <GitHubRepositories data={data} />
           </Suspense>
         </section>
         <section className="space-y-8" id="recent-projects">
           <h2 className="font-bold text-2xl dark:text-white">
-            Recent Repositories
+            Recent Projects
           </h2>
-          <Suspense fallback={<GitHubRepositoriesSkeleton count={6} />}>
+          <Suspense
+            fallback={
+              <GitHubRepositoriesSkeleton count={MORE_REPOSITORIES_COUNT} />
+            }
+          >
             <RecentGitHubRepositories data={data} />
           </Suspense>
         </section>
