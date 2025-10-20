@@ -4,10 +4,9 @@ const nextConfig = {
     formats: ["image/avif"],
     remotePatterns: [{ hostname: "avatars.githubusercontent.com" }],
   },
+  cacheComponents: true,
   experimental: {
-    cacheComponents: true,
     clientSegmentCache: true,
-    clientParamParsing: true,
   },
   eslint: {
     ignoreDuringBuilds: true,

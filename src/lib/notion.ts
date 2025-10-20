@@ -4,13 +4,14 @@ import { Client } from "@notionhq/client";
 import type {
   BlockObjectResponse,
   PageObjectResponse,
-  QueryDatabaseParameters,
+  QueryDataSourceParameters,
   RichTextItemResponse,
 } from "@notionhq/client/build/src/api-endpoints";
 import { unstable_cacheLife, unstable_cacheTag } from "next/cache";
 
 const notion = new Client({
   auth: process.env.NOTION_TOKEN,
+  notionVersion: "2025-09-03",
 });
 
 /**
@@ -192,8 +193,8 @@ export const findBlogPost = async (slug: string): Promise<BlogPost | null> => {
   unstable_cacheTag("notion");
   unstable_cacheLife("hours");
 
-  const args: QueryDatabaseParameters = {
-    database_id: "0b56732805064002a20bb6bb55da55eb",
+  const args: QueryDataSourceParameters = {
+    data_source_id: "0b56732805064002a20bb6bb55da55eb",
     filter: {
       and: [
         {
@@ -217,7 +218,7 @@ export const findBlogPost = async (slug: string): Promise<BlogPost | null> => {
     }
   }
 
-  const { results } = await notion.databases.query(args);
+  const { results } = await notion.dataSources.query(args);
   if (results.length === 0 || !("properties" in results[0])) {
     return null;
   }
@@ -238,8 +239,8 @@ export const getBlogPosts = async (): Promise<BlogPost[]> => {
   unstable_cacheTag("notion");
   unstable_cacheLife("hours");
 
-  const { results } = await notion.databases.query({
-    database_id: "0b56732805064002a20bb6bb55da55eb",
+  const { results } = await notion.dataSources.query({
+    data_source_id: "0b56732805064002a20bb6bb55da55eb",
     sorts: [{ property: "Date", direction: "descending" }],
     // Ensure we only show published blog posts.
     filter:
