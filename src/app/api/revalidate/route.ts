@@ -1,8 +1,6 @@
 import { revalidatePath, revalidateTag } from "next/cache";
 import type { NextRequest } from "next/server";
 
-export const dynamic = "force-dynamic";
-
 export async function GET(request: NextRequest): Promise<Response> {
   const url = new URL(request.url);
   if (request.headers.get("Authorization") !== process.env.REVALIDATE_KEY) {
@@ -11,7 +9,7 @@ export async function GET(request: NextRequest): Promise<Response> {
 
   const tags = url.searchParams.getAll("tag");
   for (const tag of tags) {
-    revalidateTag(tag);
+    revalidateTag(tag, "max");
   }
 
   const paths = url.searchParams.getAll("path");

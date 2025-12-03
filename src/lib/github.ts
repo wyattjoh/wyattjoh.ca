@@ -1,7 +1,7 @@
 import "server-only";
 
 import { Octokit } from "@octokit/core";
-import { unstable_cacheLife, unstable_cacheTag } from "next/cache";
+import { cacheLife, cacheTag } from "next/cache";
 
 import type {
   RepositoryFragment,
@@ -42,8 +42,8 @@ export type ViewerRepositories = {
 
 export const getViewerRepositories = async (): Promise<ViewerRepositories> => {
   "use cache";
-  unstable_cacheTag("github");
-  unstable_cacheLife("hours");
+  cacheTag("github");
+  cacheLife("hours");
 
   const data = await octokit.graphql<ViewerRepositoriesQuery>(
     /* GraphQL */ `

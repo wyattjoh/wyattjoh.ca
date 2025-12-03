@@ -7,7 +7,7 @@ import type {
   QueryDatabaseParameters,
   RichTextItemResponse,
 } from "@notionhq/client/build/src/api-endpoints";
-import { unstable_cacheLife, unstable_cacheTag } from "next/cache";
+import { cacheLife, cacheTag } from "next/cache";
 
 const notion = new Client({
   auth: process.env.NOTION_TOKEN,
@@ -22,8 +22,8 @@ const notion = new Client({
  */
 export const getPageBlocks = async (id: string) => {
   "use cache";
-  unstable_cacheTag("notion");
-  unstable_cacheLife("hours");
+  cacheTag("notion");
+  cacheLife("hours");
 
   const allBlocks: BlockObjectResponse[] = [];
   let cursor: string | undefined;
@@ -52,8 +52,8 @@ export const getPageBlocks = async (id: string) => {
  */
 export const extractHeadings = async (id: string): Promise<Heading[]> => {
   "use cache";
-  unstable_cacheTag("notion");
-  unstable_cacheLife("hours");
+  cacheTag("notion");
+  cacheLife("hours");
 
   const blocks = await getPageBlocks(id);
   const headings: Heading[] = [];
@@ -189,8 +189,8 @@ function createBlogPost(response: PageObjectResponse): BlogPost | null {
  */
 export const findBlogPost = async (slug: string): Promise<BlogPost | null> => {
   "use cache";
-  unstable_cacheTag("notion");
-  unstable_cacheLife("hours");
+  cacheTag("notion");
+  cacheLife("hours");
 
   const args: QueryDatabaseParameters = {
     database_id: "0b56732805064002a20bb6bb55da55eb",
@@ -235,8 +235,8 @@ export const findBlogPost = async (slug: string): Promise<BlogPost | null> => {
  */
 export const getBlogPosts = async (): Promise<BlogPost[]> => {
   "use cache";
-  unstable_cacheTag("notion");
-  unstable_cacheLife("hours");
+  cacheTag("notion");
+  cacheLife("hours");
 
   const { results } = await notion.databases.query({
     database_id: "0b56732805064002a20bb6bb55da55eb",
