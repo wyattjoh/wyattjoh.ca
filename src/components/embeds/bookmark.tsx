@@ -143,7 +143,7 @@ export async function BookmarkEmbed({ url }: Props) {
       href={url}
       target="_blank"
       rel="nofollow noreferrer"
-      className="not-prose flex overflow-hidden rounded-lg border border-gray-200 bg-white transition-colors hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-750"
+      className="not-prose flex overflow-hidden rounded-lg border border-gray-200 bg-white transition-colors hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
     >
       <div className="flex min-w-0 flex-1 flex-col justify-between gap-1 p-4">
         {og.title && (
