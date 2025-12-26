@@ -5,6 +5,7 @@ import type {
 
 import { Code } from "bright";
 import { ApplePodcastEmbed } from "@/components/embeds/apple-podcast";
+import { BookmarkEmbed } from "@/components/embeds/bookmark";
 import { TwitterEmbed } from "@/components/embeds/twitter";
 import { YouTubeEmbed } from "@/components/embeds/youtube";
 import { NotionRichTextBlock } from "@/components/notion-rich-text-block";
@@ -123,6 +124,8 @@ export async function NotionBlock({ block }: Props) {
       );
     case "divider":
       return <hr />;
+    case "bookmark":
+      return <BookmarkEmbed url={block.bookmark.url} />;
     default:
       // TODO: support other block types
 
