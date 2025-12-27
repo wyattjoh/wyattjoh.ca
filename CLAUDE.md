@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is Wyatt Johnson's personal portfolio website built with Next.js 15.4.0-canary.61, React 19.1.0, and Tailwind CSS v4.1.8. The site features blog posts and GitHub repository showcases, with content managed through Notion databases.
+This is Wyatt Johnson's personal portfolio website built with Next.js 16, React 19, and Tailwind CSS v4. The site features blog posts and GitHub repository showcases, with content managed through Notion databases.
 
 ## Development Commands
 
@@ -59,6 +59,7 @@ Supported block types:
 - Code blocks with syntax highlighting (using `bright` with Nord theme)
 - Rich text formatting (bold, italic, strikethrough, code)
 - Links with proper external/internal handling
+- Bookmarks with OpenGraph metadata fetching (title, description, image, favicon)
 - Embeds: YouTube videos, Twitter posts, Apple Podcasts
 
 ### Code Quality
