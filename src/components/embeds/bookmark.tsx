@@ -1,3 +1,4 @@
+import { cacheLife, cacheTag } from "next/cache";
 import Image from "next/image";
 
 type Props = {
@@ -12,6 +13,11 @@ type OpenGraphData = {
 };
 
 async function fetchOpenGraphData(url: string): Promise<OpenGraphData> {
+  "use cache";
+
+  cacheTag("notion");
+  cacheLife("days");
+
   const parsed = new URL(url);
 
   const res = await fetch(url, {
@@ -19,7 +25,6 @@ async function fetchOpenGraphData(url: string): Promise<OpenGraphData> {
       "User-Agent":
         "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
     },
-    next: { revalidate: 86400 },
   });
 
   if (!res.ok) {
@@ -134,7 +139,9 @@ export async function BookmarkEmbed({ url }: Props) {
   const parsed = new URL(url);
   const og = await fetchOpenGraphData(url);
 
-  const displayUrl = `${parsed.hostname}${parsed.pathname !== "/" ? parsed.pathname : ""}`;
+  const displayUrl = `${parsed.hostname}${
+    parsed.pathname !== "/" ? parsed.pathname : ""
+  }`;
   const truncatedUrl =
     displayUrl.length > 50 ? `${displayUrl.slice(0, 50)}...` : displayUrl;
 
